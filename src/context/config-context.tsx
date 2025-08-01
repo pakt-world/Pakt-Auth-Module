@@ -3,6 +3,7 @@
 /* -------------------------------------------------------------------------- */
 import React, { createContext, useContext, ReactNode, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 /* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
@@ -41,7 +42,7 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
         applyTheme({ ...defaultTheme, ...(config?.theme || {}) });
     }, [config]);
 
-    return (
+    const content = (
         <ConfigContext.Provider value={config}>
             {children}
             <Toaster
@@ -51,9 +52,17 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
             />
         </ConfigContext.Provider>
     );
+
+    // Wrap with GoogleOAuthProvider if Google OAuth is configured
+    if (config?.googleOAuth?.clientId) {
+        return (
+            <GoogleOAuthProvider clientId={config.googleOAuth.clientId}>
+                {content}
+            </GoogleOAuthProvider>
+        );
+    }
+
+    return content;
 };
 
-export { 
-    useConfig,
-    ConfigProvider,
-};
+export { useConfig, ConfigProvider };

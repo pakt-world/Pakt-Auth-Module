@@ -62,7 +62,7 @@ export default defineConfig(({ command, mode }) => {
                     "src/**/*.test.ts",
                     "src/**/*.spec.ts",
                     "src/test.tsx",
-                    "src/app/index.tsx",
+                    "src/app.tsx",
                 ],
                 // exclude: [
                 //     'node_modules/**',

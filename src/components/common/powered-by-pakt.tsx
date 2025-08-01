@@ -1,4 +1,4 @@
-import PaktIcon from "../assets/images/pakt.png";
+import PaktIcon from "../../assets/images/pakt.png";
 
 const PoweredByPakt = ({ className }: { className?: string }) => {
     return (
