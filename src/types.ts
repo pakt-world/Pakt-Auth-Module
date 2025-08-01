@@ -4,12 +4,21 @@
 
 import { QueryClient } from "@tanstack/react-query";
 
+interface GoogleOAuthConfig {
+    clientId: string;
+    clientSecret?: string;
+    redirectUri?: string;
+    scope?: string[];
+    hostedDomain?: string;
+}
+
 interface ConfigContextType {
     theme?: ITheme; // colors to theme the package
     errorHandler?: (errorMessage: string) => void; //  Callback to handle Error
+    googleOAuth?: GoogleOAuthConfig; // Google OAuth configuration
 }
 
-export type { ConfigContextType };
+export type { ConfigContextType, GoogleOAuthConfig };
 
 type IAny = any;
 type I0xAddressType = `0x${string}`;
