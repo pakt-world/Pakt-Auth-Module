@@ -39,17 +39,17 @@ const VerifyLoginDialog = ({
 }: VerifyLoginDialogProps): JSX.Element => {
     return (
         <HeadlessModal isOpen={isOpen} closeModal={onClose} disableClickOutside>
-            <div className="pam-z-[2] pam-flex pam-size-full pam-flex-col pam-items-center pam-justify-center pam-gap-6">
-                <div className="pam-flex pam-flex-col pam-items-center pam-gap-2 pam-text-center">
-                    <h3 className="pam-font-sans pam-text-2xl pam-font-bold pam-text-title sm:pam-text-3xl sm:pam-text-white">
+            <div className="pka-z-[2] pka-flex pka-size-full pka-flex-col pka-items-center pka-justify-center pka-gap-6">
+                <div className="pka-flex pka-flex-col pka-items-center pka-gap-2 pka-text-center">
+                    <h3 className="pka-font-sans pka-text-2xl pka-font-bold pka-text-title sm:pka-text-3xl sm:pka-text-white">
                         2FA Security
                     </h3>
-                    <p className="pam-font-sans pam-text-base pam-leading-normal pam-tracking-tight pam-text-body sm:pam-text-white">
+                    <p className="pka-font-sans pka-text-base pka-leading-normal pka-tracking-tight pka-text-body sm:pka-text-white">
                         {type === "authenticator"
                             ? "Enter the OTP from your authenticator app"
                             : "Enter the code that was sent to"}
                         {type === "email" && (
-                            <span className="pam-ml-1 pam-text-green-400">
+                            <span className="pka-ml-1 pka-text-green-400">
                                 {email}
                             </span>
                         )}
@@ -64,8 +64,8 @@ const VerifyLoginDialog = ({
                     isSuccess={isSuccess}
                     onSuccess={onSuccess}
                 />
-                <div className="pam-flex pam-w-full pam-items-center pam-justify-end">
-                    <PoweredByPakt className="!pam-text-white" />
+                <div className="pka-flex pka-w-full pka-items-center pka-justify-end">
+                    <PoweredByPakt className="!pka-text-white" />
                 </div>
             </div>
         </HeadlessModal>

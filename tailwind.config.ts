@@ -4,8 +4,8 @@ import { fontFamily } from "tailwindcss/defaultTheme";
 import tailwindcssRadix from "tailwindcss-radix";
 import tailwindcssAnimate from "tailwindcss-animate";
 
-const Prefix = "pam-";
-const PrefixExt = "pams-";
+const Prefix = "pka-";
+const PrefixExt = "pkas-";
 
 const RenderPrefixVariable = (value:string) => `var(--${PrefixExt}${value})`;
 

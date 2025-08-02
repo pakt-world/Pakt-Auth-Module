@@ -20,7 +20,7 @@ const applyTheme = (theme: ITheme) => {
 
   Object.keys(theme).forEach((key) => {
       const value = theme[key as keyof typeof theme] || ""; // Provide a fallback value
-      root.style.setProperty(`--pams-${key}`, value);
+      root.style.setProperty(`--pkas-${key}`, value);
   });
 };
 

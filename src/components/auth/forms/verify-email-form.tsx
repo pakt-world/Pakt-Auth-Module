@@ -85,21 +85,21 @@ function VerifyEmailForm({
     };
 
     return (
-        <div className="pam-flex pam-w-full pam-max-w-2xl pam-flex-col pam-items-center pam-gap-6 sm:pam-mt-28">
-            <div className="pam-flex pam-flex-col pam-items-center pam-gap-2 pam-text-center">
-                <h3 className="pam-font-sans pam-text-3xl pam-font-bold pam-text-title sm:pam-text-white">
+        <div className="pka-flex pka-w-full pka-max-w-2xl pka-flex-col pka-items-center pka-gap-6 sm:pka-mt-28">
+            <div className="pka-flex pka-flex-col pka-items-center pka-gap-2 pka-text-center">
+                <h3 className="pka-font-sans pka-text-3xl pka-font-bold pka-text-title sm:pka-text-white">
                     Reset Password Code
                 </h3>
-                <p className="pam-font-sans pam-text-base pam-text-body sm:pam-text-white">
+                <p className="pka-font-sans pka-text-base pka-text-body sm:pka-text-white">
                     A code has been sent to your email address. Enter it to
                     verify your reset password.
                 </p>
             </div>
             <form
-                className="pam-relative pam-z-[100] pam-mx-auto pam-flex pam-w-full pam-flex-col pam-items-center pam-gap-6 pam-rounded-2xl pam-bg-white pam-p-4 sm:pam-max-w-[600px] sm:pam-px-[40px] sm:pam-py-10"
+                className="pka-relative pka-z-[100] pka-mx-auto pka-flex pka-w-full pka-flex-col pka-items-center pka-gap-6 pka-rounded-2xl pka-bg-white pka-p-4 sm:pka-max-w-[600px] sm:pka-px-[40px] sm:pka-py-10"
                 onSubmit={form.handleSubmit(handleSubmit)}
             >
-                <div className="pam-flex pam-w-fit pam-flex-col pam-gap-4">
+                <div className="pka-flex pka-w-fit pka-flex-col pka-gap-4">
                     <Controller
                         name="otp"
                         control={form.control}
@@ -114,7 +114,7 @@ function VerifyEmailForm({
                                     renderInput={(props) => (
                                         <input
                                             {...props}
-                                            className="pam-otp_style pam-focus:outline-none pam-focus:ring-1 pam-focus:ring-primary !pam-select-none pam-px-3 pam-py-2"
+                                            className="pka-otp_style pka-focus:outline-none pka-focus:ring-1 pka-focus:ring-primary !pka-select-none pka-px-3 pka-py-2"
                                         />
                                     )}
                                 />
@@ -131,8 +131,8 @@ function VerifyEmailForm({
                         {isLoading ? <Spinner /> : "Reset Password"}
                     </Button>
 
-                    <div className="pam-flex pam-w-full pam-flex-col pam-items-center pam-gap-4">
-                        <span className="pam-text-body">
+                    <div className="pka-flex pka-w-full pka-flex-col pka-items-center pka-gap-4">
+                        <span className="pka-text-body">
                             {formatCountdown(countdown)}
                         </span>
 
@@ -142,13 +142,13 @@ function VerifyEmailForm({
                             variant="outline"
                             onClick={handleResendOTP}
                             disabled={resendLoading || isResendDisabled}
-                            className="!pam-h-7 pam-max-w-[150px] pam-items-center pam-justify-center !pam-py-2"
+                            className="!pka-h-7 pka-max-w-[150px] pka-items-center pka-justify-center !pka-py-2"
                             style={{
                                 opacity:
                                     resendLoading || isResendDisabled ? 0.2 : 1,
                             }}
                         >
-                            <span className="pam-flex pam-flex-row pam-gap-2">
+                            <span className="pka-flex pka-flex-row pka-gap-2">
                                 <Timer size={16} className="" />
                                 {resendLoading ? (
                                     <Spinner size={16} />

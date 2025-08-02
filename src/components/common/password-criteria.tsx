@@ -20,7 +20,7 @@ export const PasswordCriteria = ({
 }: PasswordCriteriaProps): React.JSX.Element => {
     return (
         <div
-            className={`pam-flex pam-flex-row pam-items-center pam-gap-4 ${isValidated ? "pam-text-success" : "pam-text-body"}`}
+            className={`pka-flex pka-flex-row pka-items-center pka-gap-4 ${isValidated ? "pka-text-success" : "pka-text-body"}`}
         >
             <Check size={15} />
             {criteria}

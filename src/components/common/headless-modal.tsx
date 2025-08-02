@@ -30,7 +30,7 @@ export const HeadlessModal: FC<HeadlessModalProps> = ({
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog
                 as="div"
-                className="pam-relative !pam-z-[79]"
+                className="pka-relative !pka-z-[79]"
                 onClose={() => {
                     if (!disableClickOutside) {
                         closeModal();
@@ -39,30 +39,30 @@ export const HeadlessModal: FC<HeadlessModalProps> = ({
             >
                 <Transition.Child
                     as={Fragment}
-                    enter="pam-ease-out"
-                    enterFrom="pam-opacity-0"
-                    enterTo="pam-opacity-100"
-                    leave="pam-ease-in pam-duration-200"
-                    leaveFrom="pam-opacity-100"
-                    leaveTo="pam-opacity-0"
+                    enter="pka-ease-out"
+                    enterFrom="pka-opacity-0"
+                    enterTo="pka-opacity-100"
+                    leave="pka-ease-in pka-duration-200"
+                    leaveFrom="pka-opacity-100"
+                    leaveTo="pka-opacity-0"
                 >
-                    <div className="pam-fixed pam-inset-0 pam-bg-black pam-bg-opacity-80 pam-backdrop-blur-lg" />
+                    <div className="pka-fixed pka-inset-0 pka-bg-black pka-bg-opacity-80 pka-backdrop-blur-lg" />
                 </Transition.Child>
 
-                <div className="pam-fixed pam-inset-0 pam-overflow-y-auto">
-                    <div className="pam-flex pam-min-h-full pam-items-center pam-justify-center pam-p-4 pam-text-center">
+                <div className="pka-fixed pka-inset-0 pka-overflow-y-auto">
+                    <div className="pka-flex pka-min-h-full pka-items-center pka-justify-center pka-p-4 pka-text-center">
                         <Transition.Child
                             as={Fragment}
-                            enter="pam-ease-out"
-                            enterFrom="pam-opacity-0 pam-scale-95"
-                            enterTo="pam-opacity-100 pam-scale-100"
-                            leave="pam-ease-in pam-duration-200"
-                            leaveFrom="pam-opacity-100 pam-scale-100"
-                            leaveTo="pam-opacity-0 pam-scale-95"
+                            enter="pka-ease-out"
+                            enterFrom="pka-opacity-0 pka-scale-95"
+                            enterTo="pka-opacity-100 pka-scale-100"
+                            leave="pka-ease-in pka-duration-200"
+                            leaveFrom="pka-opacity-100 pka-scale-100"
+                            leaveTo="pka-opacity-0 pka-scale-95"
                         >
                             <Dialog.Panel
                                 className={cn(
-                                    "pam-relative !pam-z-10 pam-w-full pam-max-w-lg pam-transform pam-overflow-hidden pam-bg-transparent pam-text-left pam-align-middle pam-transition-all",
+                                    "pka-relative !pka-z-10 pka-w-full pka-max-w-lg pka-transform pka-overflow-hidden pka-bg-transparent pka-text-left pka-align-middle pka-transition-all",
                                     className
                                 )}
                             >
