@@ -11,7 +11,6 @@ import { memo } from "react";
 import LoginForm from "../../forms/login-form";
 import { HeadlessModal } from "../../../common/headless-modal";
 import PoweredByPakt from "../../../common/powered-by-pakt";
-import { AuthEnums } from "../../../utils/auth-utils";
 
 interface LoginDialogProps {
     isOpen: boolean;

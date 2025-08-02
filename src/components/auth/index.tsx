@@ -28,5 +28,5 @@ export { SigninMethod } from "./methods/signin-method";
 export { SignupMethod } from "./methods/signup-method";
 export { AuthMethod, AuthOptions } from "./methods/auth-method";
 
-// Main Auth System
-export { default as AuthSystem } from "./auth-system";
+// Common Components
+export { PasswordCriteria } from "../common/password-criteria";

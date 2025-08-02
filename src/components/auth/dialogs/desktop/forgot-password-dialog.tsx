@@ -8,8 +8,8 @@ import { useState } from "react";
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
 
-import { HeadlessModal } from "../../common/headless-modal";
-import { ForgotPasswordFormData } from "../../../types/auth";
+import { HeadlessModal } from "../../../common/headless-modal";
+import { ForgotPasswordFormData } from "../../../../types/auth";
 
 interface ForgotPasswordDialogProps {
     isOpen: boolean;
