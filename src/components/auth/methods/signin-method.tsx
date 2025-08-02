@@ -10,7 +10,7 @@ import { useMediaQuery } from "usehooks-ts";
 
 import PoweredByPakt from "../../common/powered-by-pakt";
 import { AuthMethod } from "./auth-method";
-import { useGoogleAuth } from "../../hooks/use-google-auth";
+import { useGoogleAuth } from "../../../hooks/use-google-auth";
 
 interface SigninMethodProps {
     onNavigate: (path: string) => void;

@@ -74,6 +74,7 @@ const DesktopAuth = forwardRef((_, ref: DesktopAuthRef) => {
                 isLoading={false}
                 error={undefined}
                 backToSignupMethod={backToSignupMethod}
+                goToLoginMethod={() => setCurrentView("login-method")}
             />
             {/*   <VerifySignUpDialog
                 isOpen={currentView === "verify-signup"}

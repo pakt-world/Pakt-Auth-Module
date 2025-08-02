@@ -17,6 +17,8 @@ import { spChars } from "../../../utils/auth-utils";
 import { signupSchema } from "../../../utils/validation";
 import { Button } from "../../common/button";
 import { AuthEnums } from "../../../utils/auth-utils";
+import { Spinner } from "../../../components/common/loader";
+import { PasswordCriteria } from "../../../components/common/password-criteria";
 
 type FormValues = z.infer<typeof signupSchema>;
 
@@ -25,6 +27,7 @@ interface SignUpFormProps {
     isLoading?: boolean;
     error?: string;
     backToSignupMethod?: () => void;
+    goToLoginMethod?: () => void;
 }
 
 const SignUpForm = ({
@@ -32,6 +35,7 @@ const SignUpForm = ({
     isLoading,
     error,
     backToSignupMethod,
+    goToLoginMethod,
 }: SignUpFormProps): React.JSX.Element => {
     const isMobile = useMediaQuery("(max-width: 640px)");
 
@@ -77,7 +81,7 @@ const SignUpForm = ({
         <form
             method="post"
             onSubmit={form.handleSubmit(handleSubmit)}
-            className="pam-sm:max-w-[600px] pam-sm:px-[40px] pam-sm:py-10 pam-relative pam-z-[100] pam-mx-auto pam-flex pam-w-full pam-flex-col pam-items-center pam-gap-6 pam-rounded-2xl pam-bg-white pam-p-4 pam-shadow"
+            className="pam-mx-auto pam-flex pam-w-full pam-flex-col pam-items-center pam-gap-6 pam-rounded-2xl pam-bg-white pam-p-4 sm:pam-max-w-[600px] sm:pam-px-[40px] sm:pam-py-10"
         >
             {backToSignupMethod && (
                 <button
@@ -151,48 +155,31 @@ const SignUpForm = ({
                     />
                     {isPasswordTyping && (
                         <div className="pam-flex pam-flex-col pam-gap-4 pam-p-4 pam-text-xs pam-text-body">
-                            <div
-                                className={`pam-flex pam-items-center pam-gap-2 ${validatingErr.isMinLength ? "pam-text-green-500" : "pam-text-red-500"}`}
-                            >
-                                <span>
-                                    {validatingErr.isMinLength ? "✓" : "✗"}
-                                </span>
-                                <span>At least 8 characters</span>
-                            </div>
-                            <div
-                                className={`pam-flex pam-items-center pam-gap-2 ${validatingErr.checkLowerUpper ? "pam-text-green-500" : "pam-text-red-500"}`}
-                            >
-                                <span>
-                                    {validatingErr.checkLowerUpper ? "✓" : "✗"}
-                                </span>
-                                <span>Upper and lower case characters</span>
-                            </div>
-                            <div
-                                className={`pam-flex pam-items-center pam-gap-2 ${validatingErr.checkNumber ? "pam-text-green-500" : "pam-text-red-500"}`}
-                            >
-                                <span>
-                                    {validatingErr.checkNumber ? "✓" : "✗"}
-                                </span>
-                                <span>1 or more numbers</span>
-                            </div>
-                            <div
-                                className={`pam-flex pam-items-center pam-gap-2 ${validatingErr.specialCharacter ? "pam-text-green-500" : "pam-text-red-500"}`}
-                            >
-                                <span>
-                                    {validatingErr.specialCharacter ? "✓" : "✗"}
-                                </span>
-                                <span>1 or more special characters</span>
-                            </div>
-                            <div
-                                className={`pam-flex pam-items-center pam-gap-2 ${validatingErr.confirmedPassword ? "pam-text-green-500" : "pam-text-red-500"}`}
-                            >
-                                <span>
-                                    {validatingErr.confirmedPassword
-                                        ? "✓"
-                                        : "✗"}
-                                </span>
-                                <span>passwords must match</span>
-                            </div>
+                            <PasswordCriteria
+                                isValidated={validatingErr.isMinLength}
+                                criteria="At least 8 characters"
+                                isSignUp
+                            />
+                            <PasswordCriteria
+                                isValidated={validatingErr.checkLowerUpper}
+                                criteria="Upper and lower case characters"
+                                isSignUp
+                            />
+                            <PasswordCriteria
+                                isValidated={validatingErr.checkNumber}
+                                criteria="1 or more numbers"
+                                isSignUp
+                            />
+                            <PasswordCriteria
+                                isValidated={validatingErr.specialCharacter}
+                                criteria="1 or more special characters"
+                                isSignUp
+                            />
+                            <PasswordCriteria
+                                isValidated={validatingErr.confirmedPassword}
+                                criteria="passwords must match"
+                                isSignUp
+                            />
                         </div>
                     )}
                 </div>
@@ -231,11 +218,7 @@ const SignUpForm = ({
                 disabled={!form.formState.isValid || isLoading}
                 variant="primary"
             >
-                {isLoading ? (
-                    <div className="pam-h-4 pam-w-4 pam-animate-spin pam-rounded-full pam-border-2 pam-border-white pam-border-t-transparent"></div>
-                ) : (
-                    "Signup"
-                )}
+                {isLoading ? <Spinner /> : "Signup"}
             </Button>
 
             {!isMobile && (
@@ -244,10 +227,7 @@ const SignUpForm = ({
                         Already have an account?{" "}
                     </span>
                     <span
-                        onClick={() => {
-                            // This would need to be handled by the parent component
-                            console.log("Navigate to login");
-                        }}
+                        onClick={goToLoginMethod}
                         className="pam-hover:underline pam-cursor-pointer pam-font-bold pam-text-primary"
                     >
                         Login
