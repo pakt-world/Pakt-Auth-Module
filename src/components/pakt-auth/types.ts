@@ -6,13 +6,13 @@ type AuthRef = {
 
 interface PaktAuthProps {
     config: any;
-    onLogin?: (data?: any) => void;
-    onSignup?: (data?: any) => void;
+    onLoginSuccess?: (userData: any) => void;
+    onSignupSuccess?: (userData: any) => void;
 }
 
 interface DesktopAuthProps {
-    onLogin?: (data?: any) => void;
-    onSignup?: (data?: any) => void;
+    onLoginSuccess?: (userData: any) => void;
+    onSignupSuccess?: (userData: any) => void;
 }
 
 

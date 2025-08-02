@@ -30,12 +30,12 @@ const App = () => {
     const handleLogin = () => paktAuthRef.current?.onLogin?.();
     const handleSignup = () => paktAuthRef.current?.onSignup?.();
 
-    const handleSignupSuccess = (data: any) => {
-        console.log("Signup success:", data);
+    const handleSignupSuccess = (userData: any) => {
+        console.log("Signup success:", userData);
     };
 
-    const handleLoginSuccess = (data: any) => {
-        console.log("Login success:", data);
+    const handleLoginSuccess = (userData: any) => {
+        console.log("Login success:", userData);
     };
 
     return (
