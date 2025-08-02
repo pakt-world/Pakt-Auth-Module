@@ -26,6 +26,7 @@ export { default as ForgotPasswordForm } from "./forms/forgot-password-form";
 export { default as VerifyEmailForm } from "./forms/verify-email-form";
 export { default as ResetPasswordForm } from "./forms/reset-password-form";
 export { default as VerifySignupForm } from "./forms/verify-signup-form";
+export { default as VerifyLoginForm } from "./forms/verify-login-form";
 
 // Methods
 export { SigninMethod } from "./methods/signin-method";

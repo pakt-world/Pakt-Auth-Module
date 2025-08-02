@@ -12,26 +12,35 @@ import { ConfigProvider } from "../../context/config-context";
 import DesktopAuth from "./desktop";
 import { AuthRef, PaktAuthProps } from "./types";
 
-const PaktAuth = forwardRef(({ config }: PaktAuthProps, ref: Ref<AuthRef>) => {
-    // const isMobile = useMediaQuery("(max-width: 640px)");
-    const desktopAuthRef = useRef<AuthRef>(null);
+const PaktAuth = forwardRef(
+    (
+        { config, onLoginSuccess, onSignupSuccess }: PaktAuthProps,
+        ref: Ref<AuthRef>
+    ) => {
+        // const isMobile = useMediaQuery("(max-width: 640px)");
+        const desktopAuthRef = useRef<AuthRef>(null);
 
-    useImperativeHandle(ref, () => ({
-        onLogin: () => {
-            desktopAuthRef.current?.onLogin();
-        },
-        onSignup: () => {
-            desktopAuthRef.current?.onSignup();
-        },
-    }));
+        useImperativeHandle(ref, () => ({
+            onLogin: () => {
+                desktopAuthRef.current?.onLogin();
+            },
+            onSignup: () => {
+                desktopAuthRef.current?.onSignup();
+            },
+        }));
 
-    return (
-        <ConfigProvider config={config}>
-            {/* {isMobile ? <DesktopAuth /> : <DesktopAuth />} */}
-            <DesktopAuth ref={desktopAuthRef} />
-        </ConfigProvider>
-    );
-});
+        return (
+            <ConfigProvider config={config}>
+                {/* {isMobile ? <DesktopAuth /> : <DesktopAuth />} */}
+                <DesktopAuth
+                    ref={desktopAuthRef}
+                    onLoginSuccess={onLoginSuccess}
+                    onSignupSuccess={onSignupSuccess}
+                />
+            </ConfigProvider>
+        );
+    }
+);
 
 PaktAuth.displayName = "PaktAuth";
 
