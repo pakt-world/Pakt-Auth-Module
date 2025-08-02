@@ -22,6 +22,10 @@ export { default as LoginForm } from "./forms/login-form";
 export { default as SignupForm } from "./forms/signup-form";
 export { default as LoginFormWrapper } from "./forms/login-form-wrapper";
 export { default as SignupFormWrapper } from "./forms/signup-form-wrapper";
+export { default as ForgotPasswordForm } from "./forms/forgot-password-form";
+export { default as VerifyEmailForm } from "./forms/verify-email-form";
+export { default as ResetPasswordForm } from "./forms/reset-password-form";
+export { default as VerifySignupForm } from "./forms/verify-signup-form";
 
 // Methods
 export { SigninMethod } from "./methods/signin-method";

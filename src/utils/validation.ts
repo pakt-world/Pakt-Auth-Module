@@ -63,6 +63,11 @@ export const emailVerificationSchema = z.object({
   code: z.string().min(1, "Verification code is required").length(6, "Verification code must be 6 digits"),
 });
 
+// OTP schema
+export const otpSchema = z.object({
+  otp: z.string().min(1, "OTP is required").length(6, "OTP must be 6 digits"),
+});
+
 // Two-factor authentication schema
 export const twoFactorSchema = z.object({
   code: z.string().min(1, "Authentication code is required").length(6, "Authentication code must be 6 digits"),
