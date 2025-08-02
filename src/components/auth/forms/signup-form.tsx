@@ -101,7 +101,7 @@ const SignUpForm = ({
                     <div className="pam-relative pam-mb-1 pam-flex pam-w-full pam-flex-col pam-gap-2">
                         <label
                             htmlFor="firstName"
-                            className="pam-sm:text-sm pam-text-base pam-text-body"
+                            className="pam-text-base pam-text-body sm:pam-text-sm"
                         >
                             Full Name
                         </label>
@@ -122,7 +122,7 @@ const SignUpForm = ({
                 <div className="pam-relative pam-mb-1 pam-flex pam-flex-col pam-gap-2">
                     <label
                         htmlFor="email"
-                        className="pam-sm:text-sm pam-text-base pam-text-body"
+                        className="pam-text-base pam-text-body sm:pam-text-sm"
                     >
                         Email Address
                     </label>
@@ -142,7 +142,7 @@ const SignUpForm = ({
                 <div className="pam-relative pam-mb-1 pam-flex pam-flex-col pam-gap-2">
                     <label
                         htmlFor="password"
-                        className="pam-sm:text-sm pam-text-base pam-text-body"
+                        className="pam-text-base pam-text-body sm:pam-text-sm"
                     >
                         Create Password
                     </label>
@@ -187,7 +187,7 @@ const SignUpForm = ({
                 <div className="pam-relative pam-mb-1 pam-flex pam-flex-col pam-gap-2">
                     <label
                         htmlFor="confirmPassword"
-                        className="pam-sm:text-sm pam-text-base pam-text-body"
+                        className="pam-text-base pam-text-body sm:pam-text-sm"
                     >
                         Confirm Password
                     </label>

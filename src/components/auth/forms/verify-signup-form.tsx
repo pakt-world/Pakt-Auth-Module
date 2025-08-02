@@ -94,7 +94,7 @@ function VerifySignupForm({
         <>
             {!isSuccess ? (
                 <form
-                    className="pam-sm:max-w-[600px] pam-sm:px-[40px] pam-sm:py-10 pam-relative pam-mx-auto pam-flex pam-w-full pam-flex-col pam-items-center pam-gap-6 pam-rounded-2xl pam-bg-white pam-p-4"
+                    className="pam-relative pam-mx-auto pam-flex pam-w-full pam-flex-col pam-items-center pam-gap-6 pam-rounded-2xl pam-bg-white pam-p-4 sm:pam-max-w-[600px] sm:pam-px-[40px] sm:pam-py-10"
                     onSubmit={form.handleSubmit(handleSubmit)}
                 >
                     <div className="pam-flex pam-w-fit pam-flex-col pam-gap-4">

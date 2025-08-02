@@ -87,7 +87,7 @@ function ResetPasswordForm({
             {!isSuccess ? (
                 <div className="pam-flex pam-h-full pam-w-full pam-flex-col pam-items-center pam-justify-center pam-gap-6 sm:pam-max-w-2xl max-sm:pam-p-0">
                     <div className="pam-flex pam-flex-col pam-items-center pam-gap-2 pam-text-center">
-                        <h3 className="pam-2xl:text-3xl pam-font-sans pam-text-2xl pam-font-bold pam-text-title sm:pam-text-white">
+                        <h3 className="pam-font-sans pam-text-2xl pam-font-bold pam-text-title sm:pam-text-white 2xl:pam-text-3xl">
                             Reset Password
                         </h3>
                         <p className="pam-font-sans pam-text-base pam-leading-normal pam-tracking-tight pam-text-body sm:pam-text-white">
