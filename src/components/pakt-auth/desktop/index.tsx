@@ -12,10 +12,10 @@ import {
     SignupDialog,
     LoginDialog,
     ForgotPasswordDialog,
-    // VerifySignUpDialog,
+    VerifySignupDialog,
     // VerifyLoginDialog,
-    // VerifyEmailDialog,
-    // ResetPasswordDialog,
+    VerifyEmailDialog,
+    ResetPasswordDialog,
 } from "../../auth";
 // import { DesktopAuthProps } from "../types";
 
@@ -39,6 +39,8 @@ type DesktopAuthRef = Ref<{
 
 const DesktopAuth = forwardRef((_, ref: DesktopAuthRef) => {
     const [currentView, setCurrentView] = useState<AuthView>("");
+    const [verifySignupSuccess, setVerifySignupSuccess] = useState(false);
+    const [resetPasswordSuccess, setResetPasswordSuccess] = useState(false);
 
     const resetCurrentView = () => setCurrentView("");
     const backToSignupMethod = () => setCurrentView("signup-method");
@@ -76,16 +78,22 @@ const DesktopAuth = forwardRef((_, ref: DesktopAuthRef) => {
                 backToSignupMethod={backToSignupMethod}
                 goToLoginMethod={() => setCurrentView("login-method")}
             />
-            {/*   <VerifySignUpDialog
+            <VerifySignupDialog
                 isOpen={currentView === "verify-signup"}
                 onClose={() => setCurrentView("signup")}
                 onVerify={(code) => {
                     console.log("Verify signup:", code);
+                    setVerifySignupSuccess(true);
                 }}
                 onResend={() => {
                     console.log("Resend verification");
                 }}
-            /> */}
+                isSuccess={verifySignupSuccess}
+                onSuccess={() => {
+                    console.log("Verify signup success");
+                    resetCurrentView();
+                }}
+            />
             {/* == Login == */}
             <SigninMethodDialog
                 isOpen={currentView === "login-method"}
@@ -130,31 +138,35 @@ const DesktopAuth = forwardRef((_, ref: DesktopAuthRef) => {
                 }}
                 isLoading={false}
                 error={undefined}
-                onSuccess={() => setCurrentView("verify-email")}
+                onBackToLogin={() => setCurrentView("login")}
             />
 
-            {/* <VerifyEmailDialog
+            <VerifyEmailDialog
                 isOpen={currentView === "verify-email"}
                 onClose={() => setCurrentView("forgot-password")}
                 onVerify={(code) => {
                     console.log("Verify email:", code);
+                    setCurrentView("reset-password");
                 }}
                 onResend={() => {
                     console.log("Resend verification");
                 }}
-                onSuccess={() => setCurrentView("reset-password")}
             />
             <ResetPasswordDialog
                 isOpen={currentView === "reset-password"}
                 onClose={() => setCurrentView("verify-email")}
                 onSubmit={(data) => {
                     console.log("Reset password:", data);
-                    setCurrentView("login");
+                    setResetPasswordSuccess(true);
                 }}
                 isLoading={false}
                 error={undefined}
-                onSuccess={() => setCurrentView("login")}
-            /> */}
+                isSuccess={resetPasswordSuccess}
+                onSuccess={() => {
+                    console.log("Reset password success");
+                    setCurrentView("login");
+                }}
+            />
         </>
     );
 });

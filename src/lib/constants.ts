@@ -68,4 +68,8 @@ export const AUTH_METHOD: AuthMethod[] = [
 		icon: React.createElement(EmailIcon),
 		method: "Email",
 	},
-]; 
+];
+
+export const RESEND_INTERVAL = 60000; // 1 minute
+export const COUNTDOWN_START = 60; // 60 seconds
+export const ONE_SECOND = 1000; // 1 second 

@@ -30,6 +30,14 @@ const App = () => {
     const handleLogin = () => paktAuthRef.current?.onLogin?.();
     const handleSignup = () => paktAuthRef.current?.onSignup?.();
 
+    const handleSignupSuccess = (data: any) => {
+        console.log("Signup success:", data);
+    };
+
+    const handleLoginSuccess = (data: any) => {
+        console.log("Login success:", data);
+    };
+
     return (
         <>
             <div className="pam-flex pam-min-h-screen pam-items-center pam-justify-center pam-bg-gradient-to-br pam-from-blue-900 pam-via-purple-900 pam-to-indigo-900 pam-p-4">
@@ -66,6 +74,8 @@ const App = () => {
                     },
                 }}
                 ref={paktAuthRef}
+                onLoginSuccess={handleLoginSuccess}
+                onSignupSuccess={handleSignupSuccess}
             />
         </>
     );
