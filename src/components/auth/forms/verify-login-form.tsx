@@ -94,10 +94,10 @@ function VerifyLoginForm({
         <>
             {!isSuccess ? (
                 <form
-                    className="pam-relative pam-z-[100] pam-mx-auto pam-flex pam-w-full pam-flex-col pam-items-center pam-gap-6 pam-rounded-2xl pam-bg-white pam-p-4 sm:pam-max-w-[600px] sm:pam-px-[40px] sm:pam-py-10"
+                    className="pka-relative pka-z-[100] pka-mx-auto pka-flex pka-w-full pka-flex-col pka-items-center pka-gap-6 pka-rounded-2xl pka-bg-white pka-p-4 sm:pka-max-w-[600px] sm:pka-px-[40px] sm:pka-py-10"
                     onSubmit={form.handleSubmit(handleSubmit)}
                 >
-                    <div className="pam-flex pam-w-fit pam-flex-col pam-gap-4">
+                    <div className="pka-flex pka-w-fit pka-flex-col pka-gap-4">
                         <Controller
                             name="otp"
                             control={form.control}
@@ -112,7 +112,7 @@ function VerifyLoginForm({
                                         renderInput={(props) => (
                                             <input
                                                 {...props}
-                                                className="pam-otp_style pam-focus:outline-none pam-focus:ring-1 pam-focus:ring-primary !pam-select-none pam-px-3 pam-py-2"
+                                                className="pka-otp_style pka-focus:outline-none pka-focus:ring-1 pka-focus:ring-primary !pka-select-none pka-px-3 pka-py-2"
                                             />
                                         )}
                                     />
@@ -128,20 +128,20 @@ function VerifyLoginForm({
                             {isLoading ? <Spinner /> : "Submit"}
                         </Button>
 
-                        <div className="pam-flex pam-w-full pam-flex-col pam-items-center pam-gap-4">
-                            <span className="pam-text-body">
+                        <div className="pka-flex pka-w-full pka-flex-col pka-items-center pka-gap-4">
+                            <span className="pka-text-body">
                                 {formatCountdown(countdown)}
                             </span>
 
                             <Button
                                 size="xs"
                                 fullWidth
-                                className="!pam-h-7 pam-max-w-[150px] pam-items-center pam-justify-center !pam-py-2"
+                                className="!pka-h-7 pka-max-w-[150px] pka-items-center pka-justify-center !pka-py-2"
                                 variant="outline"
                                 onClick={handleResendOTP}
                                 disabled={resendLoading || isResendDisabled}
                             >
-                                <span className="pam-flex pam-flex-row pam-gap-2">
+                                <span className="pka-flex pka-flex-row pka-gap-2">
                                     <Timer size={16} className="" />
                                     {resendLoading ? (
                                         <Spinner size={16} />
@@ -154,11 +154,11 @@ function VerifyLoginForm({
                     </div>
                 </form>
             ) : (
-                <div className="pam-mx-auto pam-flex pam-w-full pam-max-w-xl pam-flex-col pam-items-center pam-justify-center pam-gap-2 pam-rounded-2xl pam-bg-white pam-p-8 pam-px-[40px] pam-py-10 pam-text-center pam-text-body">
-                    <div className="pam-flex pam-w-full pam-max-w-[150px] pam-items-center pam-justify-center">
+                <div className="pka-mx-auto pka-flex pka-w-full pka-max-w-xl pka-flex-col pka-items-center pka-justify-center pka-gap-2 pka-rounded-2xl pka-bg-white pka-p-8 pka-px-[40px] pka-py-10 pka-text-center pka-text-body">
+                    <div className="pka-flex pka-w-full pka-max-w-[150px] pka-items-center pka-justify-center">
                         <Lottie animationData={success} />
                     </div>
-                    <h6 className="pam-my-4 pam-flex-wrap pam-text-lg pam-font-thin pam-opacity-[0.8]">
+                    <h6 className="pka-my-4 pka-flex-wrap pka-text-lg pka-font-thin pka-opacity-[0.8]">
                         Login Successful
                     </h6>
                     <Button

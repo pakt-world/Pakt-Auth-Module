@@ -18,12 +18,12 @@ interface ModalCloseBtnProps {
 const ModalCloseBtn = ({ onClick, text }: ModalCloseBtnProps) => {
     return (
         <Button
-            className="pam-flex !pam-h-[37px] !pam-w-[106px] pam-items-center pam-justify-center pam-gap-2 !pam-px-4 !pam-py-2 pam-font-bold sm:!pam-h-[51px] sm:!pam-w-[151px] sm:pam-gap-4"
+            className="pka-flex !pka-h-[37px] !pka-w-[106px] pka-items-center pka-justify-center pka-gap-2 !pka-px-4 !pka-py-2 pka-font-bold sm:!pka-h-[51px] sm:!pka-w-[151px] sm:pka-gap-4"
             variant="secondary"
             onClick={onClick}
         >
-            <XIcon className="pam-cursor-pointer pam-text-primary" />
-            <span className="!pam-text-sm sm:!pam-text-lg">
+            <XIcon className="pka-cursor-pointer pka-text-primary" />
+            <span className="!pka-text-sm sm:!pka-text-lg">
                 {text || "Cancel"}
             </span>
         </Button>

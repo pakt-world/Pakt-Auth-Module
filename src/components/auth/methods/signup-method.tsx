@@ -45,7 +45,7 @@ export const SignupMethod = ({
     });
 
     return (
-        <div className="pam-z-[2] pam-flex pam-size-full pam-flex-col pam-items-center pam-justify-center pam-gap-6">
+        <div className="pka-z-[2] pka-flex pka-size-full pka-flex-col pka-items-center pka-justify-center pka-gap-6">
             <AuthMethod
                 title="Create Your Account"
                 description="Connect with world-class builders"
@@ -62,8 +62,8 @@ export const SignupMethod = ({
                 email={onEmailSignup}
                 goToLoginMethod={goToLoginMethod}
             />
-            <div className="pam-flex pam-w-full pam-items-center pam-justify-end">
-                <PoweredByPakt className="sm:!pam-text-white" />
+            <div className="pka-flex pka-w-full pka-items-center pka-justify-end">
+                <PoweredByPakt className="sm:!pka-text-white" />
             </div>
         </div>
     );

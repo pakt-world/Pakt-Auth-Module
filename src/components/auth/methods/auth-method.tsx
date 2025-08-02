@@ -28,12 +28,12 @@ const MethodWrapper = ({
         <button
             type="button"
             onClick={onClick}
-            className="pam-inline-flex pam-h-14 pam-w-full pam-items-center pam-justify-center pam-gap-4 pam-overflow-hidden pam-rounded-[10px] pam-border-2 pam-border-slate-200 pam-bg-white pam-p-4"
+            className="pka-inline-flex pka-h-14 pka-w-full pka-items-center pka-justify-center pka-gap-4 pka-overflow-hidden pka-rounded-[10px] pka-border-2 pka-border-slate-200 pka-bg-white pka-p-4"
         >
-            <div data-svg-wrapper className="pam-relative">
+            <div data-svg-wrapper className="pka-relative">
                 {icon}
             </div>
-            <div className="pam-text-base pam-font-medium pam-leading-normal pam-text-slate-800">
+            <div className="pka-text-base pka-font-medium pka-leading-normal pka-text-slate-800">
                 {isLogin ? "Log in" : "Sign up"} with {method}
             </div>
         </button>
@@ -63,8 +63,8 @@ export const AuthOptions = ({
     const isLogin = currentAuth === "signin_method";
 
     return (
-        <div className="pam-flex pam-w-full pam-flex-col pam-items-center pam-justify-center pam-gap-4 pam-rounded-3xl pam-bg-white pam-p-6">
-            <h3 className="pam-text-xl pam-leading-[30px] pam-tracking-tight pam-text-[#1f2739]">
+        <div className="pka-flex pka-w-full pka-flex-col pka-items-center pka-justify-center pka-gap-4 pka-rounded-3xl pka-bg-white pka-p-6">
+            <h3 className="pka-text-xl pka-leading-[30px] pka-tracking-tight pka-text-[#1f2739]">
                 {instruction}
             </h3>
             {AUTH_METHOD.map((method) => {
@@ -93,15 +93,15 @@ export const AuthOptions = ({
                     />
                 );
             })}
-            <div className="pam-inline-flex pam-h-5 pam-items-start pam-justify-center pam-gap-1">
-                <div className="pam-text-sm pam-font-medium pam-leading-tight pam-text-[#1f2739]">
+            <div className="pka-inline-flex pka-h-5 pka-items-start pka-justify-center pka-gap-1">
+                <div className="pka-text-sm pka-font-medium pka-leading-tight pka-text-[#1f2739]">
                     {isLogin
                         ? "Don't have an account?"
                         : "Already have an account?"}
                 </div>
                 <button
                     onClick={isLogin ? goToSignupMethod : goToLoginMethod}
-                    className="pam-text-sm pam-font-bold pam-leading-tight pam-text-[#3055b3]"
+                    className="pka-text-sm pka-font-bold pka-leading-tight pka-text-[#3055b3]"
                 >
                     {isLogin ? "Sign up" : "Login"}
                 </button>
@@ -134,13 +134,13 @@ export const AuthMethod = ({
     currentAuth,
 }: AuthMethodProps) => {
     return (
-        <div className="pam-z-[2] pam-flex pam-w-full pam-items-center sm:pam-mx-auto sm:pam-size-full">
-            <div className="pam-flex pam-size-full pam-flex-col pam-items-center pam-justify-center pam-gap-6">
-                <div className="pam-flex pam-flex-col pam-items-center pam-gap-2 pam-text-center">
-                    <h3 className="pam-font-sans pam-text-2xl pam-font-bold pam-text-title sm:pam-text-3xl sm:pam-text-white">
+        <div className="pka-z-[2] pka-flex pka-w-full pka-items-center sm:pka-mx-auto sm:pka-size-full">
+            <div className="pka-flex pka-size-full pka-flex-col pka-items-center pka-justify-center pka-gap-6">
+                <div className="pka-flex pka-flex-col pka-items-center pka-gap-2 pka-text-center">
+                    <h3 className="pka-font-sans pka-text-2xl pka-font-bold pka-text-title sm:pka-text-3xl sm:pka-text-white">
                         {title}
                     </h3>
-                    <p className="pam-w-[392px] pam-text-center pam-text-base pam-font-medium pam-leading-normal pam-tracking-tight pam-text-body sm:pam-text-white">
+                    <p className="pka-w-[392px] pka-text-center pka-text-base pka-font-medium pka-leading-normal pka-tracking-tight pka-text-body sm:pka-text-white">
                         {description}
                     </p>
                 </div>

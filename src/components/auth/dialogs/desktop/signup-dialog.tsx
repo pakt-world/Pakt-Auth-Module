@@ -33,12 +33,12 @@ const SignupDialog = ({
 }: SignupDialogProps): JSX.Element => {
     return (
         <HeadlessModal isOpen={isOpen} closeModal={onClose} disableClickOutside>
-            <div className="pam-z-[2] pam-flex pam-size-full pam-flex-col pam-items-center pam-justify-center pam-gap-6">
-                <div className="pam-flex pam-flex-col pam-items-center pam-gap-2 pam-text-center pam-text-white">
-                    <h3 className="pam-font-sans pam-text-2xl pam-font-bold sm:pam-text-3xl">
+            <div className="pka-z-[2] pka-flex pka-size-full pka-flex-col pka-items-center pka-justify-center pka-gap-6">
+                <div className="pka-flex pka-flex-col pka-items-center pka-gap-2 pka-text-center pka-text-white">
+                    <h3 className="pka-font-sans pka-text-2xl pka-font-bold sm:pka-text-3xl">
                         Create Your Account
                     </h3>
-                    <p className="pam-font-sans pam-text-base pam-leading-normal pam-tracking-tight">
+                    <p className="pka-font-sans pka-text-base pka-leading-normal pka-tracking-tight">
                         Connect with world-class builders
                     </p>
                 </div>
@@ -49,8 +49,8 @@ const SignupDialog = ({
                     backToSignupMethod={backToSignupMethod}
                     goToLoginMethod={goToLoginMethod}
                 />
-                <div className="pam-flex pam-w-full pam-items-center pam-justify-end">
-                    <PoweredByPakt className="!pam-text-white" />
+                <div className="pka-flex pka-w-full pka-items-center pka-justify-end">
+                    <PoweredByPakt className="!pka-text-white" />
                 </div>
             </div>
         </HeadlessModal>

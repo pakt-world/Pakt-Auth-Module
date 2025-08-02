@@ -10,21 +10,21 @@ import LoginForm from "./login-form";
 import { LoginFormProps } from "../../../types/auth";
 
 const Login = (props: LoginFormProps): React.JSX.Element => {
-  return (
-    <div className="pam-z-[2] pam-flex pam-w-full pam-items-center sm:pam-mx-auto sm:pam-size-full">
-      <div className="pam-flex pam-size-full pam-flex-col pam-items-center pam-justify-center pam-gap-6">
-        <div className="pam-flex pam-flex-col pam-items-center pam-gap-2 pam-text-center">
-          <h3 className="pam-font-sans pam-text-2xl pam-font-bold pam-text-title sm:pam-text-3xl sm:pam-text-white">
-            Welcome Back
-          </h3>
-          <p className="pam-w-[392px] pam-text-center pam-text-base pam-font-medium pam-leading-normal pam-tracking-tight pam-text-body sm:pam-text-white">
-            Sign in to your account to continue
-          </p>
+    return (
+        <div className="pka-z-[2] pka-flex pka-w-full pka-items-center sm:pka-mx-auto sm:pka-size-full">
+            <div className="pka-flex pka-size-full pka-flex-col pka-items-center pka-justify-center pka-gap-6">
+                <div className="pka-flex pka-flex-col pka-items-center pka-gap-2 pka-text-center">
+                    <h3 className="pka-font-sans pka-text-2xl pka-font-bold pka-text-title sm:pka-text-3xl sm:pka-text-white">
+                        Welcome Back
+                    </h3>
+                    <p className="pka-w-[392px] pka-text-center pka-text-base pka-font-medium pka-leading-normal pka-tracking-tight pka-text-body sm:pka-text-white">
+                        Sign in to your account to continue
+                    </p>
+                </div>
+                <LoginForm {...props} />
+            </div>
         </div>
-        <LoginForm {...props} />
-      </div>
-    </div>
-  );
+    );
 };
 
-export default Login; 
+export default Login;

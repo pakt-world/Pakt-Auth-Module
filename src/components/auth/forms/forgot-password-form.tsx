@@ -42,18 +42,18 @@ const ForgotPasswordForm = ({
 
     return (
         <form
-            className="pam-relative pam-mx-auto pam-flex pam-w-full pam-max-w-[600px] pam-flex-col pam-items-center pam-gap-6 pam-rounded-2xl pam-bg-white pam-p-4 sm:pam-px-[40px] sm:pam-py-10"
+            className="pka-relative pka-mx-auto pka-flex pka-w-full pka-max-w-[600px] pka-flex-col pka-items-center pka-gap-6 pka-rounded-2xl pka-bg-white pka-p-4 sm:pka-px-[40px] sm:pka-py-10"
             onSubmit={form.handleSubmit(handleSubmit)}
         >
             {error && (
-                <div className="pam-w-full pam-rounded-lg pam-border pam-border-red-200 pam-bg-red-50 pam-p-3 pam-text-sm pam-text-red-600">
+                <div className="pka-w-full pka-rounded-lg pka-border pka-border-red-200 pka-bg-red-50 pka-p-3 pka-text-sm pka-text-red-600">
                     {error}
                 </div>
             )}
 
-            <div className="pam-relative pam-flex pam-w-full pam-flex-col pam-gap-2">
+            <div className="pka-relative pka-flex pka-w-full pka-flex-col pka-gap-2">
                 <label
-                    className="pam-font-sans pam-text-base pam-text-body sm:pam-text-sm"
+                    className="pka-font-sans pka-text-base pka-text-body sm:pka-text-sm"
                     htmlFor="email"
                 >
                     Email
@@ -62,11 +62,11 @@ const ForgotPasswordForm = ({
                     {...form.register("email")}
                     placeholder="Email"
                     type="email"
-                    className="pam-input_style"
+                    className="pka-input_style"
                     id="email"
                 />
                 {form.formState.errors.email?.message && (
-                    <div className="pam-text-sm pam-text-red-500">
+                    <div className="pka-text-sm pka-text-red-500">
                         {form.formState.errors.email.message}
                     </div>
                 )}
@@ -83,7 +83,7 @@ const ForgotPasswordForm = ({
             {!isMobile && onBackToLogin && (
                 <Button
                     variant="transparent"
-                    className="pam-text-primary"
+                    className="pka-text-primary"
                     onClick={onBackToLogin}
                     type="button"
                 >
