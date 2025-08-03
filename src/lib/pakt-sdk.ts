@@ -21,6 +21,12 @@ import {
     ResponseDto
 } from "pakt-sdk";
 
+// Define LoginTwoFAPayload interface since it might not be exported from pakt-sdk
+export interface LoginTwoFAPayload {
+    code: string;
+    tempToken: string;
+}
+
 export interface PaktSDKConfig {
     baseUrl: string;
     testnet?: boolean;
@@ -89,6 +95,16 @@ class PaktSDKService {
         } catch (error) {
             console.log("====>", error)
             return this.createErrorResponse<LoginDto>(error, "Login failed");
+        }
+    }
+
+    async loginTwoFa(payload: LoginTwoFAPayload): Promise<AuthResponse<LoginDto>> {
+        const sdk = this.ensureInitialized();
+        try {
+            const response = await sdk.auth.loginTwoFa(payload);
+            return response as AuthResponse<LoginDto>;
+        } catch (error) {
+            return this.createErrorResponse<LoginDto>(error, "Two-factor authentication failed");
         }
     }
 

@@ -17,7 +17,7 @@ export { usePaktAuth } from "./hooks/use-pakt-auth";
 
 // PAKT SDK
 export { paktSDKService } from "./lib/pakt-sdk";
-export type { PaktSDKConfig, AuthResponse } from "./lib/pakt-sdk";
+export type { PaktSDKConfig, AuthResponse, LoginTwoFAPayload } from "./lib/pakt-sdk";
 
 // Authentication types
 export * from "./types/auth";
