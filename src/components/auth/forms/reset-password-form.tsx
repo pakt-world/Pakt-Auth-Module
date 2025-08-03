@@ -115,7 +115,7 @@ function ResetPasswordForm({
                                 <input
                                     id="password"
                                     {...resetForm.register("password")}
-                                    className="pka-input_style"
+                                    className="input_style"
                                     placeholder="create password"
                                     type="password"
                                 />
@@ -170,7 +170,7 @@ function ResetPasswordForm({
                                 <input
                                     id="confirmPassword"
                                     {...resetForm.register("confirmPassword")}
-                                    className="pka-input_style"
+                                    className="input_style"
                                     placeholder="re-type password"
                                     type="password"
                                 />

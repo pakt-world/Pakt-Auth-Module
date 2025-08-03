@@ -10,7 +10,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../utils";
 
 const button = cva(
-    "pka-focus:outline-none pka-py-3 pka-whitespace-nowrap pka-duration-200 pka-capitalize pka-focus-visible:ring-1 pka-focus-visible:ring-[#19A966] pka-relative pka-z-0 pka-rounded-[10px] pka-text-center pka-w-fit pka-px-6 pka-font-semibold pka-focus-visible:border-transparent",
+    "focus:pka-outline-none pka-py-3 pka-whitespace-nowrap pka-duration-200 pka-capitalize pka-focus-visible:ring-1 pka-focus-visible:ring-[#19A966] pka-relative pka-z-0 pka-rounded-[10px] pka-text-center pka-w-fit pka-px-6 pka-font-semibold pka-focus-visible:border-transparent",
     {
         variants: {
             variant: {

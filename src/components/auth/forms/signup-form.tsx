@@ -109,7 +109,7 @@ const SignUpForm = ({
                             id="firstName"
                             {...form.register("firstName")}
                             placeholder="Enter Full Name"
-                            className="pka-input_style"
+                            className="input_style"
                         />
                         {form.formState.errors.firstName?.message && (
                             <div className="pka-text-sm pka-text-red-500">
@@ -130,7 +130,7 @@ const SignUpForm = ({
                         id="email"
                         {...form.register("email")}
                         placeholder="Enter Email Address"
-                        className="pka-input_style"
+                        className="input_style"
                     />
                     {form.formState.errors.email?.message && (
                         <div className="pka-text-sm pka-text-red-500">
@@ -149,7 +149,7 @@ const SignUpForm = ({
                     <input
                         id="password"
                         {...form.register("password")}
-                        className="pka-input_style"
+                        className="input_style"
                         placeholder="Password"
                         type="password"
                     />
@@ -194,7 +194,7 @@ const SignUpForm = ({
                     <input
                         id="confirmPassword"
                         {...form.register("confirmPassword")}
-                        className="pka-input_style"
+                        className="input_style"
                         placeholder="Confirm Password"
                         type="password"
                     />

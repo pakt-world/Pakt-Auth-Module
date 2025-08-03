@@ -68,7 +68,7 @@ const LoginForm = ({
                     </label>
                     <input
                         {...form.register("email")}
-                        className="pka-input_style"
+                        className="input_style"
                         placeholder="Email Address"
                         type="email"
                     />
@@ -88,7 +88,7 @@ const LoginForm = ({
                     </label>
                     <input
                         {...form.register("password")}
-                        className="pka-input_style"
+                        className="input_style"
                         placeholder="Password"
                         type="password"
                     />

@@ -79,10 +79,10 @@
 // Input styles
 @layer components {
   .input_style {
-    @apply w-full px-4 py-3 border border-gray-300 rounded-lg text-sm text-gray-900 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors;
+    @apply pka-w-full pka-px-4 pka-py-3 pka-border pka-border-gray-300 pka-rounded-lg pka-text-sm pka-text-gray-900 pka-bg-white pka-placeholder-gray-500 focus:pka-outline-none focus:pka-ring-2 focus:pka-ring-primary focus:pka-border-transparent pka-transition-colors;
   }
   
   .otp_style {
-    @apply w-12 h-12 text-center border border-gray-300 rounded-lg text-lg font-semibold text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors;
+    @apply pka-w-12 pka-h-12 pka-text-center pka-border pka-border-gray-300 pka-rounded-lg pka-text-lg pka-font-semibold pka-text-gray-900 pka-bg-white focus:pka-outline-none focus:pka-ring-2 focus:pka-ring-primary focus:pka-border-transparent pka-transition-colors;
   }
 }
