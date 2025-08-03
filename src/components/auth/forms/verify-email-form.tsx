@@ -87,10 +87,10 @@ function VerifyEmailForm({
     return (
         <div className="pka-flex pka-w-full pka-max-w-2xl pka-flex-col pka-items-center pka-gap-6 sm:pka-mt-28">
             <div className="pka-flex pka-flex-col pka-items-center pka-gap-2 pka-text-center">
-                <h3 className="pka-font-sans pka-text-3xl pka-font-bold pka-text-title sm:pka-text-white">
+                <h3 className="pka-font-sans pka-text-3xl pka-font-bold pka-text-white">
                     Reset Password Code
                 </h3>
-                <p className="pka-font-sans pka-text-base pka-text-body sm:pka-text-white">
+                <p className="pka-font-sans pka-text-base pka-text-body pka-text-white">
                     A code has been sent to your email address. Enter it to
                     verify your reset password.
                 </p>
