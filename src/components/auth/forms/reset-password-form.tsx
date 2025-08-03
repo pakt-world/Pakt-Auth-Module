@@ -87,10 +87,10 @@ function ResetPasswordForm({
             {!isSuccess ? (
                 <div className="pka-flex pka-h-full pka-w-full pka-flex-col pka-items-center pka-justify-center pka-gap-6 sm:pka-max-w-2xl max-sm:pka-p-0">
                     <div className="pka-flex pka-flex-col pka-items-center pka-gap-2 pka-text-center">
-                        <h3 className="pka-font-sans pka-text-2xl pka-font-bold pka-text-title sm:pka-text-white 2xl:pka-text-3xl">
+                        <h3 className="pka-font-sans pka-text-2xl pka-font-bold pka-text-white 2xl:pka-text-3xl">
                             Reset Password
                         </h3>
-                        <p className="pka-font-sans pka-text-base pka-leading-normal pka-tracking-tight pka-text-body sm:pka-text-white">
+                        <p className="pka-font-sans pka-text-base pka-leading-normal pka-tracking-tight pka-text-body pka-text-white">
                             Choose a new password for your account
                         </p>
                     </div>

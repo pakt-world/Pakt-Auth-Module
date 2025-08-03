@@ -41,10 +41,10 @@ const VerifyLoginDialog = ({
         <HeadlessModal isOpen={isOpen} closeModal={onClose} disableClickOutside>
             <div className="pka-z-[2] pka-flex pka-size-full pka-flex-col pka-items-center pka-justify-center pka-gap-6">
                 <div className="pka-flex pka-flex-col pka-items-center pka-gap-2 pka-text-center">
-                    <h3 className="pka-font-sans pka-text-2xl pka-font-bold pka-text-title sm:pka-text-3xl sm:pka-text-white">
+                    <h3 className="pka-font-sans pka-text-2xl pka-font-bold sm:pka-text-3xl pka-text-white">
                         2FA Security
                     </h3>
-                    <p className="pka-font-sans pka-text-base pka-leading-normal pka-tracking-tight pka-text-body sm:pka-text-white">
+                    <p className="pka-font-sans pka-text-base pka-leading-normal pka-tracking-tight pka-text-body pka-text-white">
                         {type === "authenticator"
                             ? "Enter the OTP from your authenticator app"
                             : "Enter the code that was sent to"}
