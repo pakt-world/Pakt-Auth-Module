@@ -14,16 +14,14 @@ import { ChevronLeft } from "lucide-react";
 /* -------------------------------------------------------------------------- */
 
 import { spChars } from "../../../utils/auth-utils";
-import { signupSchema } from "../../../utils/validation";
+import { signupSchema, type SignupFormValues } from "../../../utils/validation";
 import { Button } from "../../common/button";
 import { AuthEnums } from "../../../utils/auth-utils";
 import { Spinner } from "../../../components/common/loader";
 import { PasswordCriteria } from "../../../components/common/password-criteria";
 
-type FormValues = z.infer<typeof signupSchema>;
-
 interface SignUpFormProps {
-    onSubmit: (data: FormValues) => void;
+    onSubmit: (data: SignupFormValues) => void;
     isLoading?: boolean;
     error?: string;
     backToSignupMethod?: () => void;
@@ -39,11 +37,11 @@ const SignUpForm = ({
 }: SignUpFormProps): React.JSX.Element => {
     const isMobile = useMediaQuery("(max-width: 640px)");
 
-    const form = useForm<FormValues>({
+    const form = useForm<SignupFormValues>({
         resolver: zodResolver(signupSchema),
     });
 
-    const handleSubmit: SubmitHandler<FormValues> = (values) => {
+    const handleSubmit: SubmitHandler<SignupFormValues> = (values) => {
         onSubmit(values);
     };
 

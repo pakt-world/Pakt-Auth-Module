@@ -2,12 +2,18 @@
 /*                             External Dependency                            */
 /* -------------------------------------------------------------------------- */
 import { forwardRef, Ref, useImperativeHandle, useState } from "react";
-import { LoginPayload } from "pakt-sdk";
+import {
+    AccountVerifyDto,
+    LoginPayload,
+    RegisterPayload,
+    VerifyAccountPayload,
+} from "pakt-sdk";
 
 /* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
 import { usePaktAuth } from "../../../hooks/use-pakt-auth";
+import { SignupFormValues } from "../../../utils/validation";
 import {
     SignupMethodDialog,
     SigninMethodDialog,
@@ -47,13 +53,27 @@ type DesktopAuthRef = {
 const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
     ({ onLoginSuccess, onSignupSuccess }, ref) => {
         const [currentView, setCurrentView] = useState<AuthView>("");
-        const [verifySignupSuccess, setVerifySignupSuccess] = useState(false);
+        const [verifySignupSuccess, setVerifySignupSuccess] = useState<{
+            isSuccess: boolean;
+            userData: AccountVerifyDto | null;
+        }>({
+            isSuccess: false,
+            userData: null,
+        });
         const [verifyLoginSuccess, setVerifyLoginSuccess] = useState(false);
         const [resetPasswordSuccess, setResetPasswordSuccess] = useState(false);
         const [twoFaType, setTwoFaType] = useState("");
         const [tempToken, setTempToken] = useState("");
+        const [signupEmail, setSignupEmail] = useState("");
 
-        const { login, loading, error } = usePaktAuth();
+        const {
+            login,
+            register,
+            verifyAccount,
+            resendVerifyLink,
+            loading,
+            error,
+        } = usePaktAuth();
 
         const resetCurrentView = () => setCurrentView("");
         const backToSignupMethod = () => setCurrentView("signup-method");
@@ -79,6 +99,54 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
             }
         };
 
+        const handleSignup = async (signupPayload: SignupFormValues) => {
+            const registerPayload: RegisterPayload = {
+                firstName: signupPayload.firstName,
+                email: signupPayload.email,
+                password: signupPayload.password,
+                confirmPassword: signupPayload.confirmPassword,
+            };
+
+            const { data, status } = await register(registerPayload);
+
+            if (status === "success" && data) {
+                setTempToken(data?.token);
+                setSignupEmail(signupPayload.email);
+                setCurrentView("verify-signup");
+            }
+        };
+
+        const handleVerifySignup = async (verificationData: {
+            otp: string;
+        }) => {
+            const verifyPayload: VerifyAccountPayload = {
+                tempToken: tempToken,
+                token: verificationData.otp,
+            };
+
+            const { data, status } = await verifyAccount(verifyPayload);
+
+            if (status === "success" && data) {
+                setVerifySignupSuccess({
+                    isSuccess: true,
+                    userData: data,
+                });
+            }
+        };
+
+        const handleVerifySignupSuccess = () => {
+            onSignupSuccess?.(verifySignupSuccess.userData);
+            resetCurrentView();
+        };
+
+        const handleResendVerification = async () => {
+            const resendPayload = {
+                email: signupEmail,
+            };
+
+            await resendVerifyLink(resendPayload);
+        };
+
         console.log("currentView", currentView);
 
         return (
@@ -96,34 +164,20 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
                 <SignupDialog
                     isOpen={currentView === "signup"}
                     onClose={resetCurrentView}
-                    onSubmit={(data) => {
-                        console.log("Signup:", data);
-                        setCurrentView("verify-signup");
-                    }}
-                    isLoading={false}
-                    error={undefined}
+                    onSubmit={handleSignup}
+                    isLoading={loading}
+                    error={error || undefined}
                     backToSignupMethod={backToSignupMethod}
                     goToLoginMethod={() => setCurrentView("login-method")}
                 />
                 <VerifySignupDialog
                     isOpen={currentView === "verify-signup"}
                     onClose={() => setCurrentView("signup")}
-                    onVerify={(code) => {
-                        console.log("Verify signup:", code);
-                        setVerifySignupSuccess(true);
-                    }}
-                    onResend={() => {
-                        console.log("Resend verification");
-                    }}
-                    isSuccess={verifySignupSuccess}
-                    onSuccess={() => {
-                        console.log("Verify signup success");
-                        const userData = {
-                            /* Add user data here */
-                        };
-                        onSignupSuccess?.(userData);
-                        resetCurrentView();
-                    }}
+                    onVerify={handleVerifySignup}
+                    onResend={handleResendVerification}
+                    isLoading={loading}
+                    isSuccess={verifySignupSuccess.isSuccess}
+                    onSuccess={handleVerifySignupSuccess}
                 />
                 {/* == Login == */}
                 <SigninMethodDialog
