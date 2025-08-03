@@ -27,7 +27,8 @@ import type {
     ValidateReferralDto,
     GoogleOAuthGenerateDto,
     GoogleOAuthValdatePayload,
-    GoogleOAuthValidateDto
+    GoogleOAuthValidateDto,
+    LoginTwoFAPayload
 } from "../lib/pakt-sdk";
 
 interface User {
@@ -47,6 +48,7 @@ interface UsePaktAuthReturn {
     
     // Authentication Methods
     login: (payload: LoginPayload) => Promise<AuthResponse<LoginDto>>;
+    loginTwoFa: (payload: LoginTwoFAPayload) => Promise<AuthResponse<LoginDto>>;
     register: (payload: RegisterPayload) => Promise<AuthResponse<RegisterDto>>;
     verifyAccount: (payload: VerifyAccountPayload) => Promise<AuthResponse<AccountVerifyDto>>;
     resendVerifyLink: (payload: ResendVerifyPayload) => Promise<AuthResponse<IResendVerifyLink>>;
@@ -375,6 +377,29 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
         }
     }, [createErrorResponse]);
 
+    // Login Two-Factor Authentication
+    const loginTwoFa = useCallback(async (payload: LoginTwoFAPayload): Promise<AuthResponse<LoginDto>> => {
+        setLoading(true);
+        setError(null);
+        
+        try {
+            const response = await paktSDKService.loginTwoFa(payload);
+            
+            if (response.status === 'success' && response.data) {
+                setUser(response.data);
+            } else {
+                setError(response.message || 'Two-factor authentication failed');
+            }
+            
+            return response;
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : 'Two-factor authentication failed';
+            return createErrorResponse<LoginDto>(errorMessage, 'Two-factor authentication failed');
+        } finally {
+            setLoading(false);
+        }
+    }, [createErrorResponse]);
+
     return {
         // State
         user,
@@ -383,6 +408,7 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
         
         // Authentication Methods
         login,
+        loginTwoFa,
         register,
         verifyAccount,
         resendVerifyLink,

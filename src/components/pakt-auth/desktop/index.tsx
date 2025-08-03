@@ -4,7 +4,10 @@
 import { forwardRef, Ref, useImperativeHandle, useState } from "react";
 import {
     AccountVerifyDto,
+    IUserTwoFaType,
+    LoginDto,
     LoginPayload,
+    LoginTwoFAPayload,
     RegisterPayload,
     VerifyAccountPayload,
 } from "pakt-sdk";
@@ -50,24 +53,31 @@ type DesktopAuthRef = {
     onLogin: () => void;
 };
 
+interface AuthSuccess {
+    isSuccess: boolean;
+    userData: AccountVerifyDto | LoginDto | null;
+}
+
+const initialAuthSuccess: AuthSuccess = {
+    isSuccess: false,
+    userData: null,
+};
+
 const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
     ({ onLoginSuccess, onSignupSuccess }, ref) => {
         const [currentView, setCurrentView] = useState<AuthView>("");
-        const [verifySignupSuccess, setVerifySignupSuccess] = useState<{
-            isSuccess: boolean;
-            userData: AccountVerifyDto | null;
-        }>({
-            isSuccess: false,
-            userData: null,
-        });
-        const [verifyLoginSuccess, setVerifyLoginSuccess] = useState(false);
+        const [verifySignupSuccess, setVerifySignupSuccess] =
+            useState<AuthSuccess>(initialAuthSuccess);
+        const [verifyLoginSuccess, setVerifyLoginSuccess] =
+            useState<AuthSuccess>(initialAuthSuccess);
         const [resetPasswordSuccess, setResetPasswordSuccess] = useState(false);
-        const [twoFaType, setTwoFaType] = useState("");
+        const [twoFaType, setTwoFaType] = useState<IUserTwoFaType | null>(null);
         const [tempToken, setTempToken] = useState("");
         const [signupEmail, setSignupEmail] = useState("");
 
         const {
             login,
+            loginTwoFa,
             register,
             verifyAccount,
             resendVerifyLink,
@@ -79,10 +89,10 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
         const backToSignupMethod = () => setCurrentView("signup-method");
         const backToLoginMethod = () => setCurrentView("login-method");
 
-        useImperativeHandle(ref, () => ({
-            onSignup: () => setCurrentView("signup-method"),
-            onLogin: () => setCurrentView("login-method"),
-        }));
+        const handleLoginSuccess = (userData: LoginDto) => {
+            onLoginSuccess?.(userData);
+            resetCurrentView();
+        };
 
         const handleLogin = async (loginPayload: LoginPayload) => {
             const { data, status } = await login(loginPayload);
@@ -93,10 +103,30 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
                     setTempToken(data?.tempToken?.token);
                     setCurrentView("verify-login");
                 } else {
-                    onLoginSuccess?.(data);
-                    resetCurrentView();
+                    handleLoginSuccess(data);
                 }
             }
+        };
+
+        const handleVerifyLogin = async (verificationData: { otp: string }) => {
+            const loginTwoFaPayload: LoginTwoFAPayload = {
+                code: verificationData.otp,
+                tempToken: tempToken,
+            };
+
+            const { data, status } = await loginTwoFa(loginTwoFaPayload);
+
+            if (status === "success" && data) {
+                setVerifyLoginSuccess({
+                    isSuccess: true,
+                    userData: data,
+                });
+            }
+        };
+
+        const handleVerifyLoginSuccess = () => {
+            onLoginSuccess?.(verifyLoginSuccess.userData);
+            resetCurrentView();
         };
 
         const handleSignup = async (signupPayload: SignupFormValues) => {
@@ -147,6 +177,18 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
             await resendVerifyLink(resendPayload);
         };
 
+        const handleResendLoginVerification = async () => {
+            // For login resend, we need to send the 2FA email again
+            // This would typically use the tempToken to request a new 2FA code
+            // For now, we'll use a placeholder - in a real implementation,
+            // you'd want to call the appropriate resend method
+            console.log("Resend login verification");
+        };
+
+        useImperativeHandle(ref, () => ({
+            onSignup: () => setCurrentView("signup-method"),
+            onLogin: () => setCurrentView("login-method"),
+        }));
         console.log("currentView", currentView);
 
         return (
@@ -203,23 +245,12 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
                 <VerifyLoginDialog
                     isOpen={currentView === "verify-login"}
                     onClose={() => setCurrentView("login")}
-                    onVerify={(code) => {
-                        console.log("Verify login:", code);
-                        setVerifyLoginSuccess(true);
-                    }}
-                    onResend={() => {
-                        console.log("Resend verification");
-                    }}
-                    isSuccess={verifyLoginSuccess}
-                    onSuccess={() => {
-                        console.log("Verify login success");
-                        const userData = {
-                            /* Add user data here */
-                        };
-                        onLoginSuccess?.(userData);
-                        resetCurrentView();
-                    }}
-                    type="email"
+                    onVerify={handleVerifyLogin}
+                    onResend={handleResendLoginVerification}
+                    isLoading={loading}
+                    isSuccess={verifyLoginSuccess.isSuccess}
+                    onSuccess={handleVerifyLoginSuccess}
+                    type={twoFaType}
                 />
                 {/* == Forgot Password == */}
                 <ForgotPasswordDialog
