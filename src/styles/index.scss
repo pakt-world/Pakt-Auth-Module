@@ -84,5 +84,6 @@
   
   .otp_style {
     @apply pka-w-12 pka-h-12 pka-text-center pka-border pka-border-gray-300 pka-rounded-lg pka-text-lg pka-font-semibold pka-text-gray-900 pka-bg-white focus:pka-outline-none focus:pka-ring-2 focus:pka-ring-primary focus:pka-border-transparent pka-transition-colors;
+    width: theme('spacing.12') !important;
   }
 }
