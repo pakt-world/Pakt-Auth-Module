@@ -28,6 +28,7 @@ interface ResetPasswordFormProps {
     error?: string;
     onSuccess?: () => void;
     isSuccess?: boolean;
+    token?: string;
 }
 
 function ResetPasswordForm({
@@ -36,6 +37,7 @@ function ResetPasswordForm({
     error,
     onSuccess,
     isSuccess = false,
+    token = "",
 }: ResetPasswordFormProps): React.JSX.Element {
     const isMobile = useMediaQuery("(max-width: 640px)");
 
@@ -44,7 +46,7 @@ function ResetPasswordForm({
         defaultValues: {
             password: "",
             confirmPassword: "",
-            token: "123456",
+            token: token,
         },
     });
 
