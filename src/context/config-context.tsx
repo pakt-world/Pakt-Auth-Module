@@ -9,6 +9,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
 import { setGlobalErrorHandler } from "../lib/error-handler";
+import { paktSDKService } from "../lib/pakt-sdk";
 import { applyTheme } from "../utils";
 import defaultTheme from "../styles/default-theme";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -41,6 +42,14 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
 
         applyTheme({ ...defaultTheme, ...(config?.theme || {}) });
     }, [config]);
+
+    useEffect(() => {
+        if (config?.paktSDK) {
+            paktSDKService.initialize(config.paktSDK).catch((error) => {
+                console.error("Failed to initialize PAKT SDK:", error);
+            });
+        }
+    }, [config?.paktSDK]);
 
     const content = (
         <ConfigContext.Provider value={config}>

@@ -1,8 +1,8 @@
 // Import PAKT SDK types and classes
-import { 
+import {
     PaktSDK,
-    LoginPayload, 
-    RegisterPayload, 
+    LoginPayload,
+    RegisterPayload,
     VerifyAccountPayload,
     ResetPasswordPayload,
     ChangeAuthenticationPasswordPayload,
@@ -45,6 +45,7 @@ class PaktSDKService {
             this.config = config;
             this.sdk = await PaktSDK.init(config);
             this.isInitialized = true;
+            console.log("PAKT SDK initialized");
         } catch (error) {
             this.isInitialized = false;
             throw new Error(`Failed to initialize PAKT SDK: ${error instanceof Error ? error.message : 'Unknown error'}`);
@@ -52,6 +53,7 @@ class PaktSDKService {
     }
 
     private ensureInitialized(): any {
+        console.log("ensureInitialized", this.isInitialized, this.sdk);
         if (!this.isInitialized || !this.sdk) {
             throw new Error("PAKT SDK not initialized. Call initialize() first.");
         }
@@ -69,6 +71,7 @@ class PaktSDKService {
 
     // Check if SDK is initialized
     getInitialized(): boolean {
+        console.log("PAKT SDK initialized", this.isInitialized);
         return this.isInitialized;
     }
 
@@ -84,6 +87,7 @@ class PaktSDKService {
             const response = await sdk.auth.login(payload);
             return response as AuthResponse<LoginDto>;
         } catch (error) {
+            console.log("====>", error)
             return this.createErrorResponse<LoginDto>(error, "Login failed");
         }
     }

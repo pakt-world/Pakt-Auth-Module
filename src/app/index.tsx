@@ -72,6 +72,10 @@ const App = () => {
                         clientId:
                             "100000000000-00000000000000000000000000000000.apps.googleusercontent.com",
                     },
+                    paktSDK: {
+                        baseUrl: "https://api-devpaktbuild.chain.site",
+                        verbose: true,
+                    },
                 }}
                 ref={paktAuthRef}
                 onLoginSuccess={handleLoginSuccess}

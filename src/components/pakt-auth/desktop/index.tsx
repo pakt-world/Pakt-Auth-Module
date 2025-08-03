@@ -2,10 +2,12 @@
 /*                             External Dependency                            */
 /* -------------------------------------------------------------------------- */
 import { forwardRef, Ref, useImperativeHandle, useState } from "react";
+import { LoginPayload } from "pakt-sdk";
 
 /* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
+import { usePaktAuth } from "../../../hooks/use-pakt-auth";
 import {
     SignupMethodDialog,
     SigninMethodDialog,
@@ -48,6 +50,10 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
         const [verifySignupSuccess, setVerifySignupSuccess] = useState(false);
         const [verifyLoginSuccess, setVerifyLoginSuccess] = useState(false);
         const [resetPasswordSuccess, setResetPasswordSuccess] = useState(false);
+        const [twoFaType, setTwoFaType] = useState("");
+        const [tempToken, setTempToken] = useState("");
+
+        const { login, loading, error } = usePaktAuth();
 
         const resetCurrentView = () => setCurrentView("");
         const backToSignupMethod = () => setCurrentView("signup-method");
@@ -57,6 +63,21 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
             onSignup: () => setCurrentView("signup-method"),
             onLogin: () => setCurrentView("login-method"),
         }));
+
+        const handleLogin = async (loginPayload: LoginPayload) => {
+            const { data, status } = await login(loginPayload);
+
+            if (status === "success" && data) {
+                if (data?.twoFa?.status) {
+                    setTwoFaType(data?.twoFa?.type);
+                    setTempToken(data?.tempToken?.token);
+                    setCurrentView("verify-login");
+                } else {
+                    onLoginSuccess?.(data);
+                    resetCurrentView();
+                }
+            }
+        };
 
         console.log("currentView", currentView);
 
@@ -69,7 +90,6 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
                     onEmailSignup={() => setCurrentView("signup")}
                     goToLoginMethod={() => setCurrentView("login-method")}
                     onGoogleSignup={() => {
-                        // Handle Google signup
                         console.log("Google signup");
                     }}
                 />
@@ -118,19 +138,9 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
                 <LoginDialog
                     isOpen={currentView === "login"}
                     onClose={resetCurrentView}
-                    onSubmit={(data) => {
-                        console.log("Login:", data);
-                        // For immediate login success, call the callback
-                        // const userData = {
-                        //     /* Add user data here */
-                        // };
-                        // onLoginSuccess?.(userData);
-                        // resetCurrentView();
-
-                        setCurrentView("verify-login");
-                    }}
-                    isLoading={false}
-                    error={undefined}
+                    onSubmit={handleLogin}
+                    isLoading={loading}
+                    error={error || undefined}
                     onForgotPassword={() => setCurrentView("forgot-password")}
                     onSignup={() => setCurrentView("signup")}
                     backToLoginMethod={backToLoginMethod}
