@@ -100,6 +100,7 @@
     "react-loading-skeleton": "^3.5.0",
             "react-otp-input": "^3.0.4",
         "lottie-react": "^2.4.0",
+        "pakt-sdk": "^0.1.46-beta",
         "usehooks-ts": "^2.9.4",
         "zod": "^3.23.8",
         "zustand": "^5.0.0-rc.2"

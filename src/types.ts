@@ -3,6 +3,7 @@
 /* -------------------------------------------------------------------------- */
 
 import { QueryClient } from "@tanstack/react-query";
+import { PaktSDKConfig } from "./lib/pakt-sdk";
 
 interface GoogleOAuthConfig {
     clientId: string;
@@ -16,6 +17,7 @@ interface ConfigContextType {
     theme?: ITheme; // colors to theme the package
     errorHandler?: (errorMessage: string) => void; //  Callback to handle Error
     googleOAuth?: GoogleOAuthConfig; // Google OAuth configuration
+    paktSDK: PaktSDKConfig; // PAKT SDK configuration
 }
 
 export type { ConfigContextType, GoogleOAuthConfig };

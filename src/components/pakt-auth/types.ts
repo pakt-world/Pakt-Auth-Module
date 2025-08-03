@@ -1,3 +1,4 @@
+import { ConfigContextType } from "types";
 
 type AuthRef = {
     onLogin: () => void;
@@ -5,7 +6,7 @@ type AuthRef = {
 };
 
 interface PaktAuthProps {
-    config: any;
+    config: ConfigContextType;
     onLoginSuccess?: (userData: any) => void;
     onSignupSuccess?: (userData: any) => void;
 }
