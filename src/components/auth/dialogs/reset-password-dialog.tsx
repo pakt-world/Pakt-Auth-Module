@@ -11,15 +11,17 @@ import { memo } from "react";
 import { HeadlessModal } from "../../common/headless-modal";
 import PoweredByPakt from "../../common/powered-by-pakt";
 import ResetPasswordForm from "../forms/reset-password-form";
+import { ResetPasswordFormValues } from "../../../utils/validation";
 
 interface ResetPasswordDialogProps {
     isOpen: boolean;
     onClose: () => void;
-    onSubmit: (data: { password: string; confirmPassword: string }) => void;
+    onSubmit: (data: ResetPasswordFormValues) => void;
     isLoading?: boolean;
     error?: string;
     onSuccess?: () => void;
     isSuccess?: boolean;
+    token?: string;
 }
 
 const ResetPasswordDialog = ({
@@ -30,6 +32,7 @@ const ResetPasswordDialog = ({
     error,
     onSuccess,
     isSuccess,
+    token,
 }: ResetPasswordDialogProps): JSX.Element => {
     return (
         <HeadlessModal isOpen={isOpen} closeModal={onClose} disableClickOutside>
@@ -40,6 +43,7 @@ const ResetPasswordDialog = ({
                     error={error}
                     onSuccess={onSuccess}
                     isSuccess={isSuccess}
+                    token={token}
                 />
                 <div className="pka-flex pka-w-full pka-items-center pka-justify-end">
                     <PoweredByPakt className="!pka-text-white" />

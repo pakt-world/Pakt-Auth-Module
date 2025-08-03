@@ -10,13 +10,18 @@ import {
     LoginTwoFAPayload,
     RegisterPayload,
     VerifyAccountPayload,
+    ChangeAuthenticationPasswordPayload,
 } from "pakt-sdk";
 
 /* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
 import { usePaktAuth } from "../../../hooks/use-pakt-auth";
-import { SignupFormValues } from "../../../utils/validation";
+import {
+    SignupFormValues,
+    ForgotPasswordFormValues,
+    ResetPasswordFormValues,
+} from "../../../utils/validation";
 import {
     SignupMethodDialog,
     SigninMethodDialog,
@@ -75,6 +80,7 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
         const [tempToken, setTempToken] = useState("");
         const [signupEmail, setSignupEmail] = useState("");
         const [login2faEmail, setLogin2faEmail] = useState("");
+        const [verificationToken, setVerificationToken] = useState("");
 
         const {
             login,
@@ -82,6 +88,8 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
             register,
             verifyAccount,
             resendVerifyLink,
+            resetPassword,
+            changePassword,
             loading,
             error,
         } = usePaktAuth();
@@ -95,6 +103,7 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
             setTempToken("");
             setSignupEmail("");
             setLogin2faEmail("");
+            setVerificationToken("");
         };
         const backToSignupMethod = () => setCurrentView("signup-method");
         const backToLoginMethod = () => setCurrentView("login-method");
@@ -196,6 +205,45 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
             console.log("Resend login verification");
         };
 
+        const handleForgotPassword = async (
+            forgotPasswordPayload: ForgotPasswordFormValues
+        ) => {
+            const { data, status } = await resetPassword(forgotPasswordPayload);
+
+            if (status === "success" && data) {
+                setTempToken(data?.tempToken?.token);
+                setCurrentView("verify-email");
+            }
+        };
+
+        const handleVerifyEmail = async (verificationData: { otp: string }) => {
+            // Store the verification token for the reset password step
+            setVerificationToken(verificationData.otp);
+            setCurrentView("reset-password");
+        };
+
+        const handleResetPassword = async (
+            resetPasswordPayload: ResetPasswordFormValues
+        ) => {
+            const changePasswordPayload: ChangeAuthenticationPasswordPayload = {
+                token: resetPasswordPayload.token,
+                tempToken: tempToken,
+                password: resetPasswordPayload.password,
+            };
+
+            const { data, status } = await changePassword(
+                changePasswordPayload
+            );
+
+            if (status === "success") {
+                setResetPasswordSuccess(true);
+            }
+        };
+
+        const handleResetPasswordSuccess = () => {
+            setCurrentView("login");
+        };
+
         useImperativeHandle(ref, () => ({
             onSignup: () => setCurrentView("signup-method"),
             onLogin: () => setCurrentView("login-method"),
@@ -268,22 +316,16 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
                 <ForgotPasswordDialog
                     isOpen={currentView === "forgot-password"}
                     onClose={() => setCurrentView("login")}
-                    onSubmit={(data) => {
-                        console.log("Forgot password:", data);
-                        setCurrentView("verify-email");
-                    }}
-                    isLoading={false}
-                    error={undefined}
+                    onSubmit={handleForgotPassword}
+                    isLoading={loading}
+                    error={error || undefined}
                     onBackToLogin={() => setCurrentView("login")}
                 />
 
                 <VerifyEmailDialog
                     isOpen={currentView === "verify-email"}
                     onClose={() => setCurrentView("forgot-password")}
-                    onVerify={(code) => {
-                        console.log("Verify email:", code);
-                        setCurrentView("reset-password");
-                    }}
+                    onVerify={handleVerifyEmail}
                     onResend={() => {
                         console.log("Resend verification");
                     }}
@@ -291,17 +333,12 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
                 <ResetPasswordDialog
                     isOpen={currentView === "reset-password"}
                     onClose={() => setCurrentView("verify-email")}
-                    onSubmit={(data) => {
-                        console.log("Reset password:", data);
-                        setResetPasswordSuccess(true);
-                    }}
-                    isLoading={false}
-                    error={undefined}
+                    onSubmit={handleResetPassword}
+                    isLoading={loading}
+                    error={error || undefined}
                     isSuccess={resetPasswordSuccess}
-                    onSuccess={() => {
-                        console.log("Reset password success");
-                        setCurrentView("login");
-                    }}
+                    onSuccess={handleResetPasswordSuccess}
+                    token={verificationToken}
                 />
             </>
         );
