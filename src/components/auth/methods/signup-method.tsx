@@ -1,10 +1,4 @@
 /* -------------------------------------------------------------------------- */
-/*                             External Dependency                            */
-/* -------------------------------------------------------------------------- */
-
-import { useMediaQuery } from "usehooks-ts";
-
-/* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
 
@@ -13,35 +7,21 @@ import { AuthMethod } from "./auth-method";
 import { useGoogleAuth } from "../../../hooks/use-google-auth";
 
 interface SignupMethodProps {
-    onNavigate: (path: string) => void;
-    onSetCookie: (key: string, value: string) => void;
-    generateGoogleAuth: (options: { enable: boolean }) => {
-        data: any;
-        isSuccess: boolean;
-    };
-    verifyGoogleAuth: {
-        mutate: (data: { code: string; state: string }, options: any) => void;
-    };
     onEmailSignup: () => void;
     goToLoginMethod: () => void;
+    onGoogleSignupSuccess?: (userData: any) => void;
+    onGoogleSignupError?: (error: string) => void;
 }
 
 export const SignupMethod = ({
-    onNavigate,
-    onSetCookie,
-    generateGoogleAuth,
-    verifyGoogleAuth,
     onEmailSignup,
     goToLoginMethod,
+    onGoogleSignupSuccess,
+    onGoogleSignupError,
 }: SignupMethodProps): JSX.Element => {
-    const isMobile = useMediaQuery("(max-width: 600px)");
-    const { signIn: signUp } = useGoogleAuth({
-        isSignUp: true,
-        isGoogleSignup: true,
-        onNavigate,
-        onSetCookie,
-        generateGoogleAuth,
-        verifyGoogleAuth,
+    const { signIn: signUp, loading } = useGoogleAuth({
+        onSuccess: onGoogleSignupSuccess,
+        onError: onGoogleSignupError,
     });
 
     return (
@@ -51,9 +31,7 @@ export const SignupMethod = ({
                 description="Connect with world-class builders"
                 instruction="Choose sign up method"
                 currentAuth="signup_method"
-                google={() => {
-                    signUp();
-                }}
+                google={signUp}
                 github={() => {
                     console.log(
                         "Github authentication is not implemented yet."

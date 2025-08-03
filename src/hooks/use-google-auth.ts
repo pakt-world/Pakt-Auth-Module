@@ -3,94 +3,73 @@
 /* -------------------------------------------------------------------------- */
 
 import { useGoogleLogin } from "@react-oauth/google";
-import { useState } from "react";
-import { useMediaQuery } from "usehooks-ts";
+import { useCallback } from "react";
 
 /* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
 
 import Logger from "../lib/logger";
-import { handleAuthResponse } from "../utils/auth-utils";
+import { usePaktAuth } from "./use-pakt-auth";
+import type { GoogleOAuthValdatePayload } from "../lib/pakt-sdk";
+import { useConfig } from "../context/config-context";
 
 interface GoogleAuthOptions {
-  isSignIn?: boolean;
-  isSignUp?: boolean;
-  isGoogleSignIn?: boolean;
-  isGoogleSignup?: boolean;
-  // Framework-agnostic callbacks
-  onNavigate: (path: string) => void;
-  onSetCookie: (key: string, value: string) => void;
-  setLoginResponse?: (payload: any) => void;
-  setSignUpResponse?: (payload: any) => void;
-  // API functions (to be provided by the consuming application)
-  generateGoogleAuth: (options: { enable: boolean }) => { data: any; isSuccess: boolean };
-  verifyGoogleAuth: {
-    mutate: (data: { code: string; state: string }, options: any) => void;
-  };
+  onSuccess?: (userData: any) => void;
+  onError?: (error: string) => void;
 }
 
 export const useGoogleAuth = ({
-  isSignIn = false,
-  isSignUp = false,
-  isGoogleSignIn = false,
-  isGoogleSignup = false,
-  onNavigate,
-  onSetCookie,
-  setLoginResponse,
-  setSignUpResponse,
-  generateGoogleAuth,
-  verifyGoogleAuth,
+  onSuccess,
+  onError,
 }: GoogleAuthOptions) => {
-  const isMobile = useMediaQuery("(max-width: 640px)");
+  const { googleOAuth } = useConfig();
+  const { googleOAuthGenerateState, googleOAuthValidateState, loading } = usePaktAuth();
 
-  const [initiate, setInitiate] = useState(true);
-  const { data, isSuccess } = generateGoogleAuth({
-    enable: initiate,
-  });
-  Logger.info("Google auth data", data);
+  const handleGoogleAuthSuccess = useCallback(async (codeResponse: { code: string }) => {
+    try {
+      // Step 1: Generate Google OAuth state
+      const generateResponse = await googleOAuthGenerateState();
+      
+      if (generateResponse.status === 'error') {
+        throw new Error(generateResponse.message || 'Failed to generate Google OAuth state');
+      }
+
+      // Step 2: Validate Google OAuth state with the code
+      const validatePayload: GoogleOAuthValdatePayload = {
+        state: generateResponse.data.state,
+        code: codeResponse.code,
+      };
+
+      const validateResponse = await googleOAuthValidateState(validatePayload);
+
+      if (validateResponse.status === 'success' && validateResponse.data) {
+        Logger.info("Google OAuth success", validateResponse.data);
+        
+        // Call the success callback with user data
+        onSuccess?.(validateResponse.data);
+      } else {
+        throw new Error(validateResponse.message || 'Google OAuth validation failed');
+      }
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Google OAuth failed';
+      Logger.error("Google OAuth error", { error: errorMessage });
+      onError?.(errorMessage);
+    }
+  }, [googleOAuthGenerateState, googleOAuthValidateState, onSuccess, onError]);
 
   const signIn = useGoogleLogin({
-    onSuccess: (codeResponse) => {
-      if (!isSuccess) {
-        Logger.error("Google auth data is not available");
-        return;
-      }
-      Logger.info("Google login success", codeResponse);
-      setInitiate(false);
-      verifyGoogleAuth.mutate(
-        {
-          code: codeResponse.code,
-          state: data.state,
-        },
-        {
-          onSuccess: (data) => {
-            handleAuthResponse({
-              data,
-              isMobile,
-              onNavigate,
-              onSetCookie,
-              isSignIn,
-              isSignUp,
-              isGoogleSignIn,
-              isGoogleSignup,
-              setLoginResponse,
-              setSignUpResponse,
-            });
-          },
-          onError: (error) => {
-            Logger.error("Google login error", error);
-          },
-        }
-      );
-    },
-    onError: (error) => {
-      Logger.error("Google login error", error);
+    redirect_uri: googleOAuth?.redirectUri,
+    onSuccess: handleGoogleAuthSuccess,
+    onError: (error: unknown) => {
+      const errorMessage = error instanceof Error ? error.message : 'Google login failed';
+      Logger.error("Google login error", { error: errorMessage });
+      onError?.(errorMessage);
     },
     flow: "auth-code",
     scope: "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
     ux_mode: "popup",
   });
 
-  return { signIn };
+  return { signIn, loading };
 }; 

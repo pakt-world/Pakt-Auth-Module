@@ -13,35 +13,24 @@ import { AuthMethod } from "./auth-method";
 import { useGoogleAuth } from "../../../hooks/use-google-auth";
 
 interface SigninMethodProps {
-    onNavigate: (path: string) => void;
-    onSetCookie: (key: string, value: string) => void;
-    generateGoogleAuth: (options: { enable: boolean }) => {
-        data: any;
-        isSuccess: boolean;
-    };
-    verifyGoogleAuth: {
-        mutate: (data: { code: string; state: string }, options: any) => void;
-    };
     onEmailLogin: () => void;
     goToSignupMethod: () => void;
+    onGoogleLoginSuccess?: (userData: any) => void;
+    onGoogleLoginError?: (error: string) => void;
 }
 
 export const SigninMethod = ({
-    onNavigate,
-    onSetCookie,
-    generateGoogleAuth,
-    verifyGoogleAuth,
     onEmailLogin,
     goToSignupMethod,
+    onGoogleLoginSuccess,
+    onGoogleLoginError,
 }: SigninMethodProps): JSX.Element => {
     const isMobile = useMediaQuery("(max-width: 600px)");
-    const { signIn } = useGoogleAuth({
+    const { signIn, loading } = useGoogleAuth({
         isSignIn: true,
         isGoogleSignIn: true,
-        onNavigate,
-        onSetCookie,
-        generateGoogleAuth,
-        verifyGoogleAuth,
+        onSuccess: onGoogleLoginSuccess,
+        onError: onGoogleLoginError,
     });
 
     return (
