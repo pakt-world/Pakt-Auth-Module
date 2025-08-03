@@ -244,11 +244,30 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
             setCurrentView("login");
         };
 
+        const handleGoogleSignupSuccess = (userData: any) => {
+            onSignupSuccess?.(userData);
+            resetCurrentView();
+        };
+
+        const handleGoogleSignupError = (error: string) => {
+            console.error("Google signup error:", error);
+            // You could set an error state here if needed
+        };
+
+        const handleGoogleLoginSuccess = (userData: any) => {
+            onLoginSuccess?.(userData);
+            resetCurrentView();
+        };
+
+        const handleGoogleLoginError = (error: string) => {
+            console.error("Google login error:", error);
+            // You could set an error state here if needed
+        };
+
         useImperativeHandle(ref, () => ({
             onSignup: () => setCurrentView("signup-method"),
             onLogin: () => setCurrentView("login-method"),
         }));
-        console.log("currentView", currentView);
 
         return (
             <>
@@ -258,9 +277,8 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
                     onClose={resetCurrentView}
                     onEmailSignup={() => setCurrentView("signup")}
                     goToLoginMethod={() => setCurrentView("login-method")}
-                    onGoogleSignup={() => {
-                        console.log("Google signup");
-                    }}
+                    onGoogleSignupSuccess={handleGoogleSignupSuccess}
+                    onGoogleSignupError={handleGoogleSignupError}
                 />
                 <SignupDialog
                     isOpen={currentView === "signup"}
@@ -289,6 +307,8 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
                         console.log("Google login");
                     }}
                     goToSignupMethod={() => setCurrentView("signup-method")}
+                    onGoogleLoginSuccess={handleGoogleLoginSuccess}
+                    onGoogleLoginError={handleGoogleLoginError}
                 />
                 <LoginDialog
                     isOpen={currentView === "login"}

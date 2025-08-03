@@ -17,6 +17,8 @@ interface SigninMethodDialogProps {
     onEmailLogin: () => void;
     onGoogleLogin: () => void;
     goToSignupMethod: () => void;
+    onGoogleLoginSuccess?: (userData: any) => void;
+    onGoogleLoginError?: (error: string) => void;
 }
 
 const SigninMethodDialog = ({
@@ -25,38 +27,16 @@ const SigninMethodDialog = ({
     onEmailLogin,
     onGoogleLogin,
     goToSignupMethod,
+    onGoogleLoginSuccess,
+    onGoogleLoginError,
 }: SigninMethodDialogProps) => {
-    const onNavigate = (path: string) => {
-        console.log("onNavigate", path);
-    };
-
-    const onSetCookie = (key: string, value: string) => {
-        document.cookie = `${key}=${value}; path=/`;
-    };
-
-    const generateGoogleAuth = (options: { enable: boolean }) => {
-        console.log("generateGoogleAuth", options);
-        return {
-            data: {},
-            isSuccess: true,
-        };
-    };
-
-    const verifyGoogleAuth = {
-        mutate: (data: { code: string; state: string }) => {
-            console.log("verifyGoogleAuth", data);
-        },
-    };
-
     return (
         <HeadlessModal isOpen={isOpen} closeModal={onClose}>
             <SigninMethod
                 onEmailLogin={onEmailLogin}
-                onNavigate={onNavigate}
-                onSetCookie={onSetCookie}
-                generateGoogleAuth={generateGoogleAuth}
-                verifyGoogleAuth={verifyGoogleAuth}
                 goToSignupMethod={goToSignupMethod}
+                onGoogleLoginSuccess={onGoogleLoginSuccess}
+                onGoogleLoginError={onGoogleLoginError}
             />
         </HeadlessModal>
     );
