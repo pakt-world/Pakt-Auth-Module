@@ -7,15 +7,15 @@
 /* -------------------------------------------------------------------------- */
 
 // Dialogs
-export { default as LoginDialog } from "./dialogs/desktop/login-dialog";
-export { default as SignupDialog } from "./dialogs/desktop/signup-dialog";
-export { default as ForgotPasswordDialog } from "./dialogs/desktop/forgot-password-dialog";
-export { default as VerifyEmailDialog } from "./dialogs/desktop/verify-email-dialog";
-export { default as VerifyLoginDialog } from "./dialogs/desktop/verify-login-dialog";
-export { default as VerifySignupDialog } from "./dialogs/desktop/verify-signup-dialog";
-export { default as ResetPasswordDialog } from "./dialogs/desktop/reset-password-dialog";
-export { default as SigninMethodDialog } from "./dialogs/desktop/signin-method-dialog";
-export { default as SignupMethodDialog } from "./dialogs/desktop/signup-method-dialog";
+export { default as LoginDialog } from "./dialogs/login-dialog";
+export { default as SignupDialog } from "./dialogs/signup-dialog";
+export { default as ForgotPasswordDialog } from "./dialogs/forgot-password-dialog";
+export { default as VerifyEmailDialog } from "./dialogs/verify-email-dialog";
+export { default as VerifyLoginDialog } from "./dialogs/verify-login-dialog";
+export { default as VerifySignupDialog } from "./dialogs/verify-signup-dialog";
+export { default as ResetPasswordDialog } from "./dialogs/reset-password-dialog";
+export { default as SigninMethodDialog } from "./dialogs/signin-method-dialog";
+export { default as SignupMethodDialog } from "./dialogs/signup-method-dialog";
 
 // Forms
 export { default as LoginForm } from "./forms/login-form";

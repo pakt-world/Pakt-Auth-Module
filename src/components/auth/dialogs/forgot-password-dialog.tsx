@@ -8,38 +8,44 @@ import { memo } from "react";
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
 
-import { HeadlessModal } from "../../../common/headless-modal";
-import PoweredByPakt from "../../../common/powered-by-pakt";
-import ResetPasswordForm from "../../forms/reset-password-form";
+import { HeadlessModal } from "../../common/headless-modal";
+import PoweredByPakt from "../../common/powered-by-pakt";
+import ForgotPasswordForm from "../forms/forgot-password-form";
 
-interface ResetPasswordDialogProps {
+interface ForgotPasswordDialogProps {
     isOpen: boolean;
     onClose: () => void;
-    onSubmit: (data: { password: string; confirmPassword: string }) => void;
+    onSubmit: (data: { email: string }) => void;
     isLoading?: boolean;
     error?: string;
-    onSuccess?: () => void;
-    isSuccess?: boolean;
+    onBackToLogin?: () => void;
 }
 
-const ResetPasswordDialog = ({
+const ForgotPasswordDialog = ({
     isOpen,
     onClose,
     onSubmit,
     isLoading,
     error,
-    onSuccess,
-    isSuccess,
-}: ResetPasswordDialogProps): JSX.Element => {
+    onBackToLogin,
+}: ForgotPasswordDialogProps): JSX.Element => {
     return (
         <HeadlessModal isOpen={isOpen} closeModal={onClose} disableClickOutside>
             <div className="pka-z-[2] pka-flex pka-size-full pka-flex-col pka-items-center pka-justify-center pka-gap-6">
-                <ResetPasswordForm
+                <div className="pka-flex pka-flex-col pka-items-center pka-gap-2 pka-text-center pka-text-white">
+                    <h3 className="pka-font-sans pka-text-2xl pka-font-bold sm:pka-text-3xl">
+                        Forgot Password
+                    </h3>
+                    <p className="pka-font-sans pka-text-base pka-leading-normal pka-tracking-tight">
+                        Enter the email you used to create your account so we
+                        can send you instructions on how to reset your password.
+                    </p>
+                </div>
+                <ForgotPasswordForm
                     onSubmit={onSubmit}
                     isLoading={isLoading}
                     error={error}
-                    onSuccess={onSuccess}
-                    isSuccess={isSuccess}
+                    onBackToLogin={onBackToLogin}
                 />
                 <div className="pka-flex pka-w-full pka-items-center pka-justify-end">
                     <PoweredByPakt className="!pka-text-white" />
@@ -49,4 +55,4 @@ const ResetPasswordDialog = ({
     );
 };
 
-export default memo(ResetPasswordDialog);
+export default memo(ForgotPasswordDialog);

@@ -8,49 +8,38 @@ import { memo } from "react";
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
 
-import LoginForm from "../../forms/login-form";
-import { HeadlessModal } from "../../../common/headless-modal";
-import PoweredByPakt from "../../../common/powered-by-pakt";
+import { HeadlessModal } from "../../common/headless-modal";
+import PoweredByPakt from "../../common/powered-by-pakt";
+import ResetPasswordForm from "../forms/reset-password-form";
 
-interface LoginDialogProps {
+interface ResetPasswordDialogProps {
     isOpen: boolean;
     onClose: () => void;
-    onSubmit: (data: any) => void;
+    onSubmit: (data: { password: string; confirmPassword: string }) => void;
     isLoading?: boolean;
     error?: string;
-    onForgotPassword?: () => void;
-    onSignup?: () => void;
-    backToLoginMethod?: () => void;
+    onSuccess?: () => void;
+    isSuccess?: boolean;
 }
 
-const LoginDialog = ({
+const ResetPasswordDialog = ({
     isOpen,
     onClose,
     onSubmit,
     isLoading,
     error,
-    onForgotPassword,
-    onSignup,
-    backToLoginMethod,
-}: LoginDialogProps): JSX.Element => {
+    onSuccess,
+    isSuccess,
+}: ResetPasswordDialogProps): JSX.Element => {
     return (
         <HeadlessModal isOpen={isOpen} closeModal={onClose} disableClickOutside>
             <div className="pka-z-[2] pka-flex pka-size-full pka-flex-col pka-items-center pka-justify-center pka-gap-6">
-                <div className="pka-flex pka-flex-col pka-items-center pka-gap-2 pka-text-center pka-text-white">
-                    <h3 className="pka-font-sans pka-text-2xl pka-font-bold sm:pka-text-3xl">
-                        Login to your account
-                    </h3>
-                    <p className="pka-font-sans pka-text-base pka-leading-normal pka-tracking-tight">
-                        Collaborate with world-class builders
-                    </p>
-                </div>
-                <LoginForm
+                <ResetPasswordForm
                     onSubmit={onSubmit}
                     isLoading={isLoading}
                     error={error}
-                    onForgotPassword={onForgotPassword}
-                    onSignup={onSignup}
-                    backToLoginMethod={backToLoginMethod}
+                    onSuccess={onSuccess}
+                    isSuccess={isSuccess}
                 />
                 <div className="pka-flex pka-w-full pka-items-center pka-justify-end">
                     <PoweredByPakt className="!pka-text-white" />
@@ -60,4 +49,4 @@ const LoginDialog = ({
     );
 };
 
-export default memo(LoginDialog);
+export default memo(ResetPasswordDialog);

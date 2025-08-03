@@ -8,9 +8,9 @@ import { memo } from "react";
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
 
-import { HeadlessModal } from "../../../common/headless-modal";
-import PoweredByPakt from "../../../common/powered-by-pakt";
-import SignUpForm from "../../forms/signup-form";
+import { HeadlessModal } from "../../common/headless-modal";
+import PoweredByPakt from "../../common/powered-by-pakt";
+import SignUpForm from "../forms/signup-form";
 
 interface SignupDialogProps {
     isOpen: boolean;
