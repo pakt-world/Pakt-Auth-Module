@@ -8,11 +8,11 @@ import { memo } from "react";
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
 
-import { HeadlessModal } from "../../../common/headless-modal";
-import PoweredByPakt from "../../../common/powered-by-pakt";
-import VerifySignupForm from "../../forms/verify-signup-form";
+import { HeadlessModal } from "../../common/headless-modal";
+import PoweredByPakt from "../../common/powered-by-pakt";
+import VerifyLoginForm from "../forms/verify-login-form";
 
-interface VerifySignUpDialogProps {
+interface VerifyLoginDialogProps {
     isOpen: boolean;
     onClose: () => void;
     onVerify: (data: { otp: string }) => void;
@@ -22,9 +22,10 @@ interface VerifySignUpDialogProps {
     email?: string;
     isSuccess?: boolean;
     onSuccess?: () => void;
+    type?: "authenticator" | "email";
 }
 
-const VerifySignUpDialog = ({
+const VerifyLoginDialog = ({
     isOpen,
     onClose,
     onVerify,
@@ -34,20 +35,27 @@ const VerifySignUpDialog = ({
     email,
     isSuccess = false,
     onSuccess,
-}: VerifySignUpDialogProps): JSX.Element => {
+    type = "email",
+}: VerifyLoginDialogProps): JSX.Element => {
     return (
         <HeadlessModal isOpen={isOpen} closeModal={onClose} disableClickOutside>
-            <div className="pka-z-[2] pka-flex pka-size-full pka-flex-col pka-items-center pka-justify-center pka-gap-6 sm:pka-mx-auto">
+            <div className="pka-z-[2] pka-flex pka-size-full pka-flex-col pka-items-center pka-justify-center pka-gap-6">
                 <div className="pka-flex pka-flex-col pka-items-center pka-gap-2 pka-text-center">
                     <h3 className="pka-font-sans pka-text-2xl pka-font-bold sm:pka-text-3xl pka-text-white">
-                        Verify Email
+                        2FA Security
                     </h3>
-                    <p className="pka-font-sans pka-text-base pka-text-body pka-text-white">
-                        A code has been sent to your email address.
-                        <br /> Enter it to verify your email.
+                    <p className="pka-font-sans pka-text-base pka-leading-normal pka-tracking-tight pka-text-body pka-text-white">
+                        {type === "authenticator"
+                            ? "Enter the OTP from your authenticator app"
+                            : "Enter the code that was sent to"}
+                        {type === "email" && (
+                            <span className="pka-ml-1 pka-text-green-400">
+                                {email}
+                            </span>
+                        )}
                     </p>
                 </div>
-                <VerifySignupForm
+                <VerifyLoginForm
                     onSubmit={onVerify}
                     onResend={onResend}
                     isLoading={isLoading}
@@ -64,4 +72,4 @@ const VerifySignUpDialog = ({
     );
 };
 
-export default memo(VerifySignUpDialog);
+export default memo(VerifyLoginDialog);

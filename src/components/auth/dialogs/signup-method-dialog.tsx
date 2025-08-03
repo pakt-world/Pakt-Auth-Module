@@ -8,32 +8,24 @@ import { ReactElement } from "react";
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
 
-import { HeadlessModal } from "../../../common/headless-modal";
-import { SigninMethod } from "../../methods/signin-method";
+import { HeadlessModal } from "../../common/headless-modal";
+import { SignupMethod } from "../methods/signup-method";
 
-interface SigninMethodDialogProps {
+interface SignupMethodDialogProps {
     isOpen: boolean;
     onClose: () => void;
-    onEmailLogin: () => void;
-    onGoogleLogin: () => void;
-    goToSignupMethod: () => void;
+    onEmailSignup: () => void;
+    onGoogleSignup: () => void;
+    goToLoginMethod: () => void;
 }
 
-const SigninMethodDialog = ({
+const SignupMethodDialog = ({
     isOpen,
     onClose,
-    onEmailLogin,
-    onGoogleLogin,
-    goToSignupMethod,
-}: SigninMethodDialogProps) => {
-    const onNavigate = (path: string) => {
-        console.log("onNavigate", path);
-    };
-
-    const onSetCookie = (key: string, value: string) => {
-        document.cookie = `${key}=${value}; path=/`;
-    };
-
+    onEmailSignup,
+    onGoogleSignup,
+    goToLoginMethod,
+}: SignupMethodDialogProps) => {
     const generateGoogleAuth = (options: { enable: boolean }) => {
         console.log("generateGoogleAuth", options);
         return {
@@ -48,18 +40,26 @@ const SigninMethodDialog = ({
         },
     };
 
+    const onNavigate = (path: string) => {
+        console.log("onNavigate", path);
+    };
+
+    const onSetCookie = (key: string, value: string) => {
+        document.cookie = `${key}=${value}; path=/`;
+    };
+
     return (
         <HeadlessModal isOpen={isOpen} closeModal={onClose}>
-            <SigninMethod
-                onEmailLogin={onEmailLogin}
+            <SignupMethod
+                onEmailSignup={onEmailSignup}
                 onNavigate={onNavigate}
                 onSetCookie={onSetCookie}
                 generateGoogleAuth={generateGoogleAuth}
                 verifyGoogleAuth={verifyGoogleAuth}
-                goToSignupMethod={goToSignupMethod}
+                goToLoginMethod={goToLoginMethod}
             />
         </HeadlessModal>
     );
 };
 
-export default SigninMethodDialog;
+export default SignupMethodDialog;
