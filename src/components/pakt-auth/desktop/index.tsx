@@ -74,6 +74,7 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
         const [twoFaType, setTwoFaType] = useState<IUserTwoFaType | null>(null);
         const [tempToken, setTempToken] = useState("");
         const [signupEmail, setSignupEmail] = useState("");
+        const [login2faEmail, setLogin2faEmail] = useState("");
 
         const {
             login,
@@ -85,7 +86,16 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
             error,
         } = usePaktAuth();
 
-        const resetCurrentView = () => setCurrentView("");
+        const resetCurrentView = () => {
+            setCurrentView("");
+            setVerifySignupSuccess(initialAuthSuccess);
+            setVerifyLoginSuccess(initialAuthSuccess);
+            setResetPasswordSuccess(false);
+            setTwoFaType(null);
+            setTempToken("");
+            setSignupEmail("");
+            setLogin2faEmail("");
+        };
         const backToSignupMethod = () => setCurrentView("signup-method");
         const backToLoginMethod = () => setCurrentView("login-method");
 
@@ -101,6 +111,7 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
                 if (data?.twoFa?.status) {
                     setTwoFaType(data?.twoFa?.type);
                     setTempToken(data?.tempToken?.token);
+                    setLogin2faEmail(data?.email);
                     setCurrentView("verify-login");
                 } else {
                     handleLoginSuccess(data);
@@ -251,6 +262,7 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
                     isSuccess={verifyLoginSuccess.isSuccess}
                     onSuccess={handleVerifyLoginSuccess}
                     type={twoFaType}
+                    email={login2faEmail}
                 />
                 {/* == Forgot Password == */}
                 <ForgotPasswordDialog
