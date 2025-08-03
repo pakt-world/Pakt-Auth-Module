@@ -62,7 +62,7 @@ const ForgotPasswordForm = ({
                     {...form.register("email")}
                     placeholder="Email"
                     type="email"
-                    className="pka-input_style"
+                    className="input_style"
                     id="email"
                 />
                 {form.formState.errors.email?.message && (
