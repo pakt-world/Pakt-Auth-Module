@@ -26,8 +26,12 @@ bun add @pakt/auth-module
 ## Quick Start
 
 ```typescript
+// In your component
 import React, { useRef } from 'react';
 import PaktAuth, { AuthRef, ConfigContextType } from '@pakt/auth-module';
+
+// Import the stylesheet in your main entry file
+import '@pakt/auth-module/dist/styles.css';
 
 function App() {
   const authRef = useRef<AuthRef>(null);
