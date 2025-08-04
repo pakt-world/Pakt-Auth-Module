@@ -1,7 +1,7 @@
 /**
- * payment-module.js
+ * auth-module.js
  * @remarks
- * This test environment uses
+ * This test environment uses the PaktAuth component to test the authentication flow.
  */
 
 /* -------------------------------------------------------------------------- */
