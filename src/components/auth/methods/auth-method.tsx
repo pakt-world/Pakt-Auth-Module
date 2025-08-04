@@ -42,7 +42,7 @@ const MethodWrapper = ({
 
 interface AuthOptionsProps {
     instruction: string;
-    google: () => void;
+    google?: () => void;
     github: () => void;
     email: () => void;
     goToSignupMethod: () => void;
@@ -68,10 +68,15 @@ export const AuthOptions = ({
                 {instruction}
             </h3>
             {AUTH_METHOD.map((method) => {
+                // Skip Google if not provided
+                if (method.method === "Google" && !google) {
+                    return null;
+                }
+
                 const actions = () => {
                     switch (method.method) {
                         case "Google":
-                            google();
+                            google?.();
                             break;
                         case "Github":
                             github();
@@ -114,7 +119,7 @@ interface AuthMethodProps {
     title: string;
     description: string;
     instruction: string;
-    google: () => void;
+    google?: () => void;
     github: () => void;
     email: () => void;
     goToSignupMethod?: () => void;
@@ -137,7 +142,7 @@ export const AuthMethod = ({
         <div className="pka-z-[2] pka-flex pka-w-full pka-items-center sm:pka-mx-auto sm:pka-size-full">
             <div className="pka-flex pka-size-full pka-flex-col pka-items-center pka-justify-center pka-gap-6">
                 <div className="pka-flex pka-flex-col pka-items-center pka-gap-2 pka-text-center">
-                    <h3 className="pka-font-sans pka-text-2xl pka-font-bold sm:pka-text-3xl pka-text-white">
+                    <h3 className="pka-font-sans pka-text-2xl pka-font-bold pka-text-white sm:pka-text-3xl">
                         {title}
                     </h3>
                     <p className="pka-w-[392px] pka-text-center pka-text-base pka-font-medium pka-leading-normal pka-tracking-tight pka-text-body pka-text-white">

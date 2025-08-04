@@ -26,6 +26,9 @@ export const useGoogleAuth = ({
   const { googleOAuth } = useConfig();
   const { googleOAuthGenerateState, googleOAuthValidateState, loading } = usePaktAuth();
 
+  // Check if Google OAuth is configured
+  const isGoogleOAuthEnabled = !!googleOAuth?.clientId;
+
   const handleGoogleAuthSuccess = useCallback(async (codeResponse: { code: string }) => {
     try {
       // Step 1: Generate Google OAuth state
@@ -58,7 +61,7 @@ export const useGoogleAuth = ({
     }
   }, [googleOAuthGenerateState, googleOAuthValidateState, onSuccess, onError]);
 
-  const signIn = useGoogleLogin({
+  const signIn = isGoogleOAuthEnabled ? useGoogleLogin({
     redirect_uri: googleOAuth?.redirectUri,
     onSuccess: handleGoogleAuthSuccess,
     onError: (error: unknown) => {
@@ -69,7 +72,10 @@ export const useGoogleAuth = ({
     flow: "auth-code",
     scope: "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
     ux_mode: "popup",
-  });
+  }) : () => {
+    console.warn("Google OAuth is not configured. Please provide a client ID.");
+    onError?.("Google OAuth is not configured");
+  };
 
-  return { signIn, loading };
+  return { signIn, loading, isGoogleOAuthEnabled };
 }; 

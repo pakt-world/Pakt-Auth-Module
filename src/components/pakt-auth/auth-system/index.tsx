@@ -17,6 +17,7 @@ import {
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
 import { usePaktAuth } from "../../../hooks/use-pakt-auth";
+import { useConfig } from "../../../context/config-context";
 import {
     SignupFormValues,
     ForgotPasswordFormValues,
@@ -263,9 +264,27 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
             // You could set an error state here if needed
         };
 
+        // Check if Google OAuth is enabled
+        const { googleOAuth } = useConfig();
+        const isGoogleOAuthEnabled = !!googleOAuth?.clientId;
+
         useImperativeHandle(ref, () => ({
-            onSignup: () => setCurrentView("signup-method"),
-            onLogin: () => setCurrentView("login-method"),
+            onSignup: () => {
+                // If Google OAuth is not enabled, go directly to signup form
+                if (!isGoogleOAuthEnabled) {
+                    setCurrentView("signup");
+                } else {
+                    setCurrentView("signup-method");
+                }
+            },
+            onLogin: () => {
+                // If Google OAuth is not enabled, go directly to login form
+                if (!isGoogleOAuthEnabled) {
+                    setCurrentView("login");
+                } else {
+                    setCurrentView("login-method");
+                }
+            },
         }));
 
         return (
@@ -285,8 +304,17 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
                     onSubmit={handleSignup}
                     isLoading={loading}
                     error={error || undefined}
-                    backToSignupMethod={backToSignupMethod}
-                    goToLoginMethod={() => setCurrentView("login-method")}
+                    backToSignupMethod={
+                        isGoogleOAuthEnabled ? backToSignupMethod : undefined
+                    }
+                    goToLoginMethod={() => {
+                        // If Google OAuth is not enabled, go directly to login form
+                        if (!isGoogleOAuthEnabled) {
+                            setCurrentView("login");
+                        } else {
+                            setCurrentView("login-method");
+                        }
+                    }}
                 />
                 <VerifySignupDialog
                     isOpen={currentView === "verify-signup"}
@@ -316,8 +344,17 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
                     isLoading={loading}
                     error={error || undefined}
                     onForgotPassword={() => setCurrentView("forgot-password")}
-                    onSignup={() => setCurrentView("signup")}
-                    backToLoginMethod={backToLoginMethod}
+                    onSignup={() => {
+                        // If Google OAuth is not enabled, go directly to signup form
+                        if (!isGoogleOAuthEnabled) {
+                            setCurrentView("signup");
+                        } else {
+                            setCurrentView("signup-method");
+                        }
+                    }}
+                    backToLoginMethod={
+                        isGoogleOAuthEnabled ? backToLoginMethod : undefined
+                    }
                 />
 
                 <VerifyLoginDialog
