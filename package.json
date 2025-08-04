@@ -2,7 +2,7 @@
     "name": "@pakt/auth-module",
     "license": "MIT",
     "version": "0.0.1",
-    "repository": "git://github.com/pakt-world/auth-module.git",
+    "repository": "git://github.com/pakt-world/Pakt-Auth-Module.git",
     "description": "Authentication module for Pakt applications",
     "author": "Pakt",
     "main": "./dist/auth-module.cjs.js",
@@ -23,7 +23,7 @@
         "build:patch": "yarn version --patch && git push origin development && yarn publish:new",
         "postbuild": "node rename-types.js"
     },
-    "homepage": "https://github.com/pakt-world/auth-module#readme",
+    "homepage": "https://github.com/pakt-world/Pakt-Auth-Module#readme",
     "devDependencies": {
         "@babel/core": "^7.25.2",
         "@babel/plugin-transform-class-properties": "^7.25.4",
