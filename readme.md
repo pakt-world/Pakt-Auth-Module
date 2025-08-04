@@ -1,193 +1,335 @@
-# @pakt/payment-module
+# @pakt/auth-module
 
-This package provides React components for handling both fiat and cryptocurrency payments within Pakt applications. It integrates with Stripe for fiat payments and Wagmi v2 for crypto payments.
+A comprehensive React authentication module for Pakt applications. This package provides a complete authentication solution with support for email/password authentication, Google OAuth, and two-factor authentication.
 
 ## Features
 
-*   **Fiat Payments:** Uses Stripe Elements for secure credit card processing and onramp.
-*   **Crypto Payments:** Integrates with Wagmi v2 for connecting wallets and initiating transactions.
+- **Email/Password Authentication**: Complete signup, login, and password reset flows
+- **Google OAuth Integration**: Seamless Google authentication
+- **Two-Factor Authentication**: Email-based 2FA support
+- **Password Reset**: Forgot password and reset functionality
+- **Email Verification**: Account verification with resend capability
+- **Customizable UI**: Theme customization support
+- **TypeScript Support**: Full type definitions included
+- **Responsive Design**: Works on desktop and mobile devices
 
 ## Installation
+
 ```bash
-yarn add @pakt/payment-module
+yarn add @pakt/auth-module
 # or
-npm install @pakt/payment-module
+npm install @pakt/auth-module
 # or
-bun add @pakt/payment-module
+bun add @pakt/auth-module
 ```
 
-## Setup
-
-**Important:** You need to import the module's stylesheet for components to render correctly. Import it in your main application entry point (e.g., `main.tsx` or `App.tsx`):
+## Quick Start
 
 ```typescript
-import '@pakt/payment-module/dist/styles.css';
-```
+import React, { useRef } from 'react';
+import PaktAuth, { AuthRef, ConfigContextType } from '@pakt/auth-module';
 
-```typescript
-import React from 'react';
-import { ConfigContextType } from '@pakt/payment-module';
+function App() {
+  const authRef = useRef<AuthRef>(null);
 
-import { createConfig, http } from 'wagmi'; // Import Wagmi config setup
-import { mainnet, sepolia } from 'wagmi/chains'; // Import desired chains
-import { injected } from 'wagmi/connectors'; // Import desired connectors
-
-// 1. Create your Wagmi config (v2)
-const wagmiConfig = createConfig({
-  chains: [mainnet, sepolia],
-  connectors: [injected()],
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
-});
-
-// 2. Define your Pakt Payment Module config
-const paymentModuleConfig: ConfigContextType = {
-  // Optional: Customize the theme
-  theme: { primaryColor: '#ff0000', ... },
-   // crypto configuration is required for crypto payments
-  cryptoConfig:{
-    wagmiConfig: wagmiConfig,
-  },
-  // stripe configuration is required for fiat payments
-  stripeConfig: {
-    publicKey: 'YOUR_STRIPE_PUBLIC_KEY',
-    clientSecret: 'YOUR_STRIPE_CLIENT_SECRET', 
-    theme: 'light', // Optional: 'light' or 'dark'
-  },
-  // Optional: Provide custom error handling
-  errorHandler: (errorMsg) => console.error("Payment Module Error:", errorMsg),
-};
-
-export default paymentModuleConfig;
-```
-
-**Configuration Options (`ConfigContextType`):**
-
-*   `errorHandler?: (errorMessage: string) => void`: Optional callback function to handle errors originating from the module.
-*   `theme?: ITheme`: Optional theme object to customize component appearance.
-*   `cryptoConfig: { wagmiConfig: Config }`: **Required for crypto payments.** Your Wagmi v2 configuration object.
-*   `stripeConfig: { publicKey: string; clientSecret: string; theme?: "light" | "dark"; }`: **Required for fiat payments.** Your Stripe configuration including public key, client secret, and optional theme setting.
-
-## Usage
-### Fiat Payments
-
-```typescript
-import { FiatPaymentModal } from '@pakt/payment-module';
-import { useDisclosure } from '@your-ui-library/hooks'; // Example hook for modal state
-
-function MyFiatPaymentPage() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleSuccess = (data: onFinishResponseProps) => {
-    console.log('Fiat payment successful:', data);
-    // Handle successful payment (e.g., show success message, redirect)
+  const config: ConfigContextType = {
+    theme: {
+      primary: "#007C5B",
+      secondary: "#19A966",
+      title: "#1F2937",
+      body: "#6B7280",
+    },
+    googleOAuth: {
+      clientId: "your-google-client-id.apps.googleusercontent.com",
+    },
+    paktSDK: {
+      baseUrl: "https://api-devpaktbuild.chain.site",
+      verbose: true,
+    },
+    errorHandler: (errorMessage: string) => {
+      console.error("Auth Error:", errorMessage);
+    },
   };
 
+  const handleLoginSuccess = (userData: any) => {
+    console.log("Login successful:", userData);
+    // Handle successful login
+  };
+
+  const handleSignupSuccess = (userData: any) => {
+    console.log("Signup successful:", userData);
+    // Handle successful signup
+  };
+
+  const openLogin = () => authRef.current?.onLogin();
+  const openSignup = () => authRef.current?.onSignup();
+
   return (
-    <>
-      <button onClick={onOpen}>Pay with Card</button>
-      <FiatPaymentModal
-        isOpen={isOpen}
-        closeModal={onClose}
-        collectionId="your-collection-id"
-        config={paymentModuleConfig}
-        chain="ETH"
-        onFinishResponse={handleSuccess}
-        isLoading={isLoading}
+    <div>
+      <button onClick={openLogin}>Login</button>
+      <button onClick={openSignup}>Sign Up</button>
+      
+      <PaktAuth
+        config={config}
+        ref={authRef}
+        onLoginSuccess={handleLoginSuccess}
+        onSignupSuccess={handleSignupSuccess}
       />
-    </>
+    </div>
   );
 }
 ```
-
-### Crypto Payments
-
-```typescript
-import { CryptoPaymentModal } from '@pakt/payment-module';
-import { useDisclosure } from '@your-ui-library/hooks'; // Example hook for modal state
-
-function MyCryptoPaymentTrigger() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleSuccess = (data: onFinishResponseProps) => {
-    console.log('Payment successful:', data);
-    // Handle successful payment
-  };
-
-  return (
-    <>
-      <button onClick={onOpen}>Pay with Crypto</button>
-      <CryptoPaymentModal
-        isOpen={isOpen}
-        closeModal={onClose}
-        config={paymentModuleConfig}
-        collectionId="your-collection-id"
-        amount={0.1} // Amount to pay in the token's base unit
-        coin="ETH" // Token symbol (e.g., "ETH", "USDT")
-        depositAddress="0x..." // Recipient wallet address
-        chainId={1} // Network chain ID (e.g., 1 for Ethereum mainnet)
-        tokenDecimal={18} // Token decimals (e.g., 18 for ETH, 6 for USDT)
-        contractAddress="0x..." // Optional: Token contract address for ERC20 tokens
-        onSuccessResponse={handleSuccess}
-        isLoading={isLoading}
-      />
-    </>
-  );
-}
-```
-
-Required Props for FiatPaymentModal:
-* `isOpen`: boolean - Controls modal visibility
-* `closeModal`: () => void - Function to close the modal
-* `collectionId`: string - Your collection identifier
-* `config`: ConfigContextType - Your payment module configuration
-* `chain`: CHAIN_TYPES - Chain type for the payment
-* `onFinishResponse`: (data: onFinishResponseProps) => void - Callback for successful payment
-
-Optional Props for FiatPaymentModal:
-* `isLoading`: boolean - Loading state
-
-Required Props for CryptoPaymentModal:
-* `isOpen`: boolean - Controls modal visibility
-* `closeModal`: () => void - Function to close the modal
-* `config`: ConfigContextType - Your payment module configuration
-* `collectionId`: string - Your collection identifier
-* `amount`: number - Amount to pay in the token's base unit
-* `coin`: string - Token symbol (e.g., "ETH", "USDT")
-* `depositAddress`: string - Recipient wallet address
-* `chainId`: number - Network chain ID (e.g., 1 for Ethereum mainnet)
-* `tokenDecimal`: number - Token decimals (e.g., 18 for ETH, 6 for USDT)
-* `onSuccessResponse`: (data: onFinishResponseProps) => void - Callback for successful payment
-
-Optional Props for CryptoPaymentModal:
-* `contractAddress`: string - Token contract address for ERC20 tokens
-* `isLoading`: boolean - Loading state
 
 ## Configuration
 
-The module requires a configuration object of type `ConfigContextType` that includes:
+### ConfigContextType
+
+The main configuration object for the PaktAuth component:
 
 ```typescript
 interface ConfigContextType {
-  // Required configurations
-  cryptoConfig: {
-    wagmiConfig: Config; // Your Wagmi v2 configuration
-    theme?: "light" | "dark";
-    publicKey: string; // Your Pakt public key
-  };
-  stripeConfig: {
-    publicKey: string; // Your Stripe public key
-    clientSecret?: string; // Optional: Client secret for payment intent
-    theme?: "light" | "dark";
-  };
-  errorHandler?: (errorMessage: string) => void; // Custom error handler
-  theme?: ITheme; // Custom theme object
+  // Theme customization
+  theme?: ITheme;
+  
+  // Error handling
+  errorHandler?: (errorMessage: string) => void;
+  
+  // Google OAuth configuration
+  googleOAuth?: GoogleOAuthConfig;
+  
+  // PAKT SDK configuration (required)
+  paktSDK: PaktSDKConfig;
 }
 ```
+
+### Theme Configuration
+
+Customize the appearance of the authentication components:
+
+```typescript
+interface ITheme {
+  primary?: string;      // Primary color
+  secondary?: string;    // Secondary color
+  info?: string;         // Info color
+  line?: string;         // Border/line color
+  title?: string;        // Title text color
+  body?: string;         // Body text color
+  warning?: string;      // Warning color
+  success?: string;      // Success color
+  danger?: string;       // Error/danger color
+  magnolia?: string;     // Background color
+  "exhibit-tab-list"?: string;
+  "primary-brighter"?: string;
+  "refer-border"?: string;
+  "btn-primary"?: string;
+  "primary-gradient"?: string;
+  "modal-radius"?: string;
+}
+```
+
+### Google OAuth Configuration
+
+```typescript
+interface GoogleOAuthConfig {
+  clientId: string;           // Required: Your Google OAuth client ID
+  clientSecret?: string;      // Optional: Client secret
+  redirectUri?: string;       // Optional: Redirect URI
+  scope?: string[];           // Optional: OAuth scopes
+  hostedDomain?: string;      // Optional: Hosted domain restriction
+}
+```
+
+### PAKT SDK Configuration
+
+```typescript
+interface PaktSDKConfig {
+  baseUrl: string;    // Required: API base URL
+  testnet?: boolean;  // Optional: Use testnet
+  verbose?: boolean;  // Optional: Enable verbose logging
+}
+```
+
+## Component Props
+
+### PaktAuth Props
+
+```typescript
+interface PaktAuthProps {
+  config: ConfigContextType;                    // Required: Configuration object
+  onLoginSuccess?: (userData: any) => void;     // Optional: Login success callback
+  onSignupSuccess?: (userData: any) => void;    // Optional: Signup success callback
+}
+```
+
+### AuthRef Methods
+
+Access authentication methods through the ref:
+
+```typescript
+interface AuthRef {
+  onLogin: () => void;    // Opens the login dialog
+  onSignup: () => void;   // Opens the signup dialog
+}
+```
+
+## Usage Examples
+
+### Basic Implementation
+
+```typescript
+import React, { useRef } from 'react';
+import PaktAuth, { AuthRef, ConfigContextType } from '@pakt/auth-module';
+
+function MyApp() {
+  const authRef = useRef<AuthRef>(null);
+
+  const config: ConfigContextType = {
+    paktSDK: {
+      baseUrl: "https://api-devpaktbuild.chain.site",
+    },
+  };
+
+  return (
+    <div>
+      <button onClick={() => authRef.current?.onLogin()}>
+        Login
+      </button>
+      <button onClick={() => authRef.current?.onSignup()}>
+        Sign Up
+      </button>
+      
+      <PaktAuth
+        config={config}
+        ref={authRef}
+        onLoginSuccess={(userData) => {
+          console.log("User logged in:", userData);
+        }}
+        onSignupSuccess={(userData) => {
+          console.log("User signed up:", userData);
+        }}
+      />
+    </div>
+  );
+}
+```
+
+### With Google OAuth
+
+```typescript
+import React, { useRef } from 'react';
+import PaktAuth, { AuthRef, ConfigContextType } from '@pakt/auth-module';
+
+function MyApp() {
+  const authRef = useRef<AuthRef>(null);
+
+  const config: ConfigContextType = {
+    theme: {
+      primary: "#007C5B",
+      secondary: "#19A966",
+    },
+    googleOAuth: {
+      clientId: "your-google-client-id.apps.googleusercontent.com",
+    },
+    paktSDK: {
+      baseUrl: "https://api-devpaktbuild.chain.site",
+      verbose: true,
+    },
+    errorHandler: (errorMessage) => {
+      // Handle errors (e.g., show toast notification)
+      console.error("Authentication error:", errorMessage);
+    },
+  };
+
+  return (
+    <div>
+      <PaktAuth
+        config={config}
+        ref={authRef}
+        onLoginSuccess={(userData) => {
+          // Handle successful login
+          console.log("Login successful:", userData);
+        }}
+        onSignupSuccess={(userData) => {
+          // Handle successful signup
+          console.log("Signup successful:", userData);
+        }}
+      />
+    </div>
+  );
+}
+```
+
+### Custom Error Handling
+
+```typescript
+import React, { useRef } from 'react';
+import PaktAuth, { AuthRef, ConfigContextType } from '@pakt/auth-module';
+import { toast } from 'react-hot-toast'; // Example toast library
+
+function MyApp() {
+  const authRef = useRef<AuthRef>(null);
+
+  const config: ConfigContextType = {
+    paktSDK: {
+      baseUrl: "https://api-devpaktbuild.chain.site",
+    },
+    errorHandler: (errorMessage: string) => {
+      // Custom error handling
+      toast.error(errorMessage);
+      
+      // Or log to your error tracking service
+      // Sentry.captureException(new Error(errorMessage));
+    },
+  };
+
+  return (
+    <PaktAuth
+      config={config}
+      ref={authRef}
+      onLoginSuccess={(userData) => {
+        toast.success("Login successful!");
+        // Handle login success
+      }}
+      onSignupSuccess={(userData) => {
+        toast.success("Account created successfully!");
+        // Handle signup success
+      }}
+    />
+  );
+}
+```
+
+## Authentication Flow
+
+The PaktAuth component provides a complete authentication flow:
+
+1. **Login Method Selection**: Users can choose between email/password or Google OAuth
+2. **Email/Password Login**: Traditional login with email and password
+3. **Google OAuth**: One-click login with Google account
+4. **Two-Factor Authentication**: Email-based 2FA if enabled
+5. **Signup Flow**: Complete registration process with email verification
+6. **Password Reset**: Forgot password and reset functionality
+7. **Email Verification**: Account verification with resend capability
+
+
+
+## PAKT SDK Integration
+
+The module integrates with the PAKT SDK for backend authentication. The SDK handles:
+
+- User registration and login
+- Email verification
+- Password reset
+- Two-factor authentication
+- Google OAuth validation
+- User data management
+
+## Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
 
 ## Contributing
 
