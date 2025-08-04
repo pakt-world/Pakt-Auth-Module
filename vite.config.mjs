@@ -119,7 +119,25 @@ export default defineConfig(({ command, mode }) => {
             rollupOptions: {
                 // Make sure to externalize deps that shouldn't be bundled
                 // into your library
-                external: ["react", "react-dom", "react-dom/client"],
+                external: [
+                    "react",
+                    "react-dom",
+                    "react-dom/client",
+                    "@react-oauth/google",
+                    "@tanstack/react-query",
+                    "react-hook-form",
+                    "react-hot-toast",
+                    "framer-motion",
+                    "lottie-react",
+                    "lucide-react",
+                    "axios",
+                    "clsx",
+                    "tailwind-merge",
+                    "zod",
+                    "zustand",
+                ],
+                // Ensure external dependencies are not bundled
+                preserveEntrySignatures: "strict",
                 output: {
                     // Provide global variables to use in the UMD build
                     // for externalized deps (if UMD format is added)
@@ -127,6 +145,18 @@ export default defineConfig(({ command, mode }) => {
                         react: "React",
                         "react-dom": "ReactDOM",
                         "react-dom/client": "ReactDOMClient",
+                        "@react-oauth/google": "ReactOAuthGoogle",
+                        "@tanstack/react-query": "TanStackReactQuery",
+                        "react-hook-form": "ReactHookForm",
+                        "react-hot-toast": "ReactHotToast",
+                        "framer-motion": "FramerMotion",
+                        "lottie-react": "LottieReact",
+                        "lucide-react": "LucideReact",
+                        "axios": "Axios",
+                        "clsx": "Clsx",
+                        "tailwind-merge": "TailwindMerge",
+                        "zod": "Zod",
+                        "zustand": "Zustand",
                     },
                     // Preserve module structure for ES and CJS formats
                     // preserveModules: true, // Keep module structure
