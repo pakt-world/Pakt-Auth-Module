@@ -2,8 +2,6 @@
 /*                             External Dependency                            */
 /* -------------------------------------------------------------------------- */
 
-import { useMediaQuery } from "usehooks-ts";
-
 /* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
@@ -25,10 +23,7 @@ export const SigninMethod = ({
     onGoogleLoginSuccess,
     onGoogleLoginError,
 }: SigninMethodProps): JSX.Element => {
-    const isMobile = useMediaQuery("(max-width: 600px)");
-    const { signIn, loading } = useGoogleAuth({
-        isSignIn: true,
-        isGoogleSignIn: true,
+    const { signIn } = useGoogleAuth({
         onSuccess: onGoogleLoginSuccess,
         onError: onGoogleLoginError,
     });
