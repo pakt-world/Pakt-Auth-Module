@@ -6,7 +6,7 @@ var path = require("path");
 var bundles = {
     es: "dist/bundle-es",
     cjs: "dist/bundle-cjs",
-    browser: "dist/payment-module",
+    browser: "dist/auth-module",
 };
 // Define the path to the original and new file
 var folders = [
@@ -22,14 +22,21 @@ folders.forEach(function (typesDir) {
     if (fs.existsSync(oldFile)) {
         fs.rename(oldFile, newFile, function (err) {
             if (err) {
-                console.error("Error renaming index.d.ts in ".concat(typesDir, ":"), err);
-            }
-            else {
-                console.log("index.d.ts has been renamed to multi-entry.d.ts in ".concat(typesDir));
+                console.error(
+                    "Error renaming index.d.ts in ".concat(typesDir, ":"),
+                    err
+                );
+            } else {
+                console.log(
+                    "index.d.ts has been renamed to multi-entry.d.ts in ".concat(
+                        typesDir
+                    )
+                );
             }
         });
-    }
-    else {
-        console.log("index.d.ts not found in ".concat(typesDir, ", skipping rename."));
+    } else {
+        console.log(
+            "index.d.ts not found in ".concat(typesDir, ", skipping rename.")
+        );
     }
 });
