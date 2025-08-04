@@ -33,7 +33,6 @@ import {
     VerifyEmailDialog,
     ResetPasswordDialog,
 } from "../../auth";
-// import { DesktopAuthProps } from "../types";
 
 type AuthView =
     | "intro"
@@ -48,12 +47,12 @@ type AuthView =
     | "reset-password"
     | "";
 
-interface DesktopAuthProps {
+interface AuthSystemProps {
     onLoginSuccess?: (userData: any) => void;
     onSignupSuccess?: (userData: any) => void;
 }
 
-type DesktopAuthRef = {
+type AuthSystemRef = {
     onSignup: () => void;
     onLogin: () => void;
 };
@@ -68,8 +67,8 @@ const initialAuthSuccess: AuthSuccess = {
     userData: null,
 };
 
-const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
-    ({ onLoginSuccess, onSignupSuccess }, ref) => {
+const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
+    ({ onLoginSuccess, onSignupSuccess }: AuthSystemProps, ref) => {
         const [currentView, setCurrentView] = useState<AuthView>("");
         const [verifySignupSuccess, setVerifySignupSuccess] =
             useState<AuthSuccess>(initialAuthSuccess);
@@ -365,4 +364,4 @@ const DesktopAuth = forwardRef<DesktopAuthRef, DesktopAuthProps>(
     }
 );
 
-export default DesktopAuth;
+export default AuthSystem;
