@@ -23,7 +23,7 @@ export const SigninMethod = ({
     onGoogleLoginSuccess,
     onGoogleLoginError,
 }: SigninMethodProps): JSX.Element => {
-    const { signIn } = useGoogleAuth({
+    const { signIn, isGoogleOAuthEnabled } = useGoogleAuth({
         onSuccess: onGoogleLoginSuccess,
         onError: onGoogleLoginError,
     });
@@ -35,9 +35,7 @@ export const SigninMethod = ({
                 description="Collaborate with world-class builders"
                 instruction="Choose Log in method"
                 currentAuth="signin_method"
-                google={() => {
-                    signIn();
-                }}
+                google={isGoogleOAuthEnabled ? () => signIn() : undefined}
                 github={() => {
                     console.log(
                         "Github authentication is not implemented yet."

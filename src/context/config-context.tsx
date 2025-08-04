@@ -4,6 +4,7 @@
 import React, { createContext, useContext, ReactNode, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import "react-loading-skeleton/dist/skeleton.css";
 
 /* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
@@ -12,8 +13,6 @@ import { setGlobalErrorHandler } from "../lib/error-handler";
 import { paktSDKService } from "../lib/pakt-sdk";
 import { applyTheme } from "../utils";
 import defaultTheme from "../styles/default-theme";
-import "react-loading-skeleton/dist/skeleton.css";
-import "../styles/index.scss";
 import { ConfigContextType } from "../types";
 
 const ConfigContext = createContext<ConfigContextType | undefined>(undefined);

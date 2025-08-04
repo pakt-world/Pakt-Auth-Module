@@ -34,7 +34,7 @@ const LoginDialog = ({
     backToLoginMethod,
 }: LoginDialogProps): JSX.Element => {
     return (
-        <HeadlessModal isOpen={isOpen} closeModal={onClose} disableClickOutside>
+        <HeadlessModal isOpen={isOpen} closeModal={onClose}>
             <div className="pka-z-[2] pka-flex pka-size-full pka-flex-col pka-items-center pka-justify-center pka-gap-6">
                 <div className="pka-flex pka-flex-col pka-items-center pka-gap-2 pka-text-center pka-text-white">
                     <h3 className="pka-font-sans pka-text-2xl pka-font-bold sm:pka-text-3xl">
