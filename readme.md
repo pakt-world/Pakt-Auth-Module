@@ -10,6 +10,7 @@ A comprehensive React authentication module for Pakt applications. This package 
 - **Password Reset**: Forgot password and reset functionality
 - **Email Verification**: Account verification with resend capability
 - **Customizable UI**: Theme customization support
+- **Customizable Text**: Configurable titles and descriptions for all auth dialogs
 - **TypeScript Support**: Full type definitions included
 - **Responsive Design**: Works on desktop and mobile devices
 
@@ -68,6 +69,13 @@ function App() {
   const openLogin = () => authRef.current?.onLogin();
   const openSignup = () => authRef.current?.onSignup();
 
+  const textConfig = {
+    loginTitle: "Welcome Back",
+    loginDescription: "Sign in to continue your journey",
+    signupTitle: "Join Our Community",
+    signupDescription: "Start building amazing things together"
+  };
+
   return (
     <div>
       <button onClick={openLogin}>Login</button>
@@ -75,6 +83,7 @@ function App() {
       
       <PaktAuth
         config={config}
+        textConfig={textConfig}
         ref={authRef}
         onLoginSuccess={handleLoginSuccess}
         onSignupSuccess={handleSignupSuccess}
@@ -160,9 +169,33 @@ interface PaktSDKConfig {
 ```typescript
 interface PaktAuthProps {
   config: ConfigContextType;                    // Required: Configuration object
+  textConfig?: AuthTextConfig;                  // Optional: Custom text configuration
   onLoginSuccess?: (userData: any) => void;     // Optional: Login success callback
   onSignupSuccess?: (userData: any) => void;    // Optional: Signup success callback
 }
+```
+
+### Text Configuration
+
+Customize the text displayed in authentication dialogs:
+
+```typescript
+interface AuthTextConfig {
+  loginTitle: string;        // Title for login dialogs
+  loginDescription: string;  // Description for login dialogs
+  signupTitle: string;       // Title for signup dialogs
+  signupDescription: string; // Description for signup dialogs
+}
+```
+
+**Example:**
+```typescript
+const textConfig = {
+  loginTitle: "Welcome Back",
+  loginDescription: "Sign in to continue your journey",
+  signupTitle: "Join Our Community",
+  signupDescription: "Start building amazing things together"
+};
 ```
 
 ### AuthRef Methods
@@ -193,6 +226,13 @@ function MyApp() {
     },
   };
 
+  const textConfig = {
+    loginTitle: "Welcome Back",
+    loginDescription: "Sign in to continue your journey",
+    signupTitle: "Join Our Community",
+    signupDescription: "Start building amazing things together"
+  };
+
   return (
     <div>
       <button onClick={() => authRef.current?.onLogin()}>
@@ -204,6 +244,7 @@ function MyApp() {
       
       <PaktAuth
         config={config}
+        textConfig={textConfig}
         ref={authRef}
         onLoginSuccess={(userData) => {
           console.log("User logged in:", userData);
