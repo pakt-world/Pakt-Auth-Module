@@ -12,6 +12,7 @@ const RenderPrefixVariable = (value:string) => `var(--${PrefixExt}${value})`;
 const config: Config = {
     prefix: Prefix,
     content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
+    important: '.pakt-auth-module',
     theme: {
         screens: {
             sm: { min: "640px" },
