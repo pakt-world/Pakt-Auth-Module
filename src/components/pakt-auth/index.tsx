@@ -13,7 +13,7 @@ import "../../styles/index.scss";
 
 const PaktAuth = forwardRef(
     (
-        { config, onLoginSuccess, onSignupSuccess }: PaktAuthProps,
+        { config, textConfig, onLoginSuccess, onSignupSuccess }: PaktAuthProps,
         ref: Ref<AuthRef>
     ) => {
         const authSystemRef = useRef<AuthRef>(null);
@@ -32,6 +32,7 @@ const PaktAuth = forwardRef(
                 <ConfigProvider config={config}>
                     <AuthSystem
                         ref={authSystemRef}
+                        textConfig={textConfig}
                         onLoginSuccess={onLoginSuccess}
                         onSignupSuccess={onSignupSuccess}
                     />

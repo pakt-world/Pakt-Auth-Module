@@ -76,6 +76,12 @@ const App = () => {
                         verbose: true,
                     },
                 }}
+                textConfig={{
+                    loginTitle: "Welcome Back",
+                    loginDescription: "Sign in to continue your journey",
+                    signupTitle: "Join Our Community",
+                    signupDescription: "Start building amazing things together",
+                }}
                 ref={paktAuthRef}
                 onLoginSuccess={handleLoginSuccess}
                 onSignupSuccess={handleSignupSuccess}

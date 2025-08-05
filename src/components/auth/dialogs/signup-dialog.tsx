@@ -11,10 +11,12 @@ import { memo } from "react";
 import { HeadlessModal } from "../../common/headless-modal";
 import PoweredByPakt from "../../common/powered-by-pakt";
 import SignUpForm from "../forms/signup-form";
+import { AuthTextConfig } from "../../pakt-auth/types";
 
 interface SignupDialogProps {
     isOpen: boolean;
     onClose: () => void;
+    textConfig?: AuthTextConfig;
     onSubmit: (data: any) => void;
     isLoading?: boolean;
     error?: string;
@@ -25,6 +27,7 @@ interface SignupDialogProps {
 const SignupDialog = ({
     isOpen,
     onClose,
+    textConfig,
     onSubmit,
     isLoading,
     error,
@@ -36,10 +39,11 @@ const SignupDialog = ({
             <div className="pka-z-[2] pka-flex pka-size-full pka-flex-col pka-items-center pka-justify-center pka-gap-6">
                 <div className="pka-flex pka-flex-col pka-items-center pka-gap-2 pka-text-center pka-text-white">
                     <h3 className="pka-font-sans pka-text-2xl pka-font-bold sm:pka-text-3xl">
-                        Create Your Account
+                        {textConfig?.signupTitle || "Create Your Account"}
                     </h3>
                     <p className="pka-font-sans pka-text-base pka-leading-normal pka-tracking-tight">
-                        Connect with world-class builders
+                        {textConfig?.signupDescription ||
+                            "Connect with world-class builders"}
                     </p>
                 </div>
                 <SignUpForm

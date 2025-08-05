@@ -34,6 +34,7 @@ import {
     VerifyEmailDialog,
     ResetPasswordDialog,
 } from "../../auth";
+import { AuthTextConfig } from "../types";
 
 type AuthView =
     | "intro"
@@ -49,6 +50,7 @@ type AuthView =
     | "";
 
 interface AuthSystemProps {
+    textConfig?: AuthTextConfig;
     onLoginSuccess?: (userData: any) => void;
     onSignupSuccess?: (userData: any) => void;
 }
@@ -69,7 +71,7 @@ const initialAuthSuccess: AuthSuccess = {
 };
 
 const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
-    ({ onLoginSuccess, onSignupSuccess }: AuthSystemProps, ref) => {
+    ({ textConfig, onLoginSuccess, onSignupSuccess }: AuthSystemProps, ref) => {
         const [currentView, setCurrentView] = useState<AuthView>("");
         const [verifySignupSuccess, setVerifySignupSuccess] =
             useState<AuthSuccess>(initialAuthSuccess);
@@ -293,6 +295,7 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
                 <SignupMethodDialog
                     isOpen={currentView === "signup-method"}
                     onClose={resetCurrentView}
+                    textConfig={textConfig}
                     onEmailSignup={() => setCurrentView("signup")}
                     goToLoginMethod={() => setCurrentView("login-method")}
                     onGoogleSignupSuccess={handleGoogleSignupSuccess}
@@ -301,6 +304,7 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
                 <SignupDialog
                     isOpen={currentView === "signup"}
                     onClose={resetCurrentView}
+                    textConfig={textConfig}
                     onSubmit={handleSignup}
                     isLoading={loading}
                     error={error || undefined}
@@ -329,6 +333,7 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
                 <SigninMethodDialog
                     isOpen={currentView === "login-method"}
                     onClose={resetCurrentView}
+                    textConfig={textConfig}
                     onEmailLogin={() => setCurrentView("login")}
                     onGoogleLogin={() => {
                         console.log("Google login");
@@ -340,6 +345,7 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
                 <LoginDialog
                     isOpen={currentView === "login"}
                     onClose={resetCurrentView}
+                    textConfig={textConfig}
                     onSubmit={handleLogin}
                     isLoading={loading}
                     error={error || undefined}
