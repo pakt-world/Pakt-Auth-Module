@@ -33,7 +33,7 @@ const VerifyEmailDialog = ({
 }: VerifyEmailDialogProps): JSX.Element => {
     return (
         <HeadlessModal isOpen={isOpen} closeModal={onClose} disableClickOutside>
-            <div className="pka-z-[2] pka-flex pka-size-full pka-flex-col pka-items-center pka-justify-center pka-gap-6">
+            <div className="pka:z-[2] pka:flex pka:size-full pka:flex-col pka:items-center pka:justify-center pka:gap-6">
                 <VerifyEmailForm
                     onSubmit={onVerify}
                     onResend={onResend}
@@ -41,8 +41,8 @@ const VerifyEmailDialog = ({
                     resendLoading={resendLoading}
                     email={email}
                 />
-                <div className="pka-flex pka-w-full pka-items-center pka-justify-end">
-                    <PoweredByPakt className="!pka-text-white" />
+                <div className="pka:flex pka:w-full pka:items-center pka:justify-end">
+                    <PoweredByPakt className="!pka:text-white" />
                 </div>
             </div>
         </HeadlessModal>

@@ -85,21 +85,21 @@ function VerifyEmailForm({
     };
 
     return (
-        <div className="pka-flex pka-w-full pka-max-w-2xl pka-flex-col pka-items-center pka-gap-6 sm:pka-mt-28">
-            <div className="pka-flex pka-flex-col pka-items-center pka-gap-2 pka-text-center">
-                <h3 className="pka-font-sans pka-text-3xl pka-font-bold pka-text-white">
+        <div className="pka:flex pka:w-full pka:max-w-2xl pka:flex-col pka:items-center pka:gap-6 sm:pka:mt-28">
+            <div className="pka:flex pka:flex-col pka:items-center pka:gap-2 pka:text-center">
+                <h3 className="pka:font-sans pka:text-3xl pka:font-bold pka:text-white">
                     Reset Password Code
                 </h3>
-                <p className="pka-font-sans pka-text-base pka-text-body pka-text-white">
+                <p className="pka:font-sans pka:text-base pka:text-body pka:text-white">
                     A code has been sent to your email address. Enter it to
                     verify your reset password.
                 </p>
             </div>
             <form
-                className="pka-relative pka-z-[100] pka-mx-auto pka-flex pka-w-full pka-flex-col pka-items-center pka-gap-6 pka-rounded-2xl pka-bg-white pka-p-4 sm:pka-max-w-[600px] sm:pka-px-[40px] sm:pka-py-10"
+                className="pka:relative pka:z-[100] pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-white pka:p-4 sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10"
                 onSubmit={form.handleSubmit(handleSubmit)}
             >
-                <div className="pka-flex pka-w-fit pka-flex-col pka-gap-4">
+                <div className="pka:flex pka:w-fit pka:flex-col pka:gap-4">
                     <Controller
                         name="otp"
                         control={form.control}
@@ -110,11 +110,11 @@ function VerifyEmailForm({
                                     onChange={onChange}
                                     shouldAutoFocus
                                     numInputs={6}
-                                    containerStyle="pka-gap-3 pka-flex"
+                                    containerStyle="pka:gap-3 pka:flex"
                                     renderInput={(props) => (
                                         <input
                                             {...props}
-                                            className="otp_style !pka-select-none pka-px-3 pka-py-2 focus:pka-outline-none focus:pka-ring-1 focus:pka-ring-primary"
+                                            className="otp_style !pka:select-none pka:px-3 pka:py-2 focus:pka:outline-none focus:pka:ring-1 focus:pka:ring-primary"
                                         />
                                     )}
                                 />
@@ -131,8 +131,8 @@ function VerifyEmailForm({
                         {isLoading ? <Spinner /> : "Reset Password"}
                     </Button>
 
-                    <div className="pka-flex pka-w-full pka-flex-col pka-items-center pka-gap-4">
-                        <span className="pka-text-body">
+                    <div className="pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-4">
+                        <span className="pka:text-body">
                             {formatCountdown(countdown)}
                         </span>
 
@@ -142,13 +142,13 @@ function VerifyEmailForm({
                             variant="outline"
                             onClick={handleResendOTP}
                             disabled={resendLoading || isResendDisabled}
-                            className="!pka-h-7 pka-max-w-[150px] pka-items-center pka-justify-center !pka-py-2"
+                            className="!pka:h-7 pka:max-w-[150px] pka:items-center pka:justify-center !pka:py-2"
                             style={{
                                 opacity:
                                     resendLoading || isResendDisabled ? 0.2 : 1,
                             }}
                         >
-                            <span className="pka-flex pka-flex-row pka-gap-2">
+                            <span className="pka:flex pka:flex-row pka:gap-2">
                                 <Timer size={16} className="" />
                                 {resendLoading ? (
                                     <Spinner size={16} />

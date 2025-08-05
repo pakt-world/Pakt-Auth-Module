@@ -1,0 +1,7 @@
+/* Import Tailwind utilities with both prefixed and non-prefixed classes */
+@import "tailwindcss";
+@config "../../tailwind.config.js";
+
+/* Import additional non-prefixed utilities for components that need them */
+@import "tailwindcss" layer(utilities);
+@config "../../tailwind.config.base.js";

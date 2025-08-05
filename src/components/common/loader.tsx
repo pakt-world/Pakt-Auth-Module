@@ -19,11 +19,11 @@ export const Spinner: FC<SpinnerProps> = ({ size = 24, className }) => {
     return (
         <div
             className={cn(
-                `pka-flex pka-w-full pka-items-center pka-justify-center`,
+                `pka:flex pka:w-full pka:items-center pka:justify-center`,
                 className
             )}
         >
-            <Loader className="pka-animate-spin" size={size} />
+            <Loader className="pka:animate-spin" size={size} />
         </div>
     );
 };

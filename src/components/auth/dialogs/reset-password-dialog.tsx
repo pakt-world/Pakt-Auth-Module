@@ -36,7 +36,7 @@ const ResetPasswordDialog = ({
 }: ResetPasswordDialogProps): JSX.Element => {
     return (
         <HeadlessModal isOpen={isOpen} closeModal={onClose} disableClickOutside>
-            <div className="pka-z-[2] pka-flex pka-size-full pka-flex-col pka-items-center pka-justify-center pka-gap-6">
+            <div className="pka:z-[2] pka:flex pka:size-full pka:flex-col pka:items-center pka:justify-center pka:gap-6">
                 <ResetPasswordForm
                     onSubmit={onSubmit}
                     isLoading={isLoading}
@@ -45,8 +45,8 @@ const ResetPasswordDialog = ({
                     isSuccess={isSuccess}
                     token={token}
                 />
-                <div className="pka-flex pka-w-full pka-items-center pka-justify-end">
-                    <PoweredByPakt className="!pka-text-white" />
+                <div className="pka:flex pka:w-full pka:items-center pka:justify-end">
+                    <PoweredByPakt className="!pka:text-white" />
                 </div>
             </div>
         </HeadlessModal>

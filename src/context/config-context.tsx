@@ -61,7 +61,7 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
             <Toaster
                 position="top-right"
                 gutter={8}
-                containerClassName="!pka-z-[999999]"
+                containerClassName="!pka:z-[999999]"
             />
         </ConfigContext.Provider>
     );
