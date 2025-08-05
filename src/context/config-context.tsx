@@ -50,6 +50,11 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
         }
     }, [config?.paktSDK]);
 
+    useEffect(() => {
+        document.body.classList.add("pakt-auth-module");
+        return () => document.body.classList.remove("pakt-auth-module");
+    }, []);
+
     const content = (
         <ConfigContext.Provider value={config}>
             {children}

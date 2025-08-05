@@ -8,7 +8,6 @@ import { useRef, useState } from "react";
 /* -------------------------------------------------------------------------- */
 import { AuthRef } from "../components/pakt-auth/types";
 import PaktAuth from "../components/pakt-auth";
-import "../styles/index.scss";
 
 const App = () => {
     const paktAuthRef = useRef<AuthRef>(null);

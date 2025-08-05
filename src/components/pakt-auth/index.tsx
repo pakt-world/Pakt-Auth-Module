@@ -9,6 +9,7 @@ import { forwardRef, Ref, useImperativeHandle, useRef } from "react";
 import { ConfigProvider } from "../../context/config-context";
 import AuthSystem from "./auth-system";
 import { AuthRef, PaktAuthProps } from "./types";
+import "../../styles/index.scss";
 
 const PaktAuth = forwardRef(
     (
@@ -27,13 +28,15 @@ const PaktAuth = forwardRef(
         }));
 
         return (
-            <ConfigProvider config={config}>
-                <AuthSystem
-                    ref={authSystemRef}
-                    onLoginSuccess={onLoginSuccess}
-                    onSignupSuccess={onSignupSuccess}
-                />
-            </ConfigProvider>
+            <div className="pakt-auth-module">
+                <ConfigProvider config={config}>
+                    <AuthSystem
+                        ref={authSystemRef}
+                        onLoginSuccess={onLoginSuccess}
+                        onSignupSuccess={onSignupSuccess}
+                    />
+                </ConfigProvider>
+            </div>
         );
     }
 );
