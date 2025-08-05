@@ -9,8 +9,10 @@
 import PoweredByPakt from "../../common/powered-by-pakt";
 import { AuthMethod } from "./auth-method";
 import { useGoogleAuth } from "../../../hooks/use-google-auth";
+import { AuthTextConfig } from "../../pakt-auth/types";
 
 interface SigninMethodProps {
+    textConfig?: AuthTextConfig;
     onEmailLogin: () => void;
     goToSignupMethod: () => void;
     onGoogleLoginSuccess?: (userData: any) => void;
@@ -18,6 +20,7 @@ interface SigninMethodProps {
 }
 
 export const SigninMethod = ({
+    textConfig,
     onEmailLogin,
     goToSignupMethod,
     onGoogleLoginSuccess,
@@ -31,8 +34,11 @@ export const SigninMethod = ({
     return (
         <div className="pka-z-[2] pka-flex pka-size-full pka-flex-col pka-items-center pka-justify-center pka-gap-6">
             <AuthMethod
-                title="Login to your account"
-                description="Collaborate with world-class builders"
+                title={textConfig?.loginTitle || "Login to your account"}
+                description={
+                    textConfig?.loginDescription ||
+                    "Collaborate with world-class builders"
+                }
                 instruction="Choose Log in method"
                 currentAuth="signin_method"
                 google={isGoogleOAuthEnabled ? () => signIn() : undefined}

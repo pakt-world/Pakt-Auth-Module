@@ -11,10 +11,12 @@ import { memo } from "react";
 import LoginForm from "../forms/login-form";
 import { HeadlessModal } from "../../common/headless-modal";
 import PoweredByPakt from "../../common/powered-by-pakt";
+import { AuthTextConfig } from "../../pakt-auth/types";
 
 interface LoginDialogProps {
     isOpen: boolean;
     onClose: () => void;
+    textConfig?: AuthTextConfig;
     onSubmit: (data: any) => void;
     isLoading?: boolean;
     error?: string;
@@ -26,6 +28,7 @@ interface LoginDialogProps {
 const LoginDialog = ({
     isOpen,
     onClose,
+    textConfig,
     onSubmit,
     isLoading,
     error,
@@ -38,10 +41,11 @@ const LoginDialog = ({
             <div className="pka-z-[2] pka-flex pka-size-full pka-flex-col pka-items-center pka-justify-center pka-gap-6">
                 <div className="pka-flex pka-flex-col pka-items-center pka-gap-2 pka-text-center pka-text-white">
                     <h3 className="pka-font-sans pka-text-2xl pka-font-bold sm:pka-text-3xl">
-                        Login to your account
+                        {textConfig?.loginTitle || "Login to your account"}
                     </h3>
                     <p className="pka-font-sans pka-text-base pka-leading-normal pka-tracking-tight">
-                        Collaborate with world-class builders
+                        {textConfig?.loginDescription ||
+                            "Collaborate with world-class builders"}
                     </p>
                 </div>
                 <LoginForm

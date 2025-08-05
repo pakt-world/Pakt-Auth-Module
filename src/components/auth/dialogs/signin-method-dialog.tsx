@@ -10,10 +10,12 @@ import { ReactElement } from "react";
 
 import { HeadlessModal } from "../../common/headless-modal";
 import { SigninMethod } from "../methods/signin-method";
+import { AuthTextConfig } from "../../pakt-auth/types";
 
 interface SigninMethodDialogProps {
     isOpen: boolean;
     onClose: () => void;
+    textConfig?: AuthTextConfig;
     onEmailLogin: () => void;
     onGoogleLogin: () => void;
     goToSignupMethod: () => void;
@@ -24,6 +26,7 @@ interface SigninMethodDialogProps {
 const SigninMethodDialog = ({
     isOpen,
     onClose,
+    textConfig,
     onEmailLogin,
     onGoogleLogin,
     goToSignupMethod,
@@ -33,6 +36,7 @@ const SigninMethodDialog = ({
     return (
         <HeadlessModal isOpen={isOpen} closeModal={onClose}>
             <SigninMethod
+                textConfig={textConfig}
                 onEmailLogin={onEmailLogin}
                 goToSignupMethod={goToSignupMethod}
                 onGoogleLoginSuccess={onGoogleLoginSuccess}
