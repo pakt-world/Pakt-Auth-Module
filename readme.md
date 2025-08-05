@@ -9,9 +9,13 @@ A comprehensive React authentication module for Pakt applications. This package 
 - **Two-Factor Authentication**: Email-based 2FA support
 - **Password Reset**: Forgot password and reset functionality
 - **Email Verification**: Account verification with resend capability
-- **Customizable UI**: Theme customization support
+- **Customizable UI**: Theme customization support with CSS custom properties
 - **TypeScript Support**: Full type definitions included
 - **Responsive Design**: Works on desktop and mobile devices
+- **Tailwind CSS v4**: Built with the latest Tailwind CSS for optimal performance
+- **Zero CSS Dependencies**: Styles are inlined into JavaScript bundles
+- **Modern Architecture**: Pure CSS without preprocessor dependencies
+- **Scoped Styling**: Prefixed classes prevent style conflicts
 
 ## Installation
 
@@ -30,8 +34,7 @@ bun add @pakt/auth-module
 import React, { useRef } from 'react';
 import PaktAuth, { AuthRef, ConfigContextType } from '@pakt/auth-module';
 
-// Import the stylesheet in your main entry file
-import '@pakt/auth-module/dist/styles.css';
+// No need to import CSS - styles are automatically included in the JavaScript bundle
 
 function App() {
   const authRef = useRef<AuthRef>(null);
@@ -315,7 +318,61 @@ The PaktAuth component provides a complete authentication flow:
 6. **Password Reset**: Forgot password and reset functionality
 7. **Email Verification**: Account verification with resend capability
 
+## Technical Architecture
 
+### Styling & CSS
+
+The package uses a modern CSS architecture designed for optimal performance and minimal conflicts:
+
+- **Tailwind CSS v4**: Built with the latest version of Tailwind CSS for best-in-class utility styling
+- **CSS Inlining**: All styles are automatically inlined into the JavaScript bundle, eliminating the need for separate CSS imports
+- **Scoped Classes**: All Tailwind utilities use the `pka:` prefix (e.g., `pka:flex`, `pka:bg-white`) to prevent conflicts with your application's styles
+- **Zero Dependencies**: No external CSS files or preprocessor dependencies required
+- **Theme Integration**: CSS custom properties allow for seamless theme customization
+
+### Bundle Information
+
+- **ES Module**: ~399KB (includes all styles and functionality)
+- **CommonJS**: ~315KB (for older module systems)
+- **TypeScript Definitions**: Included for full type safety
+- **Tree Shakeable**: Only import what you need
+
+### Browser Compatibility
+
+The module is built with modern web standards and supports:
+- **ES2018+** JavaScript features
+- **CSS Custom Properties** for theming
+- **Modern CSS Grid & Flexbox** for layouts
+- **Responsive Design** with mobile-first approach
+
+## Migration Guide
+
+### Upgrading from v0.0.2 and earlier
+
+If you're upgrading from a previous version, please note these breaking changes:
+
+#### CSS Import Removal
+
+**Before (v0.0.2 and earlier):**
+```typescript
+import '@pakt/auth-module/dist/styles.css'; // ❌ No longer needed
+```
+
+**After (v0.0.3+):**
+```typescript
+// ✅ No CSS import required - styles are automatically included
+import PaktAuth from '@pakt/auth-module';
+```
+
+#### Benefits of the Update
+
+- **Simplified Integration**: No need to manage CSS imports
+- **Better Performance**: Styles are optimized and inlined
+- **No Style Conflicts**: Scoped classes prevent CSS conflicts
+- **Smaller Bundle**: More efficient bundling and tree-shaking
+- **Modern Tooling**: Built with Tailwind CSS v4 and Vite
+
+The component API remains the same, so no code changes are required beyond removing the CSS import.
 
 ## PAKT SDK Integration
 
@@ -330,10 +387,49 @@ The module integrates with the PAKT SDK for backend authentication. The SDK hand
 
 ## Browser Support
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+This module supports all modern browsers that support:
+
+- **Chrome**: 88+
+- **Firefox**: 85+
+- **Safari**: 14+
+- **Edge**: 88+
+- **Node.js**: 16+ (for SSR/SSG)
+
+### Requirements
+
+- **React**: 18.0.0+
+- **ES2018** support
+- **CSS Custom Properties** support
+- **CSS Grid** and **Flexbox** support
+
+## Development
+
+### Building from Source
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd pakt-auth-module
+
+# Install dependencies
+yarn install
+
+# Build the package
+yarn build
+
+# Run in development mode
+yarn dev
+```
+
+### Package Structure
+
+```
+dist/
+├── auth-module.es.js       # ES module build
+├── auth-module.cjs.js      # CommonJS build
+├── types/                  # TypeScript definitions
+└── assets/                 # Static assets (fonts, etc.)
+```
 
 ## Contributing
 
