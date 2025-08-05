@@ -29,7 +29,7 @@ export const SigninMethod = ({
     });
 
     return (
-        <div className="pka-z-[2] pka-flex pka-size-full pka-flex-col pka-items-center pka-justify-center pka-gap-6">
+        <div className="pka:z-[2] pka:flex pka:size-full pka:flex-col pka:items-center pka:justify-center pka:gap-6">
             <AuthMethod
                 title="Login to your account"
                 description="Collaborate with world-class builders"
@@ -44,8 +44,8 @@ export const SigninMethod = ({
                 email={onEmailLogin}
                 goToSignupMethod={goToSignupMethod}
             />
-            <div className="pka-flex pka-w-full pka-items-center pka-justify-end">
-                <PoweredByPakt className="sm:!pka-text-white" />
+            <div className="pka:flex pka:w-full pka:items-center pka:justify-end">
+                <PoweredByPakt className="sm:!pka:text-white" />
             </div>
         </div>
     );

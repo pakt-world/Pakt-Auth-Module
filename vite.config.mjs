@@ -4,11 +4,13 @@ import react from "@vitejs/plugin-react";
 import dts from "vite-plugin-dts";
 import { visualizer } from "rollup-plugin-visualizer";
 import { viteStaticCopy } from "vite-plugin-static-copy";
+import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
 import path from "path";
 import { fileURLToPath } from "url";
-import tailwindcss from "tailwindcss"; // Import tailwindcss
+// import tailwindcss from "tailwindcss"; // Import tailwindcss
 import autoprefixer from "autoprefixer"; // Import autoprefixer
-import postcssImport from "postcss-import"; // Import postcss-import
+// import postcssImport from "postcss-import"; // Import postcss-import
+import tailwindcss from "@tailwindcss/vite";
 
 // Replicate __dirname behavior in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -43,12 +45,14 @@ export default defineConfig(({ command, mode }) => {
 
     return {
         plugins: [
+            tailwindcss(),
             react({
                 // Use babel configuration defined in .babelrc.js
                 babel: {
                     configFile: true,
                 },
             }),
+            cssInjectedByJsPlugin(),
             dts({
                 // Specify the entry root and output directory for declaration files
                 entryRoot: resolve(__dirname, "src"),
@@ -93,16 +97,16 @@ export default defineConfig(({ command, mode }) => {
         css: {
             postcss: {
                 plugins: [
-                    postcssImport(),
-                    tailwindcss(), // Use the imported tailwindcss
-                    autoprefixer(), // Use the imported autoprefixer
+                    // PostCSS configuration is handled by postcss.config.js
                 ],
             },
         },
-        build: {
+                    build: {
             outDir: "dist", // Base output directory
             sourcemap: true,
             minify: isProduction ? "esbuild" : false, // Minify only in production
+            cssCodeSplit: false, // Bundle CSS into JS instead of separate files
+            cssMinify: isProduction, // Minify CSS in production
             lib: {
                 // Could also be a dictionary or array of multiple entry points.
                 entry: path.resolve(__dirname, "src/index.ts"), // Adjust entry point as needed
@@ -116,7 +120,7 @@ export default defineConfig(({ command, mode }) => {
                 //     return `${moduleName}.js`; // Default fallback
                 // },
             },
-            rollupOptions: {
+                            rollupOptions: {
                 // Make sure to externalize deps that shouldn't be bundled
                 // into your library
                 external: [
@@ -136,8 +140,6 @@ export default defineConfig(({ command, mode }) => {
                     "zod",
                     "zustand",
                 ],
-                // Ensure external dependencies are not bundled
-                preserveEntrySignatures: "strict",
                 output: {
                     // Provide global variables to use in the UMD build
                     // for externalized deps (if UMD format is added)
@@ -158,20 +160,16 @@ export default defineConfig(({ command, mode }) => {
                         "zod": "Zod",
                         "zustand": "Zustand",
                     },
-                    // Preserve module structure for ES and CJS formats
-                    // preserveModules: true, // Keep module structure
-                    // preserveModulesRoot: 'src', // Root for preserved modules
                     banner: banner,
                     exports: "named", // Ensure named exports are used
-                    // Adjust asset file names to land in the assets subfolder within each bundle dir
+                    // Handle non-CSS assets only (CSS will be inlined into JS by plugin)
                     assetFileNames: (assetInfo) => {
-                        if (assetInfo.name && assetInfo.name.endsWith("css")) {
-                            return "styles.css"; // Place css directly in bundle folder
-                        }
-                        // Place other assets like fonts/images in an assets subfolder
+                        // Place assets like fonts/images in an assets subfolder
                         return `assets/[name]-[hash].[ext]`;
                     },
                 },
+                // Ensure external dependencies are not bundled
+                preserveEntrySignatures: "strict",
                 // Suppress warnings related to "use client" directive
                 onwarn(warning, warn) {
                     if (
@@ -192,13 +190,9 @@ export default defineConfig(({ command, mode }) => {
                     if (warning.code === "EMPTY_CHUNK") {
                         return;
                     }
-                    // Add check to ignore empty CSS chunk warnings often caused by PostCSS processing
-                    if (warning.code === "EMPTY_BUNDLE") {
-                        // Check if the warning is about an empty CSS chunk likely from PostCSS
-                        // This condition might need adjustment based on the exact warning message/structure
-                        if (warning.message.includes(".css")) {
-                            return; // Ignore empty CSS chunk warnings
-                        }
+                    // Since CSS is inlined, we can ignore CSS-related bundle warnings
+                    if (warning.code === "EMPTY_BUNDLE" && warning.message.includes(".css")) {
+                        return; // Ignore CSS-related warnings since CSS is now inlined
                     }
                     warn(warning); // Pass other warnings along
                 },
