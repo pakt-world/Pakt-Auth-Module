@@ -14,7 +14,7 @@ import { CheckCircle, CircleAlert } from "lucide-react";
 export const toast = {
     error: (message: string) =>
         toastPrimitive.custom(
-            (t) => {
+            (t: { visible: boolean }) => {
                 return (
                     <div
                         className={`${t.visible ? "animate-enter" : "animate-leave"} pointer-events-auto flex w-full max-w-md rounded-lg bg-red-100 ring-1 ring-red-800 ring-opacity-50`}
@@ -40,7 +40,7 @@ export const toast = {
         ),
     success: (message: string) =>
         toastPrimitive.custom(
-            (t) => (
+            (t: { visible: boolean }) => (
                 <div
                     className={`${t.visible ? "animate-enter" : "animate-leave"} pointer-events-auto flex w-full max-w-md rounded-lg bg-green-100 ring-1 ring-green-800 ring-opacity-50`}
                 >
@@ -108,7 +108,7 @@ export const toast = {
     // },
     info: (message: string) =>
         toastPrimitive.custom(
-            (t) => (
+            (t: { visible: boolean }) => (
                 <div
                     className={`${t.visible ? "animate-enter" : "animate-leave"} pointer-events-auto flex w-full max-w-md rounded-lg bg-blue-100 ring-1 ring-blue-800 ring-opacity-50`}
                 >

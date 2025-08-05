@@ -22,3 +22,9 @@ declare module "*.svg" {
     const content: string;
     export default content;
 }
+
+// React 19 JSX types
+declare namespace JSX {
+    interface Element extends React.JSX.Element {}
+    interface IntrinsicElements extends React.JSX.IntrinsicElements {}
+}
