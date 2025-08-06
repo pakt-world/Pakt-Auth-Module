@@ -98,7 +98,7 @@ function ResetPasswordForm({
                     </div>
                     <form
                         onSubmit={resetForm.handleSubmit(handleSubmit)}
-                        className="pka:relative pka:z-[100] pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-white sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10 max-sm:pka:p-4"
+                        className="pka:relative pka:z-[100] pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-surface-primary sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10 max-sm:pka:p-4"
                     >
                         {error && (
                             <div className="pka:w-full pka:rounded-lg pka:border pka:border-red-200 pka:bg-red-50 pka:p-3 pka:text-sm pka:text-danger">
@@ -110,7 +110,7 @@ function ResetPasswordForm({
                             <div className="pka:relative pka:mb-2 pka:flex pka:flex-col pka:gap-2">
                                 <label
                                     htmlFor="password"
-                                    className="pka:text-base input_label sm:pka:text-sm"
+                                    className="pka:text-base pka:text-input-label sm:pka:text-sm"
                                 >
                                     Create Password
                                 </label>
@@ -165,7 +165,7 @@ function ResetPasswordForm({
                             <div className="pka:relative pka:mb-2 pka:flex pka:flex-col pka:gap-2">
                                 <label
                                     htmlFor="confirmPassword"
-                                    className="pka:text-base input_label sm:pka:text-sm"
+                                    className="pka:text-base pka:text-input-label sm:pka:text-sm"
                                 >
                                     Confirm Password
                                 </label>
@@ -200,7 +200,7 @@ function ResetPasswordForm({
                     </form>
                 </div>
             ) : (
-                <div className="pka:mx-auto pka:mt-8 pka:flex pka:w-full pka:max-w-xl pka:flex-col pka:items-center pka:justify-center pka:gap-2 pka:rounded-2xl pka:bg-white pka:p-8 pka:px-[40px] pka:py-10 pka:text-center pka:text-body sm:pka:mt-28">
+                <div className="pka:mx-auto pka:mt-8 pka:flex pka:w-full pka:max-w-xl pka:flex-col pka:items-center pka:justify-center pka:gap-2 pka:rounded-2xl pka:bg-surface-primary pka:p-8 pka:px-[40px] pka:py-10 pka:text-center pka:text-body sm:pka:mt-28">
                     <div className="pka:flex pka:w-full pka:max-w-[150px] pka:items-center pka:justify-center">
                         <Lottie animationData={success} />
                     </div>

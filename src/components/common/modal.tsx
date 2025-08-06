@@ -48,7 +48,7 @@ const Modal: FC<ModalProps> = ({
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <div className="pka:fixed pka:inset-0 pka:bg-black pka:bg-opacity-80 pka:backdrop-blur-lg" />
+                    <div className="pka:fixed pka:inset-0 pka:bg-surface-overlay pka:backdrop-blur-lg" />
                 </Transition.Child>
 
                 <div className="pka:fixed pka:inset-0 pka:overflow-y-auto">

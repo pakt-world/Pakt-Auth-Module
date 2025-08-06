@@ -96,8 +96,8 @@ function VerifyEmailForm({
                 </p>
             </div>
             <form
-                className="pka:relative pka:z-[100] pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-white pka:p-4 sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10"
                 onSubmit={form.handleSubmit(handleSubmit)}
+                className="pka:relative pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-surface-primary pka:p-4 sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10"
             >
                 <div className="pka:flex pka:w-fit pka:flex-col pka:gap-4">
                     <Controller

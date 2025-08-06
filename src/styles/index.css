@@ -96,10 +96,6 @@
     box-shadow: 0 0 0 2px var(--pkas-input-focus);
   }
   
-  .input_label {
-    color: var(--pkas-input-label);
-  }
-  
   .otp_style {
     @apply pka:w-12 pka:h-12 pka:text-center pka:border pka:rounded-lg pka:text-lg pka:font-semibold pka:transition-colors;
     width: 3rem !important;
