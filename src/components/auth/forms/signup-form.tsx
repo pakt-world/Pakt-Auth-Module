@@ -87,8 +87,8 @@ const SignUpForm = ({
                     onClick={backToSignupMethod}
                     className="pka:inline-flex pka:items-center pka:justify-start pka:gap-2 pka:self-start"
                 >
-                    <ChevronLeft size={24} className="pka:text-[#007C5B]" />
-                    <div className="pka:text-base pka:leading-normal pka:tracking-tight pka:text-[#007c5b]">
+                    <ChevronLeft size={24} className="pka:text-primary" />
+                    <div className="pka:text-base pka:leading-normal pka:tracking-tight pka:text-primary">
                         Sign up another way
                     </div>
                 </button>
@@ -99,7 +99,7 @@ const SignUpForm = ({
                     <div className="pka:relative pka:mb-1 pka:flex pka:w-full pka:flex-col pka:gap-2">
                         <label
                             htmlFor="firstName"
-                            className="pka:text-base pka:text-body sm:pka:text-sm"
+                            className="pka:text-base input_label sm:pka:text-sm"
                         >
                             Full Name
                         </label>
@@ -110,7 +110,7 @@ const SignUpForm = ({
                             className="input_style"
                         />
                         {form.formState.errors.firstName?.message && (
-                            <div className="pka:text-sm pka:text-red-500">
+                            <div className="pka:text-sm pka:text-danger">
                                 {form.formState.errors.firstName.message}
                             </div>
                         )}
@@ -120,7 +120,7 @@ const SignUpForm = ({
                 <div className="pka:relative pka:mb-1 pka:flex pka:flex-col pka:gap-2">
                     <label
                         htmlFor="email"
-                        className="pka:text-base pka:text-body sm:pka:text-sm"
+                        className="pka:text-base input_label sm:pka:text-sm"
                     >
                         Email Address
                     </label>
@@ -131,7 +131,7 @@ const SignUpForm = ({
                         className="input_style"
                     />
                     {form.formState.errors.email?.message && (
-                        <div className="pka:text-sm pka:text-red-500">
+                        <div className="pka:text-sm pka:text-danger">
                             {form.formState.errors.email.message}
                         </div>
                     )}
@@ -140,7 +140,7 @@ const SignUpForm = ({
                 <div className="pka:relative pka:mb-1 pka:flex pka:flex-col pka:gap-2">
                     <label
                         htmlFor="password"
-                        className="pka:text-base pka:text-body sm:pka:text-sm"
+                        className="pka:text-base input_label sm:pka:text-sm"
                     >
                         Create Password
                     </label>
@@ -185,7 +185,7 @@ const SignUpForm = ({
                 <div className="pka:relative pka:mb-1 pka:flex pka:flex-col pka:gap-2">
                     <label
                         htmlFor="confirmPassword"
-                        className="pka:text-base pka:text-body sm:pka:text-sm"
+                        className="pka:text-base input_label sm:pka:text-sm"
                     >
                         Confirm Password
                     </label>
@@ -197,7 +197,7 @@ const SignUpForm = ({
                         type="password"
                     />
                     {form.formState.errors.confirmPassword?.message && (
-                        <div className="pka:text-sm pka:text-red-500">
+                        <div className="pka:text-sm pka:text-danger">
                             {form.formState.errors.confirmPassword.message}
                         </div>
                     )}
@@ -205,7 +205,7 @@ const SignUpForm = ({
             </div>
 
             {error && (
-                <div className="pka:text-center pka:text-sm pka:text-red-500">
+                <div className="pka:text-center pka:text-sm pka:text-danger">
                     {error}
                 </div>
             )}

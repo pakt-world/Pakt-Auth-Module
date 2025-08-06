@@ -81,32 +81,36 @@
 @layer components {
   .input_style {
     @apply pka:!w-full pka:!px-4 pka:!py-3 pka:!border pka:!rounded-lg pka:!text-sm pka:!transition-colors;
-    background-color: var(--pkas-inputBackground);
-    border-color: var(--pkas-inputBorder);
-    color: var(--pkas-textPrimary);
+    background-color: var(--pkas-input-background);
+    border-color: var(--pkas-input-border);
+    color: var(--pkas-input-text);
   }
   
   .input_style::placeholder {
-    color: var(--pkas-inputPlaceholder);
+    color: var(--pkas-input-placeholder);
   }
   
   .input_style:focus {
     outline: none;
     border-color: transparent;
-    box-shadow: 0 0 0 2px var(--pkas-inputFocus);
+    box-shadow: 0 0 0 2px var(--pkas-input-focus);
+  }
+  
+  .input_label {
+    color: var(--pkas-input-label);
   }
   
   .otp_style {
     @apply pka:w-12 pka:h-12 pka:text-center pka:border pka:rounded-lg pka:text-lg pka:font-semibold pka:transition-colors;
     width: 3rem !important;
-    background-color: var(--pkas-inputBackground);
-    border-color: var(--pkas-inputBorder);
-    color: var(--pkas-textPrimary);
+    background-color: var(--pkas-input-background);
+    border-color: var(--pkas-input-border);
+    color: var(--pkas-input-text);
   }
   
   .otp_style:focus {
     outline: none;
     border-color: transparent;
-    box-shadow: 0 0 0 2px var(--pkas-inputFocus);
+    box-shadow: 0 0 0 2px var(--pkas-input-focus);
   }
 }

@@ -34,6 +34,8 @@ const App = () => {
                 border: "#D1D5DB",
                 focus: "#8B5CF6",
                 placeholder: "#9CA3AF",
+                text: "#1F2937",
+                label: "#1F2937",
             },
 
             states: {

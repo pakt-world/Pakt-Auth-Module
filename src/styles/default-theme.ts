@@ -38,6 +38,8 @@ const defaultTheme: ITheme = {
         border: "#D1D5DB",
         focus: "#007C5B",
         placeholder: "#9CA3AF",
+        text: "#1F2739",
+        label: "#1F2739",
     },
     
     states: {
