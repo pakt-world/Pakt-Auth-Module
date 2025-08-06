@@ -9,13 +9,13 @@
 import PoweredByPakt from "../../common/powered-by-pakt";
 import { AuthMethod } from "./auth-method";
 import { useGoogleAuth } from "../../../hooks/use-google-auth";
-import { AuthTextConfig } from "../../pakt-auth/types";
+import { AuthTextConfig, UserData } from "../../pakt-auth/types";
 
 interface SigninMethodProps {
     textConfig?: AuthTextConfig;
     onEmailLogin: () => void;
     goToSignupMethod: () => void;
-    onGoogleLoginSuccess?: (userData: any) => void;
+    onGoogleLoginSuccess?: (userData: UserData) => void;
     onGoogleLoginError?: (error: string) => void;
 }
 

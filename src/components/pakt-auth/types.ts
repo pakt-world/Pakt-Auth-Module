@@ -1,4 +1,8 @@
+import { AccountVerifyDto, LoginDto, GoogleOAuthValidateDto } from "pakt-sdk";
 import { ConfigContextType } from "types";
+
+// Union type for all possible user data types
+export type UserData = GoogleOAuthValidateDto | AccountVerifyDto | LoginDto;
 
 type AuthRef = {
     onLogin: () => void;
@@ -15,14 +19,14 @@ interface AuthTextConfig {
 interface PaktAuthProps {
     config: ConfigContextType;
     textConfig?: AuthTextConfig;
-    onLoginSuccess?: (userData: any) => void;
-    onSignupSuccess?: (userData: any) => void;
+    onLoginSuccess?: (userData: UserData) => void;
+    onSignupSuccess?: (userData: UserData) => void;
 }
 
 interface DesktopAuthProps {
     textConfig?: AuthTextConfig;
-    onLoginSuccess?: (userData: any) => void;
-    onSignupSuccess?: (userData: any) => void;
+    onLoginSuccess?: (userData: UserData) => void;
+    onSignupSuccess?: (userData: UserData) => void;
 }
 
 export type { PaktAuthProps, DesktopAuthProps, AuthRef, AuthTextConfig };

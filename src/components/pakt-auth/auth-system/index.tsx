@@ -11,6 +11,7 @@ import {
     RegisterPayload,
     VerifyAccountPayload,
     ChangeAuthenticationPasswordPayload,
+    GoogleOAuthValidateDto,
 } from "pakt-sdk";
 
 /* -------------------------------------------------------------------------- */
@@ -34,7 +35,7 @@ import {
     VerifyEmailDialog,
     ResetPasswordDialog,
 } from "../../auth";
-import { AuthTextConfig } from "../types";
+import { AuthTextConfig, UserData } from "../types";
 
 type AuthView =
     | "intro"
@@ -51,8 +52,8 @@ type AuthView =
 
 interface AuthSystemProps {
     textConfig?: AuthTextConfig;
-    onLoginSuccess?: (userData: any) => void;
-    onSignupSuccess?: (userData: any) => void;
+    onLoginSuccess?: (userData: UserData) => void;
+    onSignupSuccess?: (userData: UserData) => void;
 }
 
 type AuthSystemRef = {
@@ -62,7 +63,7 @@ type AuthSystemRef = {
 
 interface AuthSuccess {
     isSuccess: boolean;
-    userData: AccountVerifyDto | LoginDto | null;
+    userData: UserData | null;
 }
 
 const initialAuthSuccess: AuthSuccess = {
@@ -110,7 +111,7 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
         const backToSignupMethod = () => setCurrentView("signup-method");
         const backToLoginMethod = () => setCurrentView("login-method");
 
-        const handleLoginSuccess = (userData: LoginDto) => {
+        const handleLoginSuccess = (userData: UserData) => {
             onLoginSuccess?.(userData);
             resetCurrentView();
         };
@@ -147,7 +148,7 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
         };
 
         const handleVerifyLoginSuccess = () => {
-            onLoginSuccess?.(verifyLoginSuccess.userData);
+            onLoginSuccess?.(verifyLoginSuccess.userData as LoginDto);
             resetCurrentView();
         };
 
@@ -187,7 +188,7 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
         };
 
         const handleVerifySignupSuccess = () => {
-            onSignupSuccess?.(verifySignupSuccess.userData);
+            onSignupSuccess?.(verifySignupSuccess.userData as AccountVerifyDto);
             resetCurrentView();
         };
 
@@ -246,7 +247,7 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
             setCurrentView("login");
         };
 
-        const handleGoogleSignupSuccess = (userData: any) => {
+        const handleGoogleSignupSuccess = (userData: UserData) => {
             onSignupSuccess?.(userData);
             resetCurrentView();
         };
@@ -256,7 +257,7 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
             // You could set an error state here if needed
         };
 
-        const handleGoogleLoginSuccess = (userData: any) => {
+        const handleGoogleLoginSuccess = (userData: UserData) => {
             onLoginSuccess?.(userData);
             resetCurrentView();
         };
