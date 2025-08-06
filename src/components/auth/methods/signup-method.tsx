@@ -32,7 +32,7 @@ export const SignupMethod = ({
     });
 
     return (
-        <div className="pka-z-[2] pka-flex pka-size-full pka-flex-col pka-items-center pka-justify-center pka-gap-6">
+        <div className="pka:z-[2] pka:flex pka:size-full pka:flex-col pka:items-center pka:justify-center pka:gap-6">
             <AuthMethod
                 title={textConfig?.signupTitle || "Create Your Account"}
                 description={
@@ -50,8 +50,8 @@ export const SignupMethod = ({
                 email={onEmailSignup}
                 goToLoginMethod={goToLoginMethod}
             />
-            <div className="pka-flex pka-w-full pka-items-center pka-justify-end">
-                <PoweredByPakt className="sm:!pka-text-white" />
+            <div className="pka:flex pka:w-full pka:items-center pka:justify-end">
+                <PoweredByPakt className="sm:!pka:text-white" />
             </div>
         </div>
     );

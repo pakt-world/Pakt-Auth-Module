@@ -39,25 +39,25 @@ const App = () => {
 
     return (
         <>
-            <div className="pka-flex pka-min-h-screen pka-items-center pka-justify-center pka-bg-gradient-to-br pka-from-blue-900 pka-via-purple-900 pka-to-indigo-900 pka-p-4">
-                <div className="pka-max-w-md pka-text-center pka-text-white">
-                    <h1 className="pka-mb-4 pka-text-4xl pka-font-bold">
+            <div className="pka:flex pka:min-h-screen pka:items-center pka:justify-center pka:bg-gradient-to-br pka:from-blue-900 pka:via-purple-900 pka:to-indigo-900 pka:p-4">
+                <div className="pka:max-w-md pka:text-center pka:text-white">
+                    <h1 className="pka:mb-4 pka:text-4xl pka:font-bold">
                         Welcome to Pakt
                     </h1>
-                    <p className="pka-mb-8 pka-text-lg pka-text-gray-300">
+                    <p className="pka:mb-8 pka:text-lg pka:text-gray-300">
                         Connect with world-class builders and collaborate on
                         amazing projects
                     </p>
-                    <div className="pka-space-y-4">
+                    <div className="pka:space-y-4">
                         <button
                             onClick={handleLogin}
-                            className="pka-w-full pka-rounded-lg pka-bg-white pka-px-6 pka-py-3 pka-font-semibold pka-text-blue-900 pka-transition-colors hover:pka-bg-gray-100"
+                            className="pka:w-full pka:rounded-lg pka:bg-white pka:px-6 pka:py-3 pka:font-semibold pka:text-blue-900 pka:transition-colors hover:pka:bg-gray-100"
                         >
                             Login
                         </button>
                         <button
                             onClick={handleSignup}
-                            className="pka-w-full pka-rounded-lg pka-border-2 pka-border-white pka-bg-transparent pka-px-6 pka-py-3 pka-font-semibold pka-text-white pka-transition-colors hover:pka-bg-white hover:pka-text-blue-900"
+                            className="pka:w-full pka:rounded-lg pka:border-2 pka:border-white pka:bg-transparent pka:px-6 pka:py-3 pka:font-semibold pka:text-white pka:transition-colors hover:pka:bg-white hover:pka:text-blue-900"
                         >
                             Sign Up
                         </button>

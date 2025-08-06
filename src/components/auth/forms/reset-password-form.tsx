@@ -87,30 +87,30 @@ function ResetPasswordForm({
     return (
         <>
             {!isSuccess ? (
-                <div className="pka-flex pka-h-full pka-w-full pka-flex-col pka-items-center pka-justify-center pka-gap-6 sm:pka-max-w-2xl max-sm:pka-p-0">
-                    <div className="pka-flex pka-flex-col pka-items-center pka-gap-2 pka-text-center">
-                        <h3 className="pka-font-sans pka-text-2xl pka-font-bold pka-text-white 2xl:pka-text-3xl">
+                <div className="pka:flex pka:h-full pka:w-full pka:flex-col pka:items-center pka:justify-center pka:gap-6 sm:pka:max-w-2xl max-sm:pka:p-0">
+                    <div className="pka:flex pka:flex-col pka:items-center pka:gap-2 pka:text-center">
+                        <h3 className="pka:font-sans pka:text-2xl pka:font-bold pka:text-white 2xl:pka:text-3xl">
                             Reset Password
                         </h3>
-                        <p className="pka-font-sans pka-text-base pka-leading-normal pka-tracking-tight pka-text-body pka-text-white">
+                        <p className="pka:font-sans pka:text-base pka:leading-normal pka:tracking-tight pka:text-body pka:text-white">
                             Choose a new password for your account
                         </p>
                     </div>
                     <form
                         onSubmit={resetForm.handleSubmit(handleSubmit)}
-                        className="pka-relative pka-z-[100] pka-mx-auto pka-flex pka-w-full pka-flex-col pka-items-center pka-gap-6 pka-rounded-2xl pka-bg-white sm:pka-max-w-[600px] sm:pka-px-[40px] sm:pka-py-10 max-sm:pka-p-4"
+                        className="pka:relative pka:z-[100] pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-white sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10 max-sm:pka:p-4"
                     >
                         {error && (
-                            <div className="pka-w-full pka-rounded-lg pka-border pka-border-red-200 pka-bg-red-50 pka-p-3 pka-text-sm pka-text-red-600">
+                            <div className="pka:w-full pka:rounded-lg pka:border pka:border-red-200 pka:bg-red-50 pka:p-3 pka:text-sm pka:text-red-600">
                                 {error}
                             </div>
                         )}
 
-                        <div className="pka-flex pka-w-full pka-flex-col pka-gap-4">
-                            <div className="pka-relative pka-mb-2 pka-flex pka-flex-col pka-gap-2">
+                        <div className="pka:flex pka:w-full pka:flex-col pka:gap-4">
+                            <div className="pka:relative pka:mb-2 pka:flex pka:flex-col pka:gap-2">
                                 <label
                                     htmlFor="password"
-                                    className="pka-text-base pka-text-body sm:pka-text-sm"
+                                    className="pka:text-base pka:text-body sm:pka:text-sm"
                                 >
                                     Create Password
                                 </label>
@@ -122,7 +122,7 @@ function ResetPasswordForm({
                                     type="password"
                                 />
                                 {isPasswordTyping && (
-                                    <div className="pka-flex pka-flex-col pka-gap-4 pka-p-4 pka-text-xs pka-text-body">
+                                    <div className="pka:flex pka:flex-col pka:gap-4 pka:p-4 pka:text-xs pka:text-body">
                                         <PasswordCriteria
                                             isValidated={
                                                 validatingErr.isMinLength
@@ -162,10 +162,10 @@ function ResetPasswordForm({
                                 )}
                             </div>
 
-                            <div className="pka-relative pka-mb-2 pka-flex pka-flex-col pka-gap-2">
+                            <div className="pka:relative pka:mb-2 pka:flex pka:flex-col pka:gap-2">
                                 <label
                                     htmlFor="confirmPassword"
-                                    className="pka-text-base pka-text-body sm:pka-text-sm"
+                                    className="pka:text-base pka:text-body sm:pka:text-sm"
                                 >
                                     Confirm Password
                                 </label>
@@ -178,7 +178,7 @@ function ResetPasswordForm({
                                 />
                                 {resetForm.formState.errors.confirmPassword
                                     ?.message && (
-                                    <div className="pka-text-sm pka-text-red-500">
+                                    <div className="pka:text-sm pka:text-red-500">
                                         {
                                             resetForm.formState.errors
                                                 .confirmPassword.message
@@ -200,11 +200,11 @@ function ResetPasswordForm({
                     </form>
                 </div>
             ) : (
-                <div className="pka-mx-auto pka-mt-8 pka-flex pka-w-full pka-max-w-xl pka-flex-col pka-items-center pka-justify-center pka-gap-2 pka-rounded-2xl pka-bg-white pka-p-8 pka-px-[40px] pka-py-10 pka-text-center pka-text-body sm:pka-mt-28">
-                    <div className="pka-flex pka-w-full pka-max-w-[150px] pka-items-center pka-justify-center">
+                <div className="pka:mx-auto pka:mt-8 pka:flex pka:w-full pka:max-w-xl pka:flex-col pka:items-center pka:justify-center pka:gap-2 pka:rounded-2xl pka:bg-white pka:p-8 pka:px-[40px] pka:py-10 pka:text-center pka:text-body sm:pka:mt-28">
+                    <div className="pka:flex pka:w-full pka:max-w-[150px] pka:items-center pka:justify-center">
                         <Lottie animationData={success} />
                     </div>
-                    <h6 className="pka-my-4 pka-flex-wrap pka-text-lg pka-font-thin pka-opacity-[0.8]">
+                    <h6 className="pka:my-4 pka:flex-wrap pka:text-lg pka:font-thin pka:opacity-[0.8]">
                         Password Reset Successful.
                     </h6>
                     <Button

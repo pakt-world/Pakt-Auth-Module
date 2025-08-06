@@ -79,27 +79,27 @@ const SignUpForm = ({
         <form
             method="post"
             onSubmit={form.handleSubmit(handleSubmit)}
-            className="pka-mx-auto pka-flex pka-w-full pka-flex-col pka-items-center pka-gap-6 pka-rounded-2xl pka-bg-white pka-p-4 sm:pka-max-w-[600px] sm:pka-px-[40px] sm:pka-py-10"
+            className="pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-white pka:p-4 sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10"
         >
             {backToSignupMethod && (
                 <button
                     type="button"
                     onClick={backToSignupMethod}
-                    className="pka-inline-flex pka-items-center pka-justify-start pka-gap-2 pka-self-start"
+                    className="pka:inline-flex pka:items-center pka:justify-start pka:gap-2 pka:self-start"
                 >
-                    <ChevronLeft size={24} className="pka-text-[#007C5B]" />
-                    <div className="pka-text-base pka-leading-normal pka-tracking-tight pka-text-[#007c5b]">
+                    <ChevronLeft size={24} className="pka:text-[#007C5B]" />
+                    <div className="pka:text-base pka:leading-normal pka:tracking-tight pka:text-[#007c5b]">
                         Sign up another way
                     </div>
                 </button>
             )}
 
-            <div className="pka-flex pka-w-full pka-flex-col pka-gap-2">
-                <div className="pka-grid pka-grid-cols-1 pka-gap-4">
-                    <div className="pka-relative pka-mb-1 pka-flex pka-w-full pka-flex-col pka-gap-2">
+            <div className="pka:flex pka:w-full pka:flex-col pka:gap-2">
+                <div className="pka:grid pka:grid-cols-1 pka:gap-4">
+                    <div className="pka:relative pka:mb-1 pka:flex pka:w-full pka:flex-col pka:gap-2">
                         <label
                             htmlFor="firstName"
-                            className="pka-text-base pka-text-body sm:pka-text-sm"
+                            className="pka:text-base pka:text-body sm:pka:text-sm"
                         >
                             Full Name
                         </label>
@@ -110,17 +110,17 @@ const SignUpForm = ({
                             className="input_style"
                         />
                         {form.formState.errors.firstName?.message && (
-                            <div className="pka-text-sm pka-text-red-500">
+                            <div className="pka:text-sm pka:text-red-500">
                                 {form.formState.errors.firstName.message}
                             </div>
                         )}
                     </div>
                 </div>
 
-                <div className="pka-relative pka-mb-1 pka-flex pka-flex-col pka-gap-2">
+                <div className="pka:relative pka:mb-1 pka:flex pka:flex-col pka:gap-2">
                     <label
                         htmlFor="email"
-                        className="pka-text-base pka-text-body sm:pka-text-sm"
+                        className="pka:text-base pka:text-body sm:pka:text-sm"
                     >
                         Email Address
                     </label>
@@ -131,16 +131,16 @@ const SignUpForm = ({
                         className="input_style"
                     />
                     {form.formState.errors.email?.message && (
-                        <div className="pka-text-sm pka-text-red-500">
+                        <div className="pka:text-sm pka:text-red-500">
                             {form.formState.errors.email.message}
                         </div>
                     )}
                 </div>
 
-                <div className="pka-relative pka-mb-1 pka-flex pka-flex-col pka-gap-2">
+                <div className="pka:relative pka:mb-1 pka:flex pka:flex-col pka:gap-2">
                     <label
                         htmlFor="password"
-                        className="pka-text-base pka-text-body sm:pka-text-sm"
+                        className="pka:text-base pka:text-body sm:pka:text-sm"
                     >
                         Create Password
                     </label>
@@ -152,7 +152,7 @@ const SignUpForm = ({
                         type="password"
                     />
                     {isPasswordTyping && (
-                        <div className="pka-flex pka-flex-col pka-gap-4 pka-p-4 pka-text-xs pka-text-body">
+                        <div className="pka:flex pka:flex-col pka:gap-4 pka:p-4 pka:text-xs pka:text-body">
                             <PasswordCriteria
                                 isValidated={validatingErr.isMinLength}
                                 criteria="At least 8 characters"
@@ -182,10 +182,10 @@ const SignUpForm = ({
                     )}
                 </div>
 
-                <div className="pka-relative pka-mb-1 pka-flex pka-flex-col pka-gap-2">
+                <div className="pka:relative pka:mb-1 pka:flex pka:flex-col pka:gap-2">
                     <label
                         htmlFor="confirmPassword"
-                        className="pka-text-base pka-text-body sm:pka-text-sm"
+                        className="pka:text-base pka:text-body sm:pka:text-sm"
                     >
                         Confirm Password
                     </label>
@@ -197,7 +197,7 @@ const SignUpForm = ({
                         type="password"
                     />
                     {form.formState.errors.confirmPassword?.message && (
-                        <div className="pka-text-sm pka-text-red-500">
+                        <div className="pka:text-sm pka:text-red-500">
                             {form.formState.errors.confirmPassword.message}
                         </div>
                     )}
@@ -205,7 +205,7 @@ const SignUpForm = ({
             </div>
 
             {error && (
-                <div className="pka-text-center pka-text-sm pka-text-red-500">
+                <div className="pka:text-center pka:text-sm pka:text-red-500">
                     {error}
                 </div>
             )}
@@ -220,13 +220,13 @@ const SignUpForm = ({
             </Button>
 
             {!isMobile && (
-                <div className="pka-relative pka-flex pka-w-full pka-items-center pka-justify-center pka-gap-2">
-                    <span className="pka-text-title">
+                <div className="pka:relative pka:flex pka:w-full pka:items-center pka:justify-center pka:gap-2">
+                    <span className="pka:text-title">
                         Already have an account?{" "}
                     </span>
                     <span
                         onClick={goToLoginMethod}
-                        className="pka-hover:underline pka-cursor-pointer pka-font-bold pka-text-primary"
+                        className="pka:hover:underline pka:cursor-pointer pka:font-bold pka:text-primary"
                     >
                         Login
                     </span>

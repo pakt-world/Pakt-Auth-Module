@@ -36,8 +36,8 @@ const SignupDialog = ({
 }: SignupDialogProps): JSX.Element => {
     return (
         <HeadlessModal isOpen={isOpen} closeModal={onClose}>
-            <div className="pka-z-[2] pka-flex pka-size-full pka-flex-col pka-items-center pka-justify-center pka-gap-6">
-                <div className="pka-flex pka-flex-col pka-items-center pka-gap-2 pka-text-center pka-text-white">
+            <div className="pka-size-full pka-gap-6 pka-z-[2] pka-flex pka-flex-col pka-items-center pka-justify-center">
+                <div className="pka-gap-2 pka-text-white pka-flex pka-flex-col pka-items-center pka-text-center">
                     <h3 className="pka-font-sans pka-text-2xl pka-font-bold sm:pka-text-3xl">
                         {textConfig?.signupTitle || "Create Your Account"}
                     </h3>
@@ -53,8 +53,8 @@ const SignupDialog = ({
                     backToSignupMethod={backToSignupMethod}
                     goToLoginMethod={goToLoginMethod}
                 />
-                <div className="pka-flex pka-w-full pka-items-center pka-justify-end">
-                    <PoweredByPakt className="!pka-text-white" />
+                <div className="pka:flex pka:w-full pka:items-center pka:justify-end">
+                    <PoweredByPakt className="!pka:text-white" />
                 </div>
             </div>
         </HeadlessModal>

@@ -42,18 +42,18 @@ const ForgotPasswordForm = ({
 
     return (
         <form
-            className="pka-relative pka-mx-auto pka-flex pka-w-full pka-max-w-[600px] pka-flex-col pka-items-center pka-gap-6 pka-rounded-2xl pka-bg-white pka-p-4 sm:pka-px-[40px] sm:pka-py-10"
+            className="pka:relative pka:mx-auto pka:flex pka:w-full pka:max-w-[600px] pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-white pka:p-4 sm:pka:px-[40px] sm:pka:py-10"
             onSubmit={form.handleSubmit(handleSubmit)}
         >
             {error && (
-                <div className="pka-w-full pka-rounded-lg pka-border pka-border-red-200 pka-bg-red-50 pka-p-3 pka-text-sm pka-text-red-600">
+                <div className="pka:w-full pka:rounded-lg pka:border pka:border-red-200 pka:bg-red-50 pka:p-3 pka:text-sm pka:text-red-600">
                     {error}
                 </div>
             )}
 
-            <div className="pka-relative pka-flex pka-w-full pka-flex-col pka-gap-2">
+            <div className="pka:relative pka:flex pka:w-full pka:flex-col pka:gap-2">
                 <label
-                    className="pka-font-sans pka-text-base pka-text-body sm:pka-text-sm"
+                    className="pka:font-sans pka:text-base pka:text-body sm:pka:text-sm"
                     htmlFor="email"
                 >
                     Email
@@ -66,7 +66,7 @@ const ForgotPasswordForm = ({
                     id="email"
                 />
                 {form.formState.errors.email?.message && (
-                    <div className="pka-text-sm pka-text-red-500">
+                    <div className="pka:text-sm pka:text-red-500">
                         {form.formState.errors.email.message}
                     </div>
                 )}
@@ -83,7 +83,7 @@ const ForgotPasswordForm = ({
             {!isMobile && onBackToLogin && (
                 <Button
                     variant="transparent"
-                    className="pka-text-primary"
+                    className="pka:text-primary"
                     onClick={onBackToLogin}
                     type="button"
                 >

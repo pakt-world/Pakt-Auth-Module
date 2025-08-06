@@ -10,32 +10,32 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../utils";
 
 const button = cva(
-    "focus:pka-outline-none pka-py-3 pka-whitespace-nowrap pka-duration-200 pka-capitalize pka-focus-visible:ring-1 pka-focus-visible:ring-[#19A966] pka-relative pka-z-0 pka-rounded-[10px] pka-text-center pka-w-fit pka-px-6 pka-font-semibold pka-focus-visible:border-transparent",
+    "focus:pka:outline-none pka:py-3 pka:whitespace-nowrap pka:duration-200 pka:capitalize pka:focus-visible:ring-1 pka:focus-visible:ring-[#19A966] pka:relative pka:z-0 pka:rounded-[10px] pka:text-center pka:w-fit pka:px-6 pka:font-semibold pka:focus-visible:border-transparent",
     {
         variants: {
             variant: {
                 primary:
-                    "pka-border-white pka-border-opacity-10 pka-bg-btn-primary pka-text-white",
+                    "pka:border-white pka:border-opacity-10 pka:bg-btn-primary pka:text-white",
                 secondary:
-                    "pka-border-primary pka-border pka-text-primary pka-bg-primary-brighter pka-hover:bg-green-100 pka-duration-200 pka-font-normal",
+                    "pka:border-primary pka:border pka:text-primary pka:bg-primary-brighter pka:hover:bg-green-100 pka:duration-200 pka:font-normal",
                 outline:
-                    "pka-border-primary pka-border pka-text-primary pka-border-opacity-100 pka-bg-transparent pka-hover:border-opacity-50 pka-font-normal pka-duration-200",
+                    "pka:border-primary pka:border pka:text-primary pka:border-opacity-100 pka:bg-transparent pka:hover:border-opacity-50 pka:font-normal pka:duration-200",
                 transparent:
-                    "pka-border-transparent pka-text-primary pka-bg-transparent pka-hover:bg-[#008D6C1A] pka-duration-200",
-                danger: "pka-bg-red-200 pka-text-red-600 pka-hover:bg-red-100 pka-border pka-border-transparent",
+                    "pka:border-transparent pka:text-primary pka:bg-transparent pka:hover:bg-[#008D6C1A] pka:duration-200",
+                danger: "pka:bg-red-200 pka:text-red-600 pka:hover:bg-red-100 pka:border pka:border-transparent",
             },
             size: {
-                xs: "pka-px-2 pka-py-[8px] pka-text-xs",
-                sm: "pka-px-2 pka-py-2 pka-text-sm",
-                md: "pka-px-3 pka-py-3 pka-text-base",
-                lg: "pka-px-4 pka-py-4 pka-text-lg",
-                xl: "pka-px-5 pka-py-5 pka-text-xl",
+                xs: "pka:px-2 pka:py-[8px] pka:text-xs",
+                sm: "pka:px-2 pka:py-2 pka:text-sm",
+                md: "pka:px-3 pka:py-3 pka:text-base",
+                lg: "pka:px-4 pka:py-4 pka:text-lg",
+                xl: "pka:px-5 pka:py-5 pka:text-xl",
             },
             fullWidth: {
-                true: "pka-w-full",
+                true: "pka:w-full",
             },
             disabled: {
-                true: "pka-cursor-not-allowed !pka-bg-none !pka-bg-[#E3E5E5] !pka-text-[#979C9E]",
+                true: "pka:cursor-not-allowed !pka:bg-none !pka:bg-[#E3E5E5] !pka:text-[#979C9E]",
             },
         },
         defaultVariants: {
@@ -46,30 +46,30 @@ const button = cva(
             {
                 variant: "outline",
                 disabled: true,
-                className: "pka-border-gray-300",
+                className: "pka:border-gray-300",
             },
             {
                 variant: "transparent",
                 disabled: true,
-                className: "pka-border-none pka-hover:bg-transparent",
+                className: "pka:border-none pka:hover:bg-transparent",
             },
         ],
     }
 );
 
 const gradientHover = cva(
-    "pka-absolute pka-inset-0 pka-rounded-lg pka-border pka-border-transparent pka-opacity-0 pka-duration-200 pka-hover:opacity-100 pka-pointer-events-none",
+    "pka:absolute pka:inset-0 pka:rounded-lg pka:border pka:border-transparent pka:opacity-0 pka:duration-200 pka:hover:opacity-100 pka:pointer-events-none",
     {
         variants: {
             variant: {
-                primary: "pka-bg-primary",
-                secondary: "pka-bg-transparent",
-                outline: "pka-bg-transparent",
-                transparent: "pka-bg-transparent",
-                danger: "pka-bg-transparent",
+                primary: "pka:bg-primary",
+                secondary: "pka:bg-transparent",
+                outline: "pka:bg-transparent",
+                transparent: "pka:bg-transparent",
+                danger: "pka:bg-transparent",
             },
             disabled: {
-                true: "pka-bg-none pka-bg-transparent",
+                true: "pka:bg-none pka:bg-transparent",
             },
         },
         defaultVariants: {

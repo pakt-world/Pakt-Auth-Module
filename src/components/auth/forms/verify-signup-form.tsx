@@ -94,10 +94,10 @@ function VerifySignupForm({
         <>
             {!isSuccess ? (
                 <form
-                    className="pka-relative pka-mx-auto pka-flex pka-w-full pka-flex-col pka-items-center pka-gap-6 pka-rounded-2xl pka-bg-white pka-p-4 sm:pka-max-w-[600px] sm:pka-px-[40px] sm:pka-py-10"
+                    className="pka:relative pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-white pka:p-4 sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10"
                     onSubmit={form.handleSubmit(handleSubmit)}
                 >
-                    <div className="pka-flex pka-w-fit pka-flex-col pka-gap-4">
+                    <div className="pka:flex pka:w-fit pka:flex-col pka:gap-4">
                         <Controller
                             name="otp"
                             control={form.control}
@@ -108,11 +108,11 @@ function VerifySignupForm({
                                         onChange={onChange}
                                         shouldAutoFocus
                                         numInputs={6}
-                                        containerStyle="pka-gap-3 pka-flex"
+                                        containerStyle="pka:gap-3 pka:flex"
                                         renderInput={(props) => (
                                             <input
                                                 {...props}
-                                                className="otp_style !pka-select-none pka-px-3 pka-py-2 focus:pka-outline-none focus:pka-ring-1 focus:pka-ring-primary"
+                                                className="otp_style !pka:select-none pka:px-3 pka:py-2 focus:pka:outline-none focus:pka:ring-1 focus:pka:ring-primary"
                                             />
                                         )}
                                     />
@@ -128,18 +128,18 @@ function VerifySignupForm({
                             {isLoading ? <Spinner /> : "Verify Email"}
                         </Button>
 
-                        <div className="pka-flex pka-w-full pka-flex-col pka-items-center pka-gap-4">
-                            <span className="pka-text-body">
+                        <div className="pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-4">
+                            <span className="pka:text-body">
                                 {formatCountdown(countdown)}
                             </span>
-                            <div className="pka-w-full pka-max-w-[150px]">
+                            <div className="pka:w-full pka:max-w-[150px]">
                                 <Button
                                     size="xs"
                                     fullWidth
                                     variant="outline"
                                     onClick={handleResendOTP}
                                     disabled={resendLoading || isResendDisabled}
-                                    className="!pka-h-7 pka-max-w-[150px] pka-items-center pka-justify-center !pka-py-2"
+                                    className="!pka:h-7 pka:max-w-[150px] pka:items-center pka:justify-center !pka:py-2"
                                     style={{
                                         opacity:
                                             resendLoading || isResendDisabled
@@ -147,7 +147,7 @@ function VerifySignupForm({
                                                 : 1,
                                     }}
                                 >
-                                    <span className="pka-flex pka-flex-row pka-gap-2">
+                                    <span className="pka:flex pka:flex-row pka:gap-2">
                                         <Timer size={16} className="" />
                                         {resendLoading ? (
                                             <Spinner size={16} />
@@ -161,11 +161,11 @@ function VerifySignupForm({
                     </div>
                 </form>
             ) : (
-                <div className="pka-mx-auto pka-flex pka-w-full pka-max-w-xl pka-flex-col pka-items-center pka-justify-center pka-gap-2 pka-rounded-2xl pka-bg-white pka-p-8 pka-px-[40px] pka-py-10 pka-text-center pka-text-body">
-                    <div className="pka-flex pka-w-full pka-max-w-[150px] pka-items-center pka-justify-center">
+                <div className="pka:mx-auto pka:flex pka:w-full pka:max-w-xl pka:flex-col pka:items-center pka:justify-center pka:gap-2 pka:rounded-2xl pka:bg-white pka:p-8 pka:px-[40px] pka:py-10 pka:text-center pka:text-body">
+                    <div className="pka:flex pka:w-full pka:max-w-[150px] pka:items-center pka:justify-center">
                         <Lottie animationData={success} />
                     </div>
-                    <h6 className="pka-my-4 pka-flex-wrap pka-text-lg pka-font-thin pka-opacity-[0.8]">
+                    <h6 className="pka:my-4 pka:flex-wrap pka:text-lg pka:font-thin pka:opacity-[0.8]">
                         Email has been verified
                     </h6>
                     <Button

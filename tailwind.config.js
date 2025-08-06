@@ -1,15 +1,13 @@
-import { type Config } from "tailwindcss";
+const defaultTheme = require("tailwindcss/defaultTheme");
+const tailwindcssRadix = require("tailwindcss-radix");
 
-import { fontFamily } from "tailwindcss/defaultTheme";
-import tailwindcssRadix from "tailwindcss-radix";
-import tailwindcssAnimate from "tailwindcss-animate";
-
-const Prefix = "pka-";
+const Prefix = "pka";
 const PrefixExt = "pkas-";
 
-const RenderPrefixVariable = (value:string) => `var(--${PrefixExt}${value})`;
+const RenderPrefixVariable = (value) => `var(--${PrefixExt}${value})`;
 
-const config: Config = {
+/** @type {import('tailwindcss').Config} */
+module.exports = {
     prefix: Prefix,
     content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
     important: '.pakt-auth-module',
@@ -50,7 +48,7 @@ const config: Config = {
               none: "none",
             },
             fontFamily: {
-              sans: [RenderPrefixVariable("circular-std-font"), ...fontFamily.sans],
+              sans: [RenderPrefixVariable("circular-std-font"), ...defaultTheme.fontFamily.sans],
             },
             borderRadius: {
               "modal": RenderPrefixVariable("modal-radius"),
@@ -93,7 +91,5 @@ const config: Config = {
             },
         },
     },
-    plugins: [tailwindcssRadix, tailwindcssAnimate],
+    plugins: [tailwindcssRadix],
 };
-
-export default config;
