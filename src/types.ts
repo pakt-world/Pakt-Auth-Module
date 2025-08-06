@@ -25,7 +25,7 @@ export type { ConfigContextType, GoogleOAuthConfig };
 type IAny = any;
 type I0xAddressType = `0x${string}`;
 
-interface ITheme extends Record<string, any> {
+interface ITheme {
   primary?: string;
   secondary?: string;
   info?: string;
@@ -42,6 +42,59 @@ interface ITheme extends Record<string, any> {
   "btn-primary"?: string;
   "primary-gradient"?: string;
   "modal-radius"?: string;
+  "blue-lightest"?: string;
+  "blue-darkest"?: string;
+  
+  surface?: {
+    primary?: string;
+    overlay?: string;
+  };
+  
+  text?: {
+    primary?: string;
+    secondary?: string;
+    inverse?: string;
+  };
+  
+  input?: {
+    background?: string;
+    border?: string;
+    focus?: string;
+    placeholder?: string;
+  };
+  
+  states?: {
+    error?: {
+      background?: string;
+      text?: string;
+      border?: string;
+    };
+    success?: {
+      background?: string;
+      text?: string;
+    };
+    warning?: {
+      background?: string;
+      text?: string;
+    };
+  };
+  
+  button?: {
+    primary?: {
+      background?: string;
+      text?: string;
+      hover?: string;
+    };
+    outline?: {
+      background?: string;
+      text?: string;
+      border?: string;
+      hover?: {
+        background?: string;
+        text?: string;
+      };
+    };
+  };
 }
 
 export {

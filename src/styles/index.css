@@ -80,11 +80,33 @@
 /* Input styles */
 @layer components {
   .input_style {
-    @apply pka:!w-full pka:!px-4 pka:!py-3 pka:!border pka:!border-gray-300 pka:!rounded-lg pka:!text-sm pka:!text-gray-900 pka:!bg-white pka:!placeholder-gray-500 pka:focus:outline-none pka:focus:ring-2 pka:focus:ring-primary pka:focus:border-transparent pka:transition-colors;
+    @apply pka:!w-full pka:!px-4 pka:!py-3 pka:!border pka:!rounded-lg pka:!text-sm pka:!transition-colors;
+    background-color: var(--pkas-inputBackground);
+    border-color: var(--pkas-inputBorder);
+    color: var(--pkas-textPrimary);
+  }
+  
+  .input_style::placeholder {
+    color: var(--pkas-inputPlaceholder);
+  }
+  
+  .input_style:focus {
+    outline: none;
+    border-color: transparent;
+    box-shadow: 0 0 0 2px var(--pkas-inputFocus);
   }
   
   .otp_style {
-    @apply pka:w-12 pka:h-12 pka:text-center pka:border pka:border-gray-300 pka:rounded-lg pka:text-lg pka:font-semibold pka:text-gray-900 pka:bg-white pka:focus:outline-none pka:focus:ring-2 pka:focus:ring-primary pka:focus:border-transparent pka:transition-colors;
+    @apply pka:w-12 pka:h-12 pka:text-center pka:border pka:rounded-lg pka:text-lg pka:font-semibold pka:transition-colors;
     width: 3rem !important;
+    background-color: var(--pkas-inputBackground);
+    border-color: var(--pkas-inputBorder);
+    color: var(--pkas-textPrimary);
+  }
+  
+  .otp_style:focus {
+    outline: none;
+    border-color: transparent;
+    box-shadow: 0 0 0 2px var(--pkas-inputFocus);
   }
 }
