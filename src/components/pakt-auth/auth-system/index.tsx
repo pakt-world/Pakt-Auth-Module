@@ -148,7 +148,7 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
         };
 
         const handleVerifyLoginSuccess = () => {
-            onLoginSuccess?.(verifyLoginSuccess.userData as LoginDto);
+            onLoginSuccess?.(verifyLoginSuccess.userData || ({} as UserData));
             resetCurrentView();
         };
 
