@@ -56,6 +56,8 @@ module.exports = {
                 "input-border": RenderPrefixVariable("input-border"),
                 "input-focus": RenderPrefixVariable("input-focus"),
                 "input-placeholder": RenderPrefixVariable("input-placeholder"),
+                "input-text": RenderPrefixVariable("input-text"),
+                "input-label": RenderPrefixVariable("input-label"),
 
                 // State colors
                 "error-bg": RenderPrefixVariable("error-bg"),

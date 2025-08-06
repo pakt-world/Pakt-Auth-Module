@@ -28,8 +28,7 @@ const flattenTheme = (obj: any, prefix = ''): Record<string, string> => {
       if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
         Object.assign(flattened, flattenTheme(value, newKey));
       } else if (typeof value === 'string') {
-        const cssKey = newKey.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
-        flattened[cssKey] = value;
+        flattened[newKey] = value;
       }
     }
   }
@@ -52,7 +51,8 @@ const applyTheme = (theme: ITheme) => {
     
     Object.keys(flattenedColors).forEach((key) => {
       const value = flattenedColors[key];
-      root.style.setProperty(`--pkas-${key}`, value);
+      const cssProperty = `--pkas-${key}`;
+      root.style.setProperty(cssProperty, value);
     });
   }
 };

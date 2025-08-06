@@ -46,14 +46,14 @@ const ForgotPasswordForm = ({
             onSubmit={form.handleSubmit(handleSubmit)}
         >
             {error && (
-                <div className="pka:w-full pka:rounded-lg pka:border pka:border-red-200 pka:bg-red-50 pka:p-3 pka:text-sm pka:text-red-600">
+                <div className="pka:w-full pka:rounded-lg pka:border pka:border-red-200 pka:bg-red-50 pka:p-3 pka:text-sm pka:text-danger">
                     {error}
                 </div>
             )}
 
             <div className="pka:relative pka:flex pka:w-full pka:flex-col pka:gap-2">
                 <label
-                    className="pka:font-sans pka:text-base pka:text-body sm:pka:text-sm"
+                    className="pka:font-sans pka:text-base input_label sm:pka:text-sm"
                     htmlFor="email"
                 >
                     Email
@@ -66,7 +66,7 @@ const ForgotPasswordForm = ({
                     id="email"
                 />
                 {form.formState.errors.email?.message && (
-                    <div className="pka:text-sm pka:text-red-500">
+                    <div className="pka:text-sm pka:text-danger">
                         {form.formState.errors.email.message}
                     </div>
                 )}

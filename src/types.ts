@@ -61,6 +61,8 @@ interface ITheme {
     border?: string;
     focus?: string;
     placeholder?: string;
+    text?: string;
+    label?: string;
   };
   
   states?: {

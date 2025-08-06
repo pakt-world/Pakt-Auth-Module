@@ -45,15 +45,15 @@ const LoginForm = ({
                     onClick={backToLoginMethod}
                     className="pka:inline-flex pka:items-center pka:justify-start pka:gap-2 pka:self-start"
                 >
-                    <ChevronLeft size={24} className="pka:text-[#007C5B]" />
-                    <div className="pka:text-base pka:leading-normal pka:tracking-tight pka:text-[#007c5b]">
+                    <ChevronLeft size={24} className="pka:text-primary" />
+                    <div className="pka:text-base pka:leading-normal pka:tracking-tight pka:text-primary">
                         Log in another way
                     </div>
                 </button>
             )}
 
             {error && (
-                <div className="pka:w-full pka:rounded-lg pka:border pka:border-red-200 pka:bg-red-50 pka:p-3 pka:text-sm pka:text-red-600">
+                <div className="pka:w-full pka:rounded-lg pka:border pka:border-red-200 pka:bg-red-50 pka:p-3 pka:text-sm pka:text-danger">
                     {error}
                 </div>
             )}
@@ -62,7 +62,7 @@ const LoginForm = ({
                 <div className="pka:flex pka:flex-col pka:gap-2">
                     <label
                         htmlFor="email"
-                        className="pka:text-base pka:text-body sm:pka:text-sm"
+                        className="pka:text-base input_label sm:pka:text-sm"
                     >
                         Email Address
                     </label>
@@ -73,7 +73,7 @@ const LoginForm = ({
                         type="email"
                     />
                     {form.formState.errors.email && (
-                        <span className="pka:text-sm pka:text-red-500">
+                        <span className="pka:text-sm pka:text-danger">
                             {form.formState.errors.email.message}
                         </span>
                     )}
@@ -82,7 +82,7 @@ const LoginForm = ({
                 <div className="pka:flex pka:flex-col pka:gap-2">
                     <label
                         htmlFor="password"
-                        className="pka:text-base pka:text-body sm:pka:text-sm"
+                        className="pka:text-base input_label sm:pka:text-sm"
                     >
                         Password
                     </label>
@@ -93,7 +93,7 @@ const LoginForm = ({
                         type="password"
                     />
                     {form.formState.errors.password && (
-                        <span className="pka:text-sm pka:text-red-500">
+                        <span className="pka:text-sm pka:text-danger">
                             {form.formState.errors.password.message}
                         </span>
                     )}
