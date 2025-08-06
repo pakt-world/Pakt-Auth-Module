@@ -10,7 +10,7 @@ import { ReactElement } from "react";
 
 import { HeadlessModal } from "../../common/headless-modal";
 import { SigninMethod } from "../methods/signin-method";
-import { AuthTextConfig } from "../../pakt-auth/types";
+import { AuthTextConfig, UserData } from "../../pakt-auth/types";
 
 interface SigninMethodDialogProps {
     isOpen: boolean;
@@ -19,7 +19,7 @@ interface SigninMethodDialogProps {
     onEmailLogin: () => void;
     onGoogleLogin: () => void;
     goToSignupMethod: () => void;
-    onGoogleLoginSuccess?: (userData: any) => void;
+    onGoogleLoginSuccess?: (userData: UserData) => void;
     onGoogleLoginError?: (error: string) => void;
 }
 

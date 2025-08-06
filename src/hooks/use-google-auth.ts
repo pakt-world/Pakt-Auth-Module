@@ -13,9 +13,10 @@ import Logger from "../lib/logger";
 import { usePaktAuth } from "./use-pakt-auth";
 import type { GoogleOAuthValdatePayload } from "../lib/pakt-sdk";
 import { useConfig } from "../context/config-context";
+import { UserData } from "../components/pakt-auth/types";
 
 interface GoogleAuthOptions {
-  onSuccess?: (userData: any) => void;
+  onSuccess?: (userData: UserData) => void;
   onError?: (error: string) => void;
 }
 
@@ -31,9 +32,10 @@ export const useGoogleAuth = ({
 
   const handleGoogleAuthSuccess = useCallback(async (codeResponse: { code: string }) => {
     try {
+
       // Step 1: Generate Google OAuth state
       const generateResponse = await googleOAuthGenerateState();
-      
+
       if (generateResponse.status === 'error') {
         throw new Error(generateResponse.message || 'Failed to generate Google OAuth state');
       }
@@ -48,7 +50,7 @@ export const useGoogleAuth = ({
 
       if (validateResponse.status === 'success' && validateResponse.data) {
         Logger.info("Google OAuth success", validateResponse.data);
-        
+
         // Call the success callback with user data
         onSuccess?.(validateResponse.data);
       } else {
@@ -70,7 +72,6 @@ export const useGoogleAuth = ({
       onError?.(errorMessage);
     },
     flow: "auth-code",
-    scope: "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
     ux_mode: "popup",
   }) : () => {
     console.warn("Google OAuth is not configured. Please provide a client ID.");

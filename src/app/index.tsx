@@ -6,7 +6,7 @@ import { useRef, useState } from "react";
 /* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
-import { AuthRef } from "../components/pakt-auth/types";
+import { AuthRef, UserData } from "../components/pakt-auth/types";
 import PaktAuth from "../components/pakt-auth";
 
 const App = () => {
@@ -29,11 +29,11 @@ const App = () => {
     const handleLogin = () => paktAuthRef.current?.onLogin?.();
     const handleSignup = () => paktAuthRef.current?.onSignup?.();
 
-    const handleSignupSuccess = (userData: any) => {
+    const handleSignupSuccess = (userData: UserData) => {
         console.log("Signup success:", userData);
     };
 
-    const handleLoginSuccess = (userData: any) => {
+    const handleLoginSuccess = (userData: UserData) => {
         console.log("Login success:", userData);
     };
 
@@ -69,7 +69,8 @@ const App = () => {
                 config={{
                     googleOAuth: {
                         clientId:
-                            "100000000000-00000000000000000000000000000000.apps.googleusercontent.com",
+                            "583287786734-s8rrgm4ll9ltjm430a25vi6107dbiiib.apps.googleusercontent.com",
+                        redirectUri: "http://localhost:4234",
                     },
                     paktSDK: {
                         baseUrl: "https://api-devpaktbuild.chain.site",
