@@ -1,0 +1,3 @@
+/* Import Tailwind utilities with both prefixed and non-prefixed classes */
+@import "tailwindcss";
+@config "../../tailwind.config.js";

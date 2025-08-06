@@ -9,7 +9,7 @@ import { forwardRef, Ref, useImperativeHandle, useRef } from "react";
 import { ConfigProvider } from "../../context/config-context";
 import AuthSystem from "./auth-system";
 import { AuthRef, PaktAuthProps } from "./types";
-import "../../styles/index.scss";
+import "../../styles/index.css";
 
 const PaktAuth = forwardRef(
     (
