@@ -94,8 +94,8 @@ function VerifySignupForm({
         <>
             {!isSuccess ? (
                 <form
-                    className="pka:relative pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-white pka:p-4 sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10"
                     onSubmit={form.handleSubmit(handleSubmit)}
+                    className="pka:relative pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-surface-primary pka:p-4 sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10"
                 >
                     <div className="pka:flex pka:w-fit pka:flex-col pka:gap-4">
                         <Controller
@@ -161,7 +161,7 @@ function VerifySignupForm({
                     </div>
                 </form>
             ) : (
-                <div className="pka:mx-auto pka:flex pka:w-full pka:max-w-xl pka:flex-col pka:items-center pka:justify-center pka:gap-2 pka:rounded-2xl pka:bg-white pka:p-8 pka:px-[40px] pka:py-10 pka:text-center pka:text-body">
+                <div className="pka:mx-auto pka:mt-8 pka:flex pka:w-full pka:max-w-xl pka:flex-col pka:items-center pka:justify-center pka:gap-2 pka:rounded-2xl pka:bg-surface-primary pka:p-8 pka:px-[40px] pka:py-10 pka:text-center pka:text-body">
                     <div className="pka:flex pka:w-full pka:max-w-[150px] pka:items-center pka:justify-center">
                         <Lottie animationData={success} />
                     </div>

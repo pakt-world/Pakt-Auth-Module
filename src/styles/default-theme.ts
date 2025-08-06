@@ -24,7 +24,6 @@ const defaultTheme: ITheme = {
     
     surface: {
         primary: "#FFFFFF",
-        overlay: "rgba(0, 0, 0, 0.8)",
     },
     
     text: {

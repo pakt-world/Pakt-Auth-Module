@@ -21,7 +21,7 @@ const App = () => {
             primary: "#8B5CF6",
             secondary: "#F59E0B",
             surface: {
-                primary: "#FFFFFF",
+                primary: "#FF0000",
                 overlay: "rgba(0, 0, 0, 0.8)",
             },
             text: {

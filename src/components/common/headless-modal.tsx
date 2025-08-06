@@ -46,7 +46,7 @@ export const HeadlessModal: FC<HeadlessModalProps> = ({
                     leaveFrom="pka:opacity-100"
                     leaveTo="pka:opacity-0"
                 >
-                    <div className="pka:fixed pka:inset-0 pka:bg-black pka:bg-opacity-80 pka:backdrop-blur-lg" />
+                    <div className="pka:fixed pka:inset-0 pka:bg-black/80 pka:backdrop-blur-lg" />
                 </Transition.Child>
 
                 <div className="pka:fixed pka:inset-0 pka:overflow-y-auto">
