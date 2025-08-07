@@ -71,7 +71,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 2. **Update Dependencies** (if needed):
    ```bash
-   yarn add @pakt/auth-module@^0.0.3
+   yarn add @pakt/auth-module@^1.0.0
    ```
 
 ### Benefits
