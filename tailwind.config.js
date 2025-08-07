@@ -26,6 +26,7 @@ module.exports = {
         },
         extend: {
             colors: {
+                // Legacy colors (kept for backward compatibility)
                 primary: RenderPrefixVariable("primary"),
                 info: RenderPrefixVariable("info"),
                 secondary: RenderPrefixVariable("secondary"),
@@ -42,33 +43,89 @@ module.exports = {
                 "refer-border": RenderPrefixVariable("refer-border"),
                 "exhibit-tab-list": RenderPrefixVariable("exhibit-tab-list"),
 
-                // Surface colors
-                "surface-primary": RenderPrefixVariable("surface-primary"),
-                "surface-overlay": RenderPrefixVariable("surface-overlay"),
-
-                // Text colors
+                // Legacy text colors (kept for backward compatibility)
                 "text-primary": RenderPrefixVariable("text-primary"),
-                "text-secondary": RenderPrefixVariable("text-secondary"),
-                "text-inverse": RenderPrefixVariable("text-inverse"),
+                "text-body": RenderPrefixVariable("text-body"),
+                "text-title": RenderPrefixVariable("text-title"),
+                "text-danger": RenderPrefixVariable("text-danger"),
+                "text-success": RenderPrefixVariable("text-success"),
+                "text-warning": RenderPrefixVariable("text-warning"),
 
-                // Input colors
+                // Brand Colors
+                "brand-primary": RenderPrefixVariable("brand-primary"),
+                "brand-secondary": RenderPrefixVariable("brand-secondary"),
+                "brand-accent": RenderPrefixVariable("brand-accent"),
+
+                // Text Colors
+                "heading-text": RenderPrefixVariable("heading-text"),
+                "body-text": RenderPrefixVariable("body-text"),
+                "link-text": RenderPrefixVariable("link-text"),
+                "inverse-text": RenderPrefixVariable("inverse-text"),
+
+                // Background Colors
+                "form-background": RenderPrefixVariable("form-background"),
+                "modal-overlay": RenderPrefixVariable("modal-overlay"),
+                "page-background": RenderPrefixVariable("page-background"),
+                "card-background": RenderPrefixVariable("card-background"),
+
+                // Border Colors
+                "border-color": RenderPrefixVariable("border-color"),
+                "divider-color": RenderPrefixVariable("divider-color"),
+
+                // Interactive Elements
+                "button-primary-background": RenderPrefixVariable(
+                    "button-primary-background"
+                ),
+                "button-primary-text": RenderPrefixVariable(
+                    "button-primary-text"
+                ),
+                "button-primary-hover": RenderPrefixVariable(
+                    "button-primary-hover"
+                ),
+                "button-outline-background": RenderPrefixVariable(
+                    "button-outline-background"
+                ),
+                "button-outline-text": RenderPrefixVariable(
+                    "button-outline-text"
+                ),
+                "button-outline-border": RenderPrefixVariable(
+                    "button-outline-border"
+                ),
+                "button-outline-hover-background": RenderPrefixVariable(
+                    "button-outline-hover-background"
+                ),
+                "button-outline-hover-text": RenderPrefixVariable(
+                    "button-outline-hover-text"
+                ),
+
+                // Form Input Colors
                 "input-background": RenderPrefixVariable("input-background"),
                 "input-border": RenderPrefixVariable("input-border"),
-                "input-focus": RenderPrefixVariable("input-focus"),
+                "input-focus-border":
+                    RenderPrefixVariable("input-focus-border"),
                 "input-placeholder": RenderPrefixVariable("input-placeholder"),
                 "input-text": RenderPrefixVariable("input-text"),
                 "input-label": RenderPrefixVariable("input-label"),
 
-                // State colors
-                "error-bg": RenderPrefixVariable("error-bg"),
+                // State Colors
+                "error-background": RenderPrefixVariable("error-background"),
                 "error-text": RenderPrefixVariable("error-text"),
                 "error-border": RenderPrefixVariable("error-border"),
-                "success-bg": RenderPrefixVariable("success-bg"),
+                "success-background":
+                    RenderPrefixVariable("success-background"),
                 "success-text": RenderPrefixVariable("success-text"),
-                "warning-bg": RenderPrefixVariable("warning-bg"),
+                "warning-background":
+                    RenderPrefixVariable("warning-background"),
                 "warning-text": RenderPrefixVariable("warning-text"),
 
-                // Button colors
+                // Nested structure colors (kept for backward compatibility)
+                "text-primary": RenderPrefixVariable("text-primary"),
+                "text-secondary": RenderPrefixVariable("text-secondary"),
+                "text-inverse": RenderPrefixVariable("text-inverse"),
+                "input-focus": RenderPrefixVariable("input-focus"),
+                "error-bg": RenderPrefixVariable("error-bg"),
+                "success-bg": RenderPrefixVariable("success-bg"),
+                "warning-bg": RenderPrefixVariable("warning-bg"),
                 "btn-primary-bg": RenderPrefixVariable("btn-primary-bg"),
                 "btn-primary-text": RenderPrefixVariable("btn-primary-text"),
                 "btn-primary-hover": RenderPrefixVariable("btn-primary-hover"),
@@ -84,8 +141,18 @@ module.exports = {
                 ),
             },
             backgroundImage: {
+                // Legacy gradients (kept for backward compatibility)
                 "btn-primary": RenderPrefixVariable("btn-primary"),
                 "primary-gradient": RenderPrefixVariable("primary-gradient"),
+
+                // New semantic gradients
+                "brand-primary-gradient": RenderPrefixVariable(
+                    "brand-primary-gradient"
+                ),
+                "brand-secondary-gradient": RenderPrefixVariable(
+                    "brand-secondary-gradient"
+                ),
+
                 none: "none",
             },
             fontFamily: {
@@ -95,7 +162,13 @@ module.exports = {
                 ],
             },
             borderRadius: {
+                // Legacy border radius (kept for backward compatibility)
                 "modal": RenderPrefixVariable("modal-radius"),
+
+                // New semantic border radius
+                "modal-border-radius": RenderPrefixVariable(
+                    "modal-border-radius"
+                ),
             },
             keyframes: {
                 "accordion-down": {

@@ -26,30 +26,82 @@ type IAny = any;
 type I0xAddressType = `0x${string}`;
 
 interface ITheme {
-  primary?: string;
-  secondary?: string;
-  info?: string;
-  line?: string;
-  title?: string;
-  body?: string;
-  warning?: string;
-  success?: string;
-  danger?: string;
-  magnolia?: string;
-  "exhibit-tab-list"?: string;
-  "primary-brighter"?: string;
-  "refer-border"?: string;
-  "btn-primary"?: string;
-  "primary-gradient"?: string;
-  "modal-radius"?: string;
-  "blue-lightest"?: string;
-  "blue-darkest"?: string;
+  // Brand Colors
+  brandPrimary?: string;           // Main brand color for buttons, links, icons
+  brandSecondary?: string;         // Secondary brand color for backgrounds
+  brandAccent?: string;            // Accent color for highlights
   
-  surface?: {
-    primary?: string;
-    overlay?: string;
-  };
+  // Text Colors
+  headingText?: string;            // Color for headings and titles
+  bodyText?: string;               // Color for body text and descriptions
+  linkText?: string;               // Color for links and interactive text
+  inverseText?: string;            // White text for dark backgrounds
   
+  // Background Colors
+  formBackground?: string;         // Background color for forms and cards
+  modalOverlay?: string;           // Overlay color for modals and dialogs
+  pageBackground?: string;         // Main page background color
+  cardBackground?: string;         // Background for cards and containers
+  
+  // Border Colors
+  borderColor?: string;            // Default border color
+  dividerColor?: string;           // Color for dividers and separators
+  
+  // Interactive Elements
+  buttonPrimaryBackground?: string;    // Primary button background
+  buttonPrimaryText?: string;          // Primary button text color
+  buttonPrimaryHover?: string;         // Primary button hover state
+  buttonOutlineBackground?: string;    // Outline button background
+  buttonOutlineText?: string;          // Outline button text color
+  buttonOutlineBorder?: string;        // Outline button border color
+  buttonOutlineHoverBackground?: string; // Outline button hover background
+  buttonOutlineHoverText?: string;     // Outline button hover text
+  
+  // Form Input Colors
+  inputBackground?: string;        // Input field background
+  inputBorder?: string;            // Input field border
+  inputFocusBorder?: string;       // Input field focus border
+  inputPlaceholder?: string;       // Input placeholder text
+  inputText?: string;              // Input text color
+  inputLabel?: string;             // Input label text color
+  
+  // State Colors
+  errorBackground?: string;        // Error state background
+  errorText?: string;              // Error state text
+  errorBorder?: string;            // Error state border
+  successBackground?: string;      // Success state background
+  successText?: string;            // Success state text
+  warningBackground?: string;      // Warning state background
+  warningText?: string;            // Warning state text
+  
+  // Gradients
+  primaryGradient?: string;        // Primary gradient for buttons
+  secondaryGradient?: string;      // Secondary gradient
+  
+  // Spacing and Layout
+  modalBorderRadius?: string;      // Border radius for modals
+  
+  // Legacy Support (deprecated but kept for backward compatibility)
+  primary?: string;                // Legacy: use brandPrimary
+  secondary?: string;              // Legacy: use brandSecondary
+  info?: string;                   // Legacy: use brandAccent
+  line?: string;                   // Legacy: use dividerColor
+  title?: string;                  // Legacy: use headingText
+  body?: string;                   // Legacy: use bodyText
+  warning?: string;                // Legacy: use warningText
+  success?: string;                // Legacy: use successText
+  danger?: string;                 // Legacy: use errorText
+  magnolia?: string;               // Legacy: use cardBackground
+  "exhibit-tab-list"?: string;     // Legacy: use cardBackground
+  "primary-brighter"?: string;     // Legacy: use brandSecondary
+  "refer-border"?: string;         // Legacy: use borderColor
+  "btn-primary"?: string;          // Legacy: use primaryGradient
+  "primary-gradient"?: string;     // Legacy: use primaryGradient
+  "modal-radius"?: string;         // Legacy: use modalBorderRadius
+  "blue-lightest"?: string;        // Legacy: use brandAccent
+  "blue-darkest"?: string;         // Legacy: use brandPrimary
+  
+  // Nested structure for complex token groups (kept for backward compatibility)
   text?: {
     primary?: string;
     secondary?: string;

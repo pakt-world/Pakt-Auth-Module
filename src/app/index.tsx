@@ -20,54 +20,32 @@ const App = () => {
         theme: {
             primary: "#8B5CF6",
             secondary: "#F59E0B",
-            surface: {
-                primary: "#FF0000",
-            },
-            text: {
-                primary: "#1F2937",
-                secondary: "#6B7280",
-                inverse: "#FFFFFF",
-            },
-            input: {
-                background: "#FFFFFF",
-                border: "#D1D5DB",
-                focus: "#8B5CF6",
-                placeholder: "#9CA3AF",
-                text: "#1F2937",
-                label: "#1F2937",
-            },
-
-            states: {
-                error: {
-                    background: "#FEF2F2",
-                    text: "#DC2626",
-                    border: "#FECACA",
-                },
-                success: {
-                    background: "#F0FDF4",
-                    text: "#16A34A",
-                },
-                warning: {
-                    background: "#FFFBEB",
-                    text: "#D97706",
-                },
-            },
-            button: {
-                primary: {
-                    background: "#FF0000",
-                    text: "#FFFFFF",
-                    hover: "#7C3AED",
-                },
-                outline: {
-                    background: "transparent",
-                    text: "#8B5CF6",
-                    border: "#8B5CF6",
-                    hover: {
-                        background: "#8B5CF6",
-                        text: "#FFFFFF",
-                    },
-                },
-            },
+            formBackground: "#FF0000", // Example: Form backgrounds will be red
+            headingText: "#1F2937",
+            bodyText: "#6B7280",
+            labelText: "#1F2937",
+            placeholderText: "#9CA3AF",
+            linkText: "#8B5CF6",
+            inverseText: "#FFFFFF",
+            inputBackground: "#FFFFFF",
+            inputBorder: "#D1D5DB",
+            inputFocusBorder: "#8B5CF6",
+            inputText: "#1F2937",
+            inputLabel: "#1F2937",
+            errorBackground: "#FEF2F2",
+            errorText: "#DC2626",
+            errorBorder: "#FECACA",
+            successBackground: "#F0FDF4",
+            successText: "#16A34A",
+            warningBackground: "#FFFBEB",
+            warningText: "#D97706",
+            primaryButtonText: "#FFFFFF",
+            primaryButtonHover: "#7C3AED",
+            outlineButtonBackground: "transparent",
+            outlineButtonText: "#8B5CF6",
+            outlineButtonBorder: "#8B5CF6",
+            outlineButtonHoverBackground: "#8B5CF6",
+            outlineButtonHoverText: "#FFFFFF",
         },
         errorHandler: (errorMessage: string) => {
             setError(errorMessage);

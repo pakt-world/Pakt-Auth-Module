@@ -48,29 +48,12 @@ const Modal: FC<ModalProps> = ({
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                 >
-                    <div className="pka:fixed pka:inset-0 pka:bg-surface-overlay pka:backdrop-blur-lg" />
+                    <div className="pka:fixed pka:inset-0 pka:bg-black/80 pka:backdrop-blur-lg" />
                 </Transition.Child>
 
-                <div className="pka:fixed pka:inset-0 pka:overflow-y-auto">
-                    <div className="pka:flex pka:min-h-full pka:items-center pka:justify-center pka:p-4 pka:text-center">
-                        <Transition.Child
-                            as={Fragment}
-                            enter="ease-out "
-                            enterFrom="opacity-0 scale-95"
-                            enterTo="opacity-100 scale-100"
-                            leave="ease-in duration-200"
-                            leaveFrom="opacity-100 scale-100"
-                            leaveTo="opacity-0 scale-95"
-                        >
-                            <Dialog.Panel
-                                className={cn(
-                                    "pka:relative !pka:z-10 pka:w-full pka:max-w-lg pka:transform pka:overflow-hidden pka:bg-transparent pka:text-left pka:align-middle pka:transition-all",
-                                    className
-                                )}
-                            >
-                                {children}
-                            </Dialog.Panel>
-                        </Transition.Child>
+                <div className="pka:fixed pka:inset-0 pka:z-50 pka:flex pka:items-center pka:justify-center pka:bg-modal-overlay">
+                    <div className="pka:relative pka:mx-4 pka:w-full pka:max-w-md pka:rounded-lg pka:bg-form-background pka:p-6 pka:shadow-xl">
+                        {children}
                     </div>
                 </div>
             </Dialog>

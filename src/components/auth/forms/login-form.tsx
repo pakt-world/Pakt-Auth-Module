@@ -37,7 +37,7 @@ const LoginForm = ({
         <form
             method="post"
             onSubmit={form.handleSubmit(handleSubmit)}
-            className="pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-surface-primary pka:p-4 sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10"
+            className="pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-form-background pka:p-4 sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10"
         >
             {backToLoginMethod && (
                 <button
@@ -53,7 +53,7 @@ const LoginForm = ({
             )}
 
             {error && (
-                <div className="pka:w-full pka:rounded-lg pka:border pka:border-red-200 pka:bg-red-50 pka:p-3 pka:text-sm pka:text-danger">
+                <div className="pka:w-full pka:rounded-lg pka:border pka:border-error-border pka:bg-error-background pka:p-3 pka:text-sm pka:text-error-text">
                     {error}
                 </div>
             )}
