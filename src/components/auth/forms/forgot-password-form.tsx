@@ -42,7 +42,7 @@ const ForgotPasswordForm = ({
 
     return (
         <form
-            className="pka:relative pka:mx-auto pka:flex pka:w-full pka:max-w-[600px] pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-form-background pka:p-4 sm:pka:px-[40px] sm:pka:py-10"
+            className="pka:relative pka:mx-auto pka:flex pka:w-full pka:max-w-[600px] pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-form-background pka:p-4 pka:sm:px-[40px] pka:sm:py-10"
             onSubmit={form.handleSubmit(handleSubmit)}
         >
             {error && (
@@ -53,7 +53,7 @@ const ForgotPasswordForm = ({
 
             <div className="pka:relative pka:flex pka:w-full pka:flex-col pka:gap-2">
                 <label
-                    className="pka:font-sans pka:text-base pka:text-input-label sm:pka:text-sm"
+                    className="pka:font-sans pka:text-base pka:text-input-label pka:sm:text-sm"
                     htmlFor="email"
                 >
                     Email

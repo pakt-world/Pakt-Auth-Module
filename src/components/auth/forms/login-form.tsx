@@ -37,7 +37,7 @@ const LoginForm = ({
         <form
             method="post"
             onSubmit={form.handleSubmit(handleSubmit)}
-            className="pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-form-background pka:p-4 sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10"
+            className="pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-form-background pka:p-4 pka:sm:max-w-[600px] pka:sm:px-[40px] pka:sm:py-10"
         >
             {backToLoginMethod && (
                 <button
@@ -62,7 +62,7 @@ const LoginForm = ({
                 <div className="pka:flex pka:flex-col pka:gap-2">
                     <label
                         htmlFor="email"
-                        className="pka:text-base pka:text-input-label sm:pka:text-sm"
+                        className="pka:text-base pka:text-input-label pka:sm:text-sm"
                     >
                         Email Address
                     </label>
@@ -82,7 +82,7 @@ const LoginForm = ({
                 <div className="pka:flex pka:flex-col pka:gap-2">
                     <label
                         htmlFor="password"
-                        className="pka:text-base pka:text-input-label sm:pka:text-sm"
+                        className="pka:text-base pka:text-input-label pka:sm:text-sm"
                     >
                         Password
                     </label>
@@ -104,7 +104,7 @@ const LoginForm = ({
                         <button
                             type="button"
                             onClick={onForgotPassword}
-                            className="pka:cursor-pointer pka:font-bold pka:text-primary hover:pka:underline"
+                            className="pka:cursor-pointer pka:font-bold pka:text-primary pka:hover:underline"
                         >
                             Forgot Password?
                         </button>

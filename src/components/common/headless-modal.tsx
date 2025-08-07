@@ -30,7 +30,7 @@ export const HeadlessModal: FC<HeadlessModalProps> = ({
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog
                 as="div"
-                className="pka:relative !pka:z-[79]"
+                className="pka:relative !pka:z-[3000]"
                 onClose={() => {
                     if (!disableClickOutside) {
                         closeModal();
