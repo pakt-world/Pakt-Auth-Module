@@ -21,7 +21,7 @@ export default function SignupPage({
     backToSignupMethod,
 }: SignupPageProps): JSX.Element {
     return (
-        <div className="pka:z-[2] pka:flex pka:w-full pka:items-center sm:pka:mx-auto sm:pka:size-full">
+        <div className="pka:z-[2] pka:flex pka:w-full pka:items-center pka:sm:mx-auto pka:sm:size-full">
             <div className="pka:flex pka:size-full pka:flex-col pka:items-center pka:justify-center pka:gap-6"></div>
         </div>
     );

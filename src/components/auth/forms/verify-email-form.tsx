@@ -85,7 +85,7 @@ function VerifyEmailForm({
     };
 
     return (
-        <div className="pka:flex pka:w-full pka:max-w-2xl pka:flex-col pka:items-center pka:gap-6 sm:pka:mt-28">
+        <div className="pka:flex pka:w-full pka:max-w-2xl pka:flex-col pka:items-center pka:gap-6 pka:sm:mt-28">
             <div className="pka:flex pka:flex-col pka:items-center pka:gap-2 pka:text-center">
                 <h3 className="pka:font-sans pka:text-3xl pka:font-bold pka:text-white">
                     Reset Password Code
@@ -97,7 +97,7 @@ function VerifyEmailForm({
             </div>
             <form
                 onSubmit={form.handleSubmit(handleSubmit)}
-                className="pka:relative pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-form-background pka:p-4 sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10"
+                className="pka:relative pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-form-background pka:p-4 pka:sm:max-w-[600px] pka:sm:px-[40px] pka:sm:py-10"
             >
                 <div className="pka:flex pka:w-fit pka:flex-col pka:gap-4">
                     <Controller
@@ -114,7 +114,7 @@ function VerifyEmailForm({
                                     renderInput={(props) => (
                                         <input
                                             {...props}
-                                            className="otp_style !pka:select-none pka:px-3 pka:py-2 focus:pka:outline-none focus:pka:ring-1 focus:pka:ring-primary"
+                                            className="otp_style !pka:select-none pka:px-3 pka:py-2 pka:focus:outline-none pka:focus:ring-1 pka:focus:ring-primary"
                                         />
                                     )}
                                 />

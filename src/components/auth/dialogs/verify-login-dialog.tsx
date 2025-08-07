@@ -42,7 +42,7 @@ const VerifyLoginDialog = ({
         <HeadlessModal isOpen={isOpen} closeModal={onClose} disableClickOutside>
             <div className="pka:z-[2] pka:flex pka:size-full pka:flex-col pka:items-center pka:justify-center pka:gap-6">
                 <div className="pka:flex pka:flex-col pka:items-center pka:gap-2 pka:text-center">
-                    <h3 className="pka:font-sans pka:text-2xl pka:font-bold pka:text-white sm:pka:text-3xl">
+                    <h3 className="pka:font-sans pka:text-2xl pka:font-bold pka:text-white pka:sm:text-3xl">
                         2FA Security
                     </h3>
                     <p className="pka:font-sans pka:text-base pka:leading-normal pka:tracking-tight pka:text-body pka:text-white">

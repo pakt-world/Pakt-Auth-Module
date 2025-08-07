@@ -79,7 +79,7 @@ const SignUpForm = ({
         <form
             method="post"
             onSubmit={form.handleSubmit(handleSubmit)}
-            className="pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-form-background pka:p-4 sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10"
+            className="pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-form-background pka:p-4 pka:sm:max-w-[600px] pka:sm:px-[40px] pka:sm:py-10"
         >
             {backToSignupMethod && (
                 <button
@@ -99,7 +99,7 @@ const SignUpForm = ({
                     <div className="pka:relative pka:mb-1 pka:flex pka:w-full pka:flex-col pka:gap-2">
                         <label
                             htmlFor="firstName"
-                            className="pka:text-base pka:text-input-label sm:pka:text-sm"
+                            className="pka:text-base pka:text-input-label pka:sm:text-sm"
                         >
                             Full Name
                         </label>
@@ -120,7 +120,7 @@ const SignUpForm = ({
                 <div className="pka:relative pka:mb-1 pka:flex pka:flex-col pka:gap-2">
                     <label
                         htmlFor="email"
-                        className="pka:text-base pka:text-input-label sm:pka:text-sm"
+                        className="pka:text-base pka:text-input-label pka:sm:text-sm"
                     >
                         Email Address
                     </label>
@@ -140,7 +140,7 @@ const SignUpForm = ({
                 <div className="pka:relative pka:mb-1 pka:flex pka:flex-col pka:gap-2">
                     <label
                         htmlFor="password"
-                        className="pka:text-base pka:text-input-label sm:pka:text-sm"
+                        className="pka:text-base pka:text-input-label pka:sm:text-sm"
                     >
                         Create Password
                     </label>
@@ -185,7 +185,7 @@ const SignUpForm = ({
                 <div className="pka:relative pka:mb-1 pka:flex pka:flex-col pka:gap-2">
                     <label
                         htmlFor="confirmPassword"
-                        className="pka:text-base pka:text-input-label sm:pka:text-sm"
+                        className="pka:text-base pka:text-input-label pka:sm:text-sm"
                     >
                         Confirm Password
                     </label>

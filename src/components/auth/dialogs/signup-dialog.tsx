@@ -38,7 +38,7 @@ const SignupDialog = ({
         <HeadlessModal isOpen={isOpen} closeModal={onClose}>
             <div className="pka:size-full pka:gap-6 pka:z-[2] pka:flex pka:flex-col pka:items-center pka:justify-center">
                 <div className="pka:gap-2 pka:text-white pka:flex pka:flex-col pka:items-center pka:text-center">
-                    <h3 className="pka:font-sans pka:text-2xl pka:font-bold sm:pka:text-3xl">
+                    <h3 className="pka:font-sans pka:text-2xl pka:font-bold pka:sm:text-3xl">
                         {textConfig?.signupTitle || "Create Your Account"}
                     </h3>
                     <p className="pka:font-sans pka:text-base pka:leading-normal pka:tracking-tight">
