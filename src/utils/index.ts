@@ -39,14 +39,26 @@ const flattenTheme = (obj: any, prefix = ''): Record<string, string> => {
 const applyTheme = (theme: ITheme) => {
   const root = document.documentElement;
 
+  // Convert camelCase to kebab-case for CSS variables
+  const toKebabCase = (str: string) => {
+    return str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2').toLowerCase();
+  };
+
+  // Apply flat tokens (including legacy tokens)
   Object.keys(theme).forEach((key) => {
     const value = theme[key as keyof typeof theme];
     if (typeof value === 'string') {
-      root.style.setProperty(`--pkas-${key}`, value);
+      const cssVariableName = toKebabCase(key);
+      const cssProperty = `--pkas-${cssVariableName}`;
+      root.style.setProperty(cssProperty, value);
     }
   });
 
-  if (theme.surface || theme.text || theme.input || theme.states || theme.button) {
+  // Apply nested structure tokens (only if they exist)
+  const nestedStructures = ['text', 'input', 'states', 'button'];
+  const hasNestedStructures = nestedStructures.some(key => theme[key as keyof typeof theme]);
+  
+  if (hasNestedStructures) {
     const flattenedColors = flattenTheme(theme);
     
     Object.keys(flattenedColors).forEach((key) => {

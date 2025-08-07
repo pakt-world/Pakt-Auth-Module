@@ -79,7 +79,7 @@ const SignUpForm = ({
         <form
             method="post"
             onSubmit={form.handleSubmit(handleSubmit)}
-            className="pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-surface-primary pka:p-4 sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10"
+            className="pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-form-background pka:p-4 sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10"
         >
             {backToSignupMethod && (
                 <button

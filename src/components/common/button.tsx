@@ -15,14 +15,14 @@ const button = cva(
         variants: {
             variant: {
                 primary:
-                    "pka:border-white pka:border-opacity-10 pka:bg-btn-primary pka:text-white",
+                    "pka:border-white pka:border-opacity-10 pka:bg-[var(--pkas-button-primary-background)] pka:text-button-primary-text",
                 secondary:
-                    "pka:border-primary pka:border pka:text-primary pka:bg-primary-brighter pka:hover:bg-green-100 pka:duration-200 pka:font-normal",
+                    "pka:border-brand-primary pka:border pka:text-brand-primary pka:bg-brand-secondary pka:hover:bg-button-primary-hover pka:duration-200 pka:font-normal",
                 outline:
-                    "pka:border-primary pka:border pka:text-primary pka:border-opacity-100 pka:bg-transparent pka:hover:border-opacity-50 pka:font-normal pka:duration-200",
+                    "pka:border-brand-primary pka:border pka:text-button-outline-text pka:border-opacity-100 pka:bg-[var(--pkas-button-outline-background)] pka:hover:border-opacity-50 pka:hover:bg-[var(--pkas-button-outline-hover-background)] pka:hover:text-button-outline-hover-text pka:font-normal pka:duration-200",
                 transparent:
-                    "pka:border-transparent pka:text-primary pka:bg-transparent pka:hover:bg-[#008D6C1A] pka:duration-200",
-                danger: "pka:bg-red-200 pka:text-red-600 pka:hover:bg-red-100 pka:border pka:border-transparent",
+                    "pka:border-transparent pka:text-brand-primary pka:bg-transparent pka:hover:bg-[#008D6C1A] pka:duration-200",
+                danger: "pka:bg-[var(--pkas-error-background)] pka:text-error-text pka:hover:bg-[var(--pkas-error-background)] pka:border pka:border-transparent",
             },
             size: {
                 xs: "pka:px-2 pka:py-[8px] pka:text-xs",
@@ -62,7 +62,7 @@ const gradientHover = cva(
     {
         variants: {
             variant: {
-                primary: "pka:bg-primary",
+                primary: "pka:bg-[var(--pkas-button-primary-hover)]",
                 secondary: "pka:bg-transparent",
                 outline: "pka:bg-transparent",
                 transparent: "pka:bg-transparent",

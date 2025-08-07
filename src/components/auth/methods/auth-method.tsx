@@ -28,7 +28,7 @@ const MethodWrapper = ({
         <button
             type="button"
             onClick={onClick}
-            className="pka:inline-flex pka:h-14 pka:w-full pka:items-center pka:justify-center pka:gap-4 pka:overflow-hidden pka:rounded-[10px] pka:border-2 pka:border-input-border pka:bg-surface-primary pka:p-4"
+            className="pka:inline-flex pka:h-14 pka:w-full pka:items-center pka:justify-center pka:gap-4 pka:overflow-hidden pka:rounded-[10px] pka:border-2 pka:border-input-border pka:bg-form-background pka:p-4"
         >
             <div data-svg-wrapper className="pka:relative">
                 {icon}
@@ -63,7 +63,7 @@ export const AuthOptions = ({
     const isLogin = currentAuth === "signin_method";
 
     return (
-        <div className="pka:flex pka:w-full pka:flex-col pka:items-center pka:justify-center pka:gap-4 pka:rounded-3xl pka:bg-surface-primary pka:p-6">
+        <div className="pka:flex pka:w-full pka:flex-col pka:items-center pka:justify-center pka:gap-4 pka:rounded-3xl pka:bg-form-background pka:p-6">
             <h3 className="pka:text-xl pka:leading-[30px] pka:tracking-tight pka:text-text-primary">
                 {instruction}
             </h3>

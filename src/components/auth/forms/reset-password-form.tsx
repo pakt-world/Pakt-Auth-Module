@@ -89,19 +89,19 @@ function ResetPasswordForm({
             {!isSuccess ? (
                 <div className="pka:flex pka:h-full pka:w-full pka:flex-col pka:items-center pka:justify-center pka:gap-6 sm:pka:max-w-2xl max-sm:pka:p-0">
                     <div className="pka:flex pka:flex-col pka:items-center pka:gap-2 pka:text-center">
-                        <h3 className="pka:font-sans pka:text-2xl pka:font-bold pka:text-white 2xl:pka:text-3xl">
+                        <h3 className="pka:font-sans pka:text-2xl pka:font-bold pka:text-inverse-text 2xl:pka:text-3xl">
                             Reset Password
                         </h3>
-                        <p className="pka:font-sans pka:text-base pka:leading-normal pka:tracking-tight pka:text-body pka:text-white">
+                        <p className="pka:font-sans pka:text-base pka:leading-normal pka:tracking-tight pka:text-body pka:text-inverse-text">
                             Choose a new password for your account
                         </p>
                     </div>
                     <form
                         onSubmit={resetForm.handleSubmit(handleSubmit)}
-                        className="pka:relative pka:z-[100] pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-surface-primary sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10 max-sm:pka:p-4"
+                        className="pka:relative pka:z-[100] pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-form-background sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10 max-sm:pka:p-4"
                     >
                         {error && (
-                            <div className="pka:w-full pka:rounded-lg pka:border pka:border-red-200 pka:bg-red-50 pka:p-3 pka:text-sm pka:text-danger">
+                            <div className="pka:w-full pka:rounded-lg pka:border pka:border-error-border pka:bg-error-background pka:p-3 pka:text-sm pka:text-error-text">
                                 {error}
                             </div>
                         )}
@@ -200,7 +200,7 @@ function ResetPasswordForm({
                     </form>
                 </div>
             ) : (
-                <div className="pka:mx-auto pka:mt-8 pka:flex pka:w-full pka:max-w-xl pka:flex-col pka:items-center pka:justify-center pka:gap-2 pka:rounded-2xl pka:bg-surface-primary pka:p-8 pka:px-[40px] pka:py-10 pka:text-center pka:text-body sm:pka:mt-28">
+                <div className="pka:mx-auto pka:mt-8 pka:flex pka:w-full pka:max-w-xl pka:flex-col pka:items-center pka:justify-center pka:gap-2 pka:rounded-2xl pka:bg-form-background pka:p-8 pka:px-[40px] pka:py-10 pka:text-center pka:text-body sm:pka:mt-28">
                     <div className="pka:flex pka:w-full pka:max-w-[150px] pka:items-center pka:justify-center">
                         <Lottie animationData={success} />
                     </div>

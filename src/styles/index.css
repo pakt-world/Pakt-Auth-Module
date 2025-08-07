@@ -93,7 +93,7 @@
   .input_style:focus {
     outline: none;
     border-color: transparent;
-    box-shadow: 0 0 0 2px var(--pkas-input-focus);
+    box-shadow: 0 0 0 2px var(--pkas-input-focus-border);
   }
   
   .otp_style {
@@ -107,6 +107,27 @@
   .otp_style:focus {
     outline: none;
     border-color: transparent;
-    box-shadow: 0 0 0 2px var(--pkas-input-focus);
+    box-shadow: 0 0 0 2px var(--pkas-input-focus-border);
+  }
+  
+  /* Button theme tokens using background property for gradient support */
+  .pka\:bg-\[var\(--pkas-button-primary-background\)\] {
+    background: var(--pkas-button-primary-background);
+  }
+  
+  .pka\:bg-\[var\(--pkas-button-outline-background\)\] {
+    background: var(--pkas-button-outline-background);
+  }
+  
+  .pka\:bg-\[var\(--pkas-button-outline-hover-background\)\] {
+    background: var(--pkas-button-outline-hover-background);
+  }
+  
+  .pka\:bg-\[var\(--pkas-button-primary-hover\)\] {
+    background: var(--pkas-button-primary-hover);
+  }
+  
+  .pka\:bg-\[var\(--pkas-error-background\)\] {
+    background: var(--pkas-error-background);
   }
 }

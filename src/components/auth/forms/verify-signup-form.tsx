@@ -95,7 +95,7 @@ function VerifySignupForm({
             {!isSuccess ? (
                 <form
                     onSubmit={form.handleSubmit(handleSubmit)}
-                    className="pka:relative pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-surface-primary pka:p-4 sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10"
+                    className="pka:relative pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-form-background pka:p-4 sm:pka:max-w-[600px] sm:pka:px-[40px] sm:pka:py-10"
                 >
                     <div className="pka:flex pka:w-fit pka:flex-col pka:gap-4">
                         <Controller
@@ -112,7 +112,7 @@ function VerifySignupForm({
                                         renderInput={(props) => (
                                             <input
                                                 {...props}
-                                                className="otp_style !pka:select-none pka:px-3 pka:py-2 focus:pka:outline-none focus:pka:ring-1 focus:pka:ring-primary"
+                                                className="otp_style !pka:select-none pka:px-3 pka:py-2 focus:pka:outline-none focus:pka:ring-1 focus:pka:ring-input-focus-border"
                                             />
                                         )}
                                     />
@@ -125,43 +125,36 @@ function VerifySignupForm({
                             fullWidth
                             disabled={isLoading || !form.formState.isValid}
                         >
-                            {isLoading ? <Spinner /> : "Verify Email"}
+                            {isLoading ? <Spinner /> : "Submit"}
                         </Button>
 
                         <div className="pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-4">
-                            <span className="pka:text-body">
+                            <span className="pka:text-body-text">
                                 {formatCountdown(countdown)}
                             </span>
-                            <div className="pka:w-full pka:max-w-[150px]">
-                                <Button
-                                    size="xs"
-                                    fullWidth
-                                    variant="outline"
-                                    onClick={handleResendOTP}
-                                    disabled={resendLoading || isResendDisabled}
-                                    className="!pka:h-7 pka:max-w-[150px] pka:items-center pka:justify-center !pka:py-2"
-                                    style={{
-                                        opacity:
-                                            resendLoading || isResendDisabled
-                                                ? 0.2
-                                                : 1,
-                                    }}
-                                >
-                                    <span className="pka:flex pka:flex-row pka:gap-2">
-                                        <Timer size={16} className="" />
-                                        {resendLoading ? (
-                                            <Spinner size={16} />
-                                        ) : (
-                                            "Resend Code"
-                                        )}
-                                    </span>
-                                </Button>
-                            </div>
+
+                            <Button
+                                size="xs"
+                                fullWidth
+                                className="!pka:h-7 pka:max-w-[150px] pka:items-center pka:justify-center !pka:py-2"
+                                variant="outline"
+                                onClick={handleResendOTP}
+                                disabled={resendLoading || isResendDisabled}
+                            >
+                                <span className="pka:flex pka:flex-row pka:gap-2">
+                                    <Timer size={16} className="" />
+                                    {resendLoading ? (
+                                        <Spinner size={16} />
+                                    ) : (
+                                        "Resend Code"
+                                    )}
+                                </span>
+                            </Button>
                         </div>
                     </div>
                 </form>
             ) : (
-                <div className="pka:mx-auto pka:mt-8 pka:flex pka:w-full pka:max-w-xl pka:flex-col pka:items-center pka:justify-center pka:gap-2 pka:rounded-2xl pka:bg-surface-primary pka:p-8 pka:px-[40px] pka:py-10 pka:text-center pka:text-body">
+                <div className="pka:mx-auto pka:mt-8 pka:flex pka:w-full pka:max-w-xl pka:flex-col pka:items-center pka:justify-center pka:gap-2 pka:rounded-2xl pka:bg-form-background pka:p-8 pka:px-[40px] pka:py-10 pka:text-center pka:text-body">
                     <div className="pka:flex pka:w-full pka:max-w-[150px] pka:items-center pka:justify-center">
                         <Lottie animationData={success} />
                     </div>
