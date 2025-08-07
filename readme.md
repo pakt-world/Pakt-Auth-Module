@@ -117,27 +117,67 @@ interface ConfigContextType {
 
 ### Theme Configuration
 
-Customize the appearance of the authentication components:
+Customize the appearance of the authentication components with semantic color tokens:
 
 ```typescript
 interface ITheme {
-  primary?: string;      // Primary color
-  secondary?: string;    // Secondary color
-  info?: string;         // Info color
-  line?: string;         // Border/line color
-  title?: string;        // Title text color
-  body?: string;         // Body text color
-  warning?: string;      // Warning color
-  success?: string;      // Success color
-  danger?: string;       // Error/danger color
-  magnolia?: string;     // Background color
-  "exhibit-tab-list"?: string;
-  "primary-brighter"?: string;
-  "refer-border"?: string;
-  "btn-primary"?: string;
-  "primary-gradient"?: string;
-  "modal-radius"?: string;
+  // Brand Colors
+  brandPrimary?: string;           // Main brand color for buttons, links, icons
+  brandSecondary?: string;         // Secondary brand color for backgrounds
+  brandAccent?: string;            // Accent color for highlights
+  
+  // Text Colors
+  headingText?: string;            // Color for headings and titles
+  bodyText?: string;               // Color for body text and descriptions
+  linkText?: string;               // Color for links and interactive text
+  inverseText?: string;            // White text for dark backgrounds
+  
+  // Background Colors
+  formBackground?: string;         // Background color for forms and cards
+  modalOverlay?: string;           // Overlay color for modals and dialogs
+  pageBackground?: string;         // Main page background color
+  cardBackground?: string;         // Background for cards and containers
+  
+  // Interactive Elements
+  buttonPrimaryBackground?: string;    // Primary button background (supports gradients)
+  buttonPrimaryText?: string;          // Primary button text color
+  buttonPrimaryHover?: string;         // Primary button hover state
+  buttonOutlineBackground?: string;    // Outline button background
+  buttonOutlineText?: string;          // Outline button text color
+  buttonOutlineBorder?: string;        // Outline button border color
+  buttonOutlineHoverBackground?: string; // Outline button hover background
+  buttonOutlineHoverText?: string;     // Outline button hover text
+  
+  // Form Input Colors
+  inputBackground?: string;        // Input field background
+  inputBorder?: string;            // Input field border
+  inputFocusBorder?: string;       // Input field focus border
+  inputPlaceholder?: string;       // Input placeholder text
+  inputText?: string;              // Input text color
+  inputLabel?: string;             // Input label text color
+  
+  // State Colors
+  errorBackground?: string;        // Error state background
+  errorText?: string;              // Error state text
+  errorBorder?: string;            // Error state border
+  successBackground?: string;      // Success state background
+  successText?: string;            // Success state text
+  warningBackground?: string;      // Warning state background
+  warningText?: string;            // Warning state text
 }
+```
+
+**Example with gradients:**
+```typescript
+const config: ConfigContextType = {
+  theme: {
+    brandPrimary: "#007C5B",
+    buttonPrimaryBackground: "linear-gradient(102.28deg, #008D6C 32.23%, #11FFC7 139.92%)",
+    formBackground: "#FFFFFF",
+    errorText: "#DC2626",
+  },
+  // ... other config
+};
 ```
 
 ### Google OAuth Configuration
