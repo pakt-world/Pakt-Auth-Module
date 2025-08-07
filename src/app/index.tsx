@@ -17,36 +17,6 @@ const App = () => {
     const [error, setError] = useState<string | undefined>(undefined);
 
     const customConfig = {
-        theme: {
-            primary: "#8B5CF6",
-            secondary: "#F59E0B",
-            formBackground: "#FF0000", // Example: Form backgrounds will be red
-            headingText: "#1F2937",
-            bodyText: "#6B7280",
-            labelText: "#1F2937",
-            placeholderText: "#9CA3AF",
-            linkText: "#8B5CF6",
-            inverseText: "#FFFFFF",
-            inputBackground: "#FFFFFF",
-            inputBorder: "#D1D5DB",
-            inputFocusBorder: "#8B5CF6",
-            inputText: "#1F2937",
-            inputLabel: "#1F2937",
-            errorBackground: "#FEF2F2",
-            errorText: "#DC2626",
-            errorBorder: "#FECACA",
-            successBackground: "#F0FDF4",
-            successText: "#16A34A",
-            warningBackground: "#FFFBEB",
-            warningText: "#D97706",
-            primaryButtonText: "#FFFFFF",
-            primaryButtonHover: "#7C3AED",
-            outlineButtonBackground: "transparent",
-            outlineButtonText: "#8B5CF6",
-            outlineButtonBorder: "#8B5CF6",
-            outlineButtonHoverBackground: "#8B5CF6",
-            outlineButtonHoverText: "#FFFFFF",
-        },
         errorHandler: (errorMessage: string) => {
             setError(errorMessage);
         },
