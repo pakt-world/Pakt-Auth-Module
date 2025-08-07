@@ -1,7 +1,7 @@
 {
     "name": "@pakt/auth-module",
     "license": "MIT",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "repository": "git://github.com/pakt-world/Pakt-Auth-Module.git",
     "description": "Authentication module for Pakt applications",
     "author": "Pakt",
