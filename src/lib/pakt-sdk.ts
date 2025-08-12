@@ -220,13 +220,13 @@ class PaktSDKService {
     }
 
     // Two-Factor Authentication
-    async sendEmailTwoFA(authToken: string): Promise<AuthResponse<{}>> {
+    async resendTwoFAEmailCode(email: string): Promise<AuthResponse<{}>> {
         const sdk = this.ensureInitialized();
         try {
-            const response = await sdk.account.sendEmailTwoFA(authToken);
+            const response = await sdk.auth.resendTwoFAEmailCode(email);
             return response as AuthResponse<{}>;
         } catch (error) {
-            return this.createErrorResponse<{}>(error, "Failed to send 2FA email");
+            return this.createErrorResponse<{}>(error, "Failed to resend 2FA email code");
         }
     }
 

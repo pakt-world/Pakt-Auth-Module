@@ -60,7 +60,7 @@ interface UsePaktAuthReturn {
     googleOAuthValidateState: (props: GoogleOAuthValdatePayload) => Promise<AuthResponse<GoogleOAuthValidateDto>>;
     getUser: (authToken: string) => Promise<AuthResponse<any>>;
     logout: (authToken: string) => Promise<AuthResponse<void>>;
-    sendEmailTwoFA: (authToken: string) => Promise<AuthResponse<{}>>;
+    resendTwoFAEmailCode: (email: string) => Promise<AuthResponse<{}>>;
     
     // Utility Methods
     clearError: () => void;
@@ -336,21 +336,21 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
     }, [clearUser, createErrorResponse]);
 
     // Send Email 2FA
-    const sendEmailTwoFA = useCallback(async (authToken: string): Promise<AuthResponse<{}>> => {
+    const resendTwoFAEmailCode = useCallback(async (email: string): Promise<AuthResponse<{}>> => {
         setLoading(true);
         setError(null);
-        
+
         try {
-            const response = await paktSDKService.sendEmailTwoFA(authToken);
+            const response = await paktSDKService.resendTwoFAEmailCode(email);
             
             if (response.status === 'error') {
-                setError(response.message || 'Failed to send 2FA email');
+                setError(response.message || 'Failed to resend 2FA email');
             }
             
             return response;
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Failed to send 2FA email';
-            return createErrorResponse<{}>(errorMessage, 'Failed to send 2FA email');
+            const errorMessage = error instanceof Error ? error.message : 'Failed to resend 2FA email';
+            return createErrorResponse<{}>(errorMessage, 'Failed to resend 2FA email');
         } finally {
             setLoading(false);
         }
@@ -420,7 +420,7 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
         googleOAuthValidateState,
         getUser,
         logout,
-        sendEmailTwoFA,
+        resendTwoFAEmailCode,
         
         // Utility Methods
         clearError,

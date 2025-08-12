@@ -92,6 +92,7 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
             resendVerifyLink,
             resetPassword,
             changePassword,
+            resendTwoFAEmailCode,
             loading,
             error,
         } = usePaktAuth();
@@ -204,11 +205,9 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
         };
 
         const handleResendLoginVerification = async () => {
-            // For login resend, we need to send the 2FA email again
-            // This would typically use the tempToken to request a new 2FA code
-            // For now, we'll use a placeholder - in a real implementation,
-            // you'd want to call the appropriate resend method
-            console.log("Resend login verification");
+            if (!login2faEmail) return;
+            console.log("login2faEmail", login2faEmail);
+            await resendTwoFAEmailCode(login2faEmail);
         };
 
         const handleForgotPassword = async (
