@@ -121,7 +121,7 @@ function VerifySignupForm({
                             <Button
                                 size="xs"
                                 fullWidth
-                                className="pka:!h-7 pka:max-w-[150px] pka:items-center pka:justify-center"
+                                className="pka:!h-7 pka:max-w-[150px] pka:items-center pka:justify-center pka:justify-items-center pka:!p-0"
                                 variant="outline"
                                 onClick={handleResendOTP}
                                 disabled={resendLoading || isResendDisabled}

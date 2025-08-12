@@ -127,7 +127,7 @@ function VerifyEmailForm({
                             variant="outline"
                             onClick={handleResendOTP}
                             disabled={resendLoading || isResendDisabled}
-                            className="pka:!h-7 pka:max-w-[150px] pka:items-center pka:justify-center pka:!py-2"
+                            className="pka:!h-7 pka:max-w-[150px] pka:items-center pka:justify-center pka:justify-items-center pka:!p-0"
                             style={{
                                 opacity:
                                     resendLoading || isResendDisabled ? 0.2 : 1,
