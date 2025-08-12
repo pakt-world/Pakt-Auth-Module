@@ -251,19 +251,9 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
             resetCurrentView();
         };
 
-        const handleGoogleSignupError = (error: string) => {
-            console.error("Google signup error:", error);
-            // You could set an error state here if needed
-        };
-
         const handleGoogleLoginSuccess = (userData: UserData) => {
             onLoginSuccess?.(userData);
             resetCurrentView();
-        };
-
-        const handleGoogleLoginError = (error: string) => {
-            console.error("Google login error:", error);
-            // You could set an error state here if needed
         };
 
         // Check if Google OAuth is enabled
@@ -311,7 +301,6 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
                     onEmailSignup={() => setCurrentView("signup")}
                     goToLoginMethod={() => setCurrentView("login-method")}
                     onGoogleSignupSuccess={handleGoogleSignupSuccess}
-                    onGoogleSignupError={handleGoogleSignupError}
                 />
                 <SignupDialog
                     isOpen={currentView === "signup"}
@@ -351,7 +340,6 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
                     }}
                     goToSignupMethod={() => setCurrentView("signup-method")}
                     onGoogleLoginSuccess={handleGoogleLoginSuccess}
-                    onGoogleLoginError={handleGoogleLoginError}
                 />
                 <LoginDialog
                     isOpen={currentView === "login"}
