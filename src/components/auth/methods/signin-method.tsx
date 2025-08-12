@@ -51,7 +51,7 @@ export const SigninMethod = ({
                 goToSignupMethod={goToSignupMethod}
             />
             <div className="pka:flex pka:w-full pka:items-center pka:justify-end">
-                <PoweredByPakt className="sm:!pka:text-white" />
+                <PoweredByPakt className="sm:pka:!text-white" />
             </div>
         </div>
     );

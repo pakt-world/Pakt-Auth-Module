@@ -32,7 +32,7 @@ const Modal: FC<ModalProps> = ({
             <Dialog
                 open={isOpen}
                 as="div"
-                className="pka:relative !pka:z-[79]"
+                className="pka:relative pka:!z-[79]"
                 onClose={() => {
                     if (!disableClickOutside) {
                         closeModal();

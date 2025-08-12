@@ -99,7 +99,7 @@ function VerifySignupForm({
                                         renderInput={(props) => (
                                             <input
                                                 {...props}
-                                                className="otp_style !pka:select-none pka:px-3 pka:py-2 pka:focus:outline-none pka:focus:ring-1 pka:focus:ring-input-focus-border"
+                                                className="otp_style pka:!select-none pka:px-3 pka:py-2 pka:focus:outline-none pka:focus:ring-1 pka:focus:ring-input-focus-border"
                                             />
                                         )}
                                     />

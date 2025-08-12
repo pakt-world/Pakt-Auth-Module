@@ -101,7 +101,7 @@ function VerifyEmailForm({
                                     renderInput={(props) => (
                                         <input
                                             {...props}
-                                            className="otp_style !pka:select-none pka:px-3 pka:py-2 pka:focus:outline-none pka:focus:ring-1 pka:focus:ring-primary"
+                                            className="otp_style pka:!select-none pka:px-3 pka:py-2 pka:focus:outline-none pka:focus:ring-1 pka:focus:ring-primary"
                                         />
                                     )}
                                 />
@@ -129,7 +129,7 @@ function VerifyEmailForm({
                             variant="outline"
                             onClick={handleResendOTP}
                             disabled={resendLoading || isResendDisabled}
-                            className="!pka:h-7 pka:max-w-[150px] pka:items-center pka:justify-center !pka:py-2"
+                            className="pka:!h-7 pka:max-w-[150px] pka:items-center pka:justify-center pka:!py-2"
                             style={{
                                 opacity:
                                     resendLoading || isResendDisabled ? 0.2 : 1,

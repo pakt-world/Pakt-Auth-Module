@@ -30,7 +30,7 @@ export const HeadlessModal: FC<HeadlessModalProps> = ({
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog
                 as="div"
-                className="pka:relative !pka:z-[3000]"
+                className="pka:relative pka:!z-[3000]"
                 onClose={() => {
                     if (!disableClickOutside) {
                         closeModal();
@@ -62,7 +62,7 @@ export const HeadlessModal: FC<HeadlessModalProps> = ({
                         >
                             <Dialog.Panel
                                 className={cn(
-                                    "pka:relative !pka:z-10 pka:w-full pka:max-w-lg pka:transform pka:overflow-hidden pka:bg-transparent pka:text-left pka:align-middle pka:transition-all",
+                                    "pka:relative pka:!z-10 pka:w-full pka:max-w-lg pka:transform pka:overflow-hidden pka:bg-transparent pka:text-left pka:align-middle pka:transition-all",
                                     className
                                 )}
                             >
