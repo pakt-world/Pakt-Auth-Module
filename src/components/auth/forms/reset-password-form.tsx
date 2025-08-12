@@ -25,7 +25,6 @@ type ResetFormValues = z.infer<typeof resetPasswordSchema>;
 interface ResetPasswordFormProps {
     onSubmit: (data: ResetFormValues) => void;
     isLoading?: boolean;
-    error?: string;
     onSuccess?: () => void;
     isSuccess?: boolean;
     token?: string;
@@ -34,7 +33,6 @@ interface ResetPasswordFormProps {
 function ResetPasswordForm({
     onSubmit,
     isLoading = false,
-    error,
     onSuccess,
     isSuccess = false,
     token = "",
@@ -100,12 +98,6 @@ function ResetPasswordForm({
                         onSubmit={resetForm.handleSubmit(handleSubmit)}
                         className="pka:relative pka:z-[100] pka:mx-auto pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-6 pka:rounded-2xl pka:bg-form-background pka:sm:max-w-[600px] pka:sm:px-[40px] pka:sm:py-10 pka:max-sm:p-4"
                     >
-                        {error && (
-                            <div className="pka:w-full pka:rounded-lg pka:border pka:border-error-border pka:bg-error-background pka:p-3 pka:text-sm pka:text-error-text">
-                                {error}
-                            </div>
-                        )}
-
                         <div className="pka:flex pka:w-full pka:flex-col pka:gap-4">
                             <div className="pka:relative pka:mb-2 pka:flex pka:flex-col pka:gap-2">
                                 <label

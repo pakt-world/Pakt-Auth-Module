@@ -347,7 +347,7 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
                     textConfig={textConfig}
                     onEmailLogin={() => setCurrentView("login")}
                     onGoogleLogin={() => {
-                        console.log("Google login");
+                        // no-op: Google login handled via onGoogleLoginSuccess/onGoogleLoginError
                     }}
                     goToSignupMethod={() => setCurrentView("signup-method")}
                     onGoogleLoginSuccess={handleGoogleLoginSuccess}

@@ -18,7 +18,6 @@ interface ResetPasswordDialogProps {
     onClose: () => void;
     onSubmit: (data: ResetPasswordFormValues) => void;
     isLoading?: boolean;
-    error?: string;
     onSuccess?: () => void;
     isSuccess?: boolean;
     token?: string;
@@ -29,7 +28,6 @@ const ResetPasswordDialog = ({
     onClose,
     onSubmit,
     isLoading,
-    error,
     onSuccess,
     isSuccess,
     token,
@@ -40,7 +38,6 @@ const ResetPasswordDialog = ({
                 <ResetPasswordForm
                     onSubmit={onSubmit}
                     isLoading={isLoading}
-                    error={error}
                     onSuccess={onSuccess}
                     isSuccess={isSuccess}
                     token={token}

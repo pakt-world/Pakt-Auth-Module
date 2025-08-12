@@ -23,7 +23,6 @@ import { PasswordCriteria } from "../../../components/common/password-criteria";
 interface SignUpFormProps {
     onSubmit: (data: SignupFormValues) => void;
     isLoading?: boolean;
-    error?: string;
     backToSignupMethod?: () => void;
     goToLoginMethod?: () => void;
 }
@@ -31,7 +30,6 @@ interface SignUpFormProps {
 const SignUpForm = ({
     onSubmit,
     isLoading,
-    error,
     backToSignupMethod,
     goToLoginMethod,
 }: SignUpFormProps): React.JSX.Element => {
@@ -203,12 +201,6 @@ const SignUpForm = ({
                     )}
                 </div>
             </div>
-
-            {error && (
-                <div className="pka:text-center pka:text-sm pka:text-danger">
-                    {error}
-                </div>
-            )}
 
             <Button
                 className=""

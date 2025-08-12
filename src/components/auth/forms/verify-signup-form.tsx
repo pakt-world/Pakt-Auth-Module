@@ -75,8 +75,6 @@ function VerifySignupForm({
         return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
     };
 
-    console.log("isResendDisabled", isResendDisabled);
-
     return (
         <>
             {!isSuccess ? (

@@ -42,11 +42,7 @@ export const SignupMethod = ({
                 instruction="Choose sign up method"
                 currentAuth="signup_method"
                 google={isGoogleOAuthEnabled ? signUp : undefined}
-                github={() => {
-                    console.log(
-                        "Github authentication is not implemented yet."
-                    );
-                }}
+                github={undefined}
                 email={onEmailSignup}
                 goToLoginMethod={goToLoginMethod}
             />
