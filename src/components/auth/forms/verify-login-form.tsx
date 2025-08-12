@@ -97,7 +97,7 @@ function VerifyLoginForm({
                                         renderInput={(props) => (
                                             <input
                                                 {...props}
-                                                className="otp_style pka:!select-none pka:px-3 pka:py-2 pka:focus:outline-none pka:focus:ring-1 pka:focus:ring-primary"
+                                                className="otp_style pka:!select-none pka:px-3 pka:py-2 max-[424px]:pka:px-0 max-[424px]:pka:py-0 pka:focus:outline-none pka:focus:ring-1 pka:focus:ring-primary"
                                             />
                                         )}
                                     />
