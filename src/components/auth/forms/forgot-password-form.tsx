@@ -5,7 +5,6 @@
 import { type SubmitHandler, useForm } from "react-hook-form";
 import type * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMediaQuery } from "usehooks-ts";
 
 /* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
@@ -30,8 +29,6 @@ const ForgotPasswordForm = ({
     error,
     onBackToLogin,
 }: ForgotPasswordFormProps): React.JSX.Element => {
-    const isMobile = useMediaQuery("(max-width: 640px)");
-
     const form = useForm<FormValues>({
         resolver: zodResolver(forgotPasswordSchema),
     });
@@ -80,7 +77,7 @@ const ForgotPasswordForm = ({
                 {isLoading ? <Spinner /> : "Reset Password"}
             </Button>
 
-            {!isMobile && onBackToLogin && (
+            {onBackToLogin && (
                 <Button
                     variant="transparent"
                     className="pka:text-primary"

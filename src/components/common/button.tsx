@@ -35,7 +35,7 @@ const button = cva(
                 true: "pka:w-full",
             },
             disabled: {
-                true: "pka:cursor-not-allowed !pka:bg-none !pka:bg-[#E3E5E5] !pka:text-[#979C9E]",
+                true: "pka:cursor-not-allowed pka:!bg-none pka:!bg-[#E3E5E5] pka:!text-[#979C9E]",
             },
         },
         defaultVariants: {

@@ -70,6 +70,6 @@ export const AUTH_METHOD: AuthMethod[] = [
 	},
 ];
 
-export const RESEND_INTERVAL = 60000; // 1 minute
-export const COUNTDOWN_START = 60; // 60 seconds
+export const RESEND_INTERVAL = 120000; // 2 minutes
+export const COUNTDOWN_START = 120; // 120 seconds
 export const ONE_SECOND = 1000; // 1 second 

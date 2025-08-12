@@ -90,6 +90,8 @@ function VerifySignupForm({
         return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
     };
 
+    console.log("isResendDisabled", isResendDisabled);
+
     return (
         <>
             {!isSuccess ? (
@@ -136,17 +138,19 @@ function VerifySignupForm({
                             <Button
                                 size="xs"
                                 fullWidth
-                                className="!pka:h-7 pka:max-w-[150px] pka:items-center pka:justify-center !pka:py-2"
+                                className="pka:!h-7 pka:max-w-[150px] pka:items-center pka:justify-center"
                                 variant="outline"
                                 onClick={handleResendOTP}
                                 disabled={resendLoading || isResendDisabled}
                             >
-                                <span className="pka:flex pka:flex-row pka:gap-2">
+                                <span className="pka:flex pka:flex-row pka:items-center pka:justify-center pka:gap-2">
                                     <Timer size={16} className="" />
                                     {resendLoading ? (
                                         <Spinner size={16} />
                                     ) : (
-                                        "Resend Code"
+                                        <span className="pka:self-center">
+                                            Resend Code
+                                        </span>
                                     )}
                                 </span>
                             </Button>

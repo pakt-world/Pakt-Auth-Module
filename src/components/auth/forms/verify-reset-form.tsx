@@ -43,6 +43,8 @@ function VerifyEmailForm({
     const [countdown, setCountdown] = useState(0);
     const [isResendDisabled, setIsResendDisabled] = useState(true);
 
+    console.log("isResendDisabled", isResendDisabled);
+
     const isMobile = useMediaQuery("(max-width: 640px)");
 
     useEffect(() => {
