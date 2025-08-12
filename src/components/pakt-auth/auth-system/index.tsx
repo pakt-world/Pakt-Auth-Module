@@ -198,7 +198,6 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
             };
 
             const { data, status } = await resendVerifyLink(resendPayload);
-            console.log("data", data);
             if (status === "success" && data?.tempToken?.token) {
                 setTempToken(data.tempToken.token);
             }
@@ -296,11 +295,15 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
         }));
 
         const handleResendResetVerification = async () => {
-            const resendPayload = {
-                email: forgotPasswordEmail,
-            };
+            if (!forgotPasswordEmail) return;
 
-            await resendVerifyLink(resendPayload);
+            const { data, status } = await resetPassword({
+                email: forgotPasswordEmail,
+            });
+
+            if (status === "success" && data) {
+                setTempToken(data?.tempToken?.token);
+            }
         };
 
         return (
