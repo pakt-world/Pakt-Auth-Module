@@ -17,9 +17,6 @@ const App = () => {
     const [error, setError] = useState<string | undefined>(undefined);
 
     const customConfig = {
-        errorHandler: (errorMessage: string) => {
-            setError(errorMessage);
-        },
         googleOAuth: {
             clientId:
                 "583287786734-s8rrgm4ll9ltjm430a25vi6107dbiiib.apps.googleusercontent.com",

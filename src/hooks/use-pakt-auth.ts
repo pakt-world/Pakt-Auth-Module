@@ -9,6 +9,7 @@ import { useCallback, useState, useEffect } from "react";
 /* -------------------------------------------------------------------------- */
 
 import { paktSDKService } from "../lib/pakt-sdk";
+import { triggerGlobalError } from "../lib/error-handler";
 import type { 
     AuthResponse,
     LoginPayload, 
@@ -73,16 +74,21 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
     const [error, setError] = useState<string | null>(null);
 
     // Helper function to create error response
+    const setAndTriggerError = useCallback((message: string) => {
+        setError(message);
+        triggerGlobalError(message);
+    }, []);
+
     const createErrorResponse = useCallback(<T>(errorMessage: string, defaultMessage: string): AuthResponse<T> => {
         const message = errorMessage || defaultMessage;
-        setError(message);
+        setAndTriggerError(message);
         return {
             status: 'error',
             message,
             data: null as unknown as T,
             statusCode: 500
         };
-    }, []);
+    }, [setAndTriggerError]);
 
     // Clear error
     const clearError = useCallback(() => {
@@ -105,7 +111,7 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
             if (response.status === 'success' && response.data) {
                 setUser(response.data);
             } else {
-                setError(response.message || 'Login failed');
+                setAndTriggerError(response.message || 'Login failed');
             }
             
             return response;
@@ -126,7 +132,7 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
             const response = await paktSDKService.register(payload);
             
             if (response.status === 'error') {
-                setError(response.message || 'Registration failed');
+                setAndTriggerError(response.message || 'Registration failed');
             }
             
             return response;
@@ -149,7 +155,7 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
             if (response.status === 'success' && response.data) {
                 setUser(response.data);
             } else {
-                setError(response.message || 'Account verification failed');
+                setAndTriggerError(response.message || 'Account verification failed');
             }
             
             return response;
@@ -170,7 +176,7 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
             const response = await paktSDKService.resendVerifyLink(payload);
             
             if (response.status === 'error') {
-                setError(response.message || 'Failed to resend verification link');
+                setAndTriggerError(response.message || 'Failed to resend verification link');
             }
             
             return response;
@@ -191,7 +197,7 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
             const response = await paktSDKService.resetPassword(payload);
             
             if (response.status === 'error') {
-                setError(response.message || 'Password reset failed');
+                setAndTriggerError(response.message || 'Password reset failed');
             }
             
             return response;
@@ -212,7 +218,7 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
             const response = await paktSDKService.changePassword(payload);
             
             if (response.status === 'error') {
-                setError(response.message || 'Password change failed');
+                setAndTriggerError(response.message || 'Password change failed');
             }
             
             return response;
@@ -233,7 +239,7 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
             const response = await paktSDKService.validatePasswordToken(props);
             
             if (response.status === 'error') {
-                setError(response.message || 'Password token validation failed');
+                setAndTriggerError(response.message || 'Password token validation failed');
             }
             
             return response;
@@ -254,7 +260,7 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
             const response = await paktSDKService.googleOAuthGenerateState();
             
             if (response.status === 'error') {
-                setError(response.message || 'Google OAuth state generation failed');
+                setAndTriggerError(response.message || 'Google OAuth state generation failed');
             }
             
             return response;
@@ -277,7 +283,7 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
             if (response.status === 'success' && response.data) {
                 setUser(response.data as unknown as User);
             } else {
-                setError(response.message || 'Google OAuth validation failed');
+                setAndTriggerError(response.message || 'Google OAuth validation failed');
             }
             
             return response;
@@ -300,7 +306,7 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
             if (response.status === 'success' && response.data) {
                 setUser(response.data);
             } else {
-                setError(response.message || 'Failed to get user');
+                setAndTriggerError(response.message || 'Failed to get user');
             }
             
             return response;
@@ -323,7 +329,7 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
             if (response.status === 'success') {
                 clearUser();
             } else {
-                setError(response.message || 'Logout failed');
+                setAndTriggerError(response.message || 'Logout failed');
             }
             
             return response;
@@ -344,7 +350,7 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
             const response = await paktSDKService.resendTwoFAEmailCode(email);
             
             if (response.status === 'error') {
-                setError(response.message || 'Failed to resend 2FA email');
+                setAndTriggerError(response.message || 'Failed to resend 2FA email');
             }
             
             return response;
@@ -365,7 +371,7 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
             const response = await paktSDKService.validateReferral(token);
             
             if (response.status === 'error') {
-                setError(response.message || 'Referral validation failed');
+                setAndTriggerError(response.message || 'Referral validation failed');
             }
             
             return response;
@@ -388,7 +394,7 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
             if (response.status === 'success' && response.data) {
                 setUser(response.data);
             } else {
-                setError(response.message || 'Two-factor authentication failed');
+                setAndTriggerError(response.message || 'Two-factor authentication failed');
             }
             
             return response;

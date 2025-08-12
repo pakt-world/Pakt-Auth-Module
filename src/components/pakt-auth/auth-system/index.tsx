@@ -94,7 +94,6 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
             changePassword,
             resendTwoFAEmailCode,
             loading,
-            error,
         } = usePaktAuth();
 
         const resetCurrentView = () => {
@@ -206,7 +205,6 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
 
         const handleResendLoginVerification = async () => {
             if (!login2faEmail) return;
-            console.log("login2faEmail", login2faEmail);
             await resendTwoFAEmailCode(login2faEmail);
         };
 
@@ -237,9 +235,7 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
                 password: resetPasswordPayload.password,
             };
 
-            const { data, status } = await changePassword(
-                changePasswordPayload
-            );
+            const { status } = await changePassword(changePasswordPayload);
 
             if (status === "success") {
                 setResetPasswordSuccess(true);
@@ -323,7 +319,6 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
                     textConfig={textConfig}
                     onSubmit={handleSignup}
                     isLoading={loading}
-                    error={error || undefined}
                     backToSignupMethod={
                         isGoogleOAuthEnabled ? backToSignupMethod : undefined
                     }
@@ -364,7 +359,6 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
                     textConfig={textConfig}
                     onSubmit={handleLogin}
                     isLoading={loading}
-                    error={error || undefined}
                     onForgotPassword={() => setCurrentView("forgot-password")}
                     onSignup={() => {
                         // If Google OAuth is not enabled, go directly to signup form
@@ -396,7 +390,6 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
                     onClose={() => setCurrentView("login")}
                     onSubmit={handleForgotPassword}
                     isLoading={loading}
-                    error={error || undefined}
                     onBackToLogin={() => setCurrentView("login")}
                 />
 
@@ -412,7 +405,6 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
                     onClose={() => setCurrentView("verify-email")}
                     onSubmit={handleResetPassword}
                     isLoading={loading}
-                    error={error || undefined}
                     isSuccess={resetPasswordSuccess}
                     onSuccess={handleResetPasswordSuccess}
                     token={verificationToken}
