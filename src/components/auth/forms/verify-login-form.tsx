@@ -9,6 +9,7 @@ import ReactOTPInput from "react-otp-input";
 import type * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMediaQuery } from "usehooks-ts";
+import { useResendCountdown } from "../../../hooks/use-resend-countdown";
 
 /* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
@@ -46,29 +47,13 @@ function VerifyLoginForm({
     isSuccess = false,
     onSuccess,
 }: VerifyLoginFormProps): React.JSX.Element {
-    const [countdown, setCountdown] = useState(0);
-    const [isResendDisabled, setIsResendDisabled] = useState(true);
+    const {
+        countdown,
+        isDisabled: isResendDisabled,
+        start: startCountdown,
+    } = useResendCountdown();
 
     const isMobile = useMediaQuery("(max-width: 640px)");
-
-    useEffect(() => {
-        if (isResendDisabled) {
-            setCountdown(COUNTDOWN_START);
-            const timer = setInterval(() => {
-                setCountdown((prev) => (prev > 1 ? prev - 1 : 0));
-            }, ONE_SECOND);
-            const timeout = setTimeout(() => {
-                setIsResendDisabled(false);
-            }, RESEND_INTERVAL);
-
-            return () => {
-                clearInterval(timer);
-                clearTimeout(timeout);
-            };
-        }
-
-        return () => {};
-    }, [isResendDisabled]);
 
     const form = useForm<FormValues>({
         resolver: zodResolver(otpSchema),
@@ -81,7 +66,7 @@ function VerifyLoginForm({
     const handleResendOTP = (): void => {
         if (isResendDisabled || resendLoading) return;
         onResend();
-        setIsResendDisabled(true);
+        startCountdown();
     };
 
     const formatCountdown = (counter: number): string => {
