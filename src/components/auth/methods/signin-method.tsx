@@ -42,7 +42,7 @@ export const SigninMethod = ({
                 instruction="Choose Log in method"
                 currentAuth="signin_method"
                 google={isGoogleOAuthEnabled ? () => signIn() : undefined}
-                github={undefined}
+                github={() => {}}
                 email={onEmailLogin}
                 goToSignupMethod={goToSignupMethod}
             />
