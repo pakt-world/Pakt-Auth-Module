@@ -2,12 +2,12 @@
 /*                             External Dependency                            */
 /* -------------------------------------------------------------------------- */
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import type * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMediaQuery } from "usehooks-ts";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Eye, EyeOff } from "lucide-react";
 
 /* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
@@ -38,6 +38,9 @@ const SignUpForm = ({
     const form = useForm<SignupFormValues>({
         resolver: zodResolver(signupSchema),
     });
+
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const handleSubmit: SubmitHandler<SignupFormValues> = (values) => {
         onSubmit(values);
@@ -142,13 +145,26 @@ const SignUpForm = ({
                     >
                         Create Password
                     </label>
-                    <input
-                        id="password"
-                        {...form.register("password")}
-                        className="input_style"
-                        placeholder="Password"
-                        type="password"
-                    />
+                    <div className="pka:relative">
+                        <input
+                            id="password"
+                            {...form.register("password")}
+                            className="input_style pka:pr-10"
+                            placeholder="Password"
+                            type={showPassword ? "text" : "password"}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="pka:absolute pka:inset-y-0 pka:right-0 pka:flex pka:items-center pka:pr-3 pka:text-gray-400 hover:pka:text-gray-600"
+                        >
+                            {showPassword ? (
+                                <EyeOff className="pka:h-4 pka:w-4" />
+                            ) : (
+                                <Eye className="pka:h-4 pka:w-4" />
+                            )}
+                        </button>
+                    </div>
                     {isPasswordTyping && (
                         <div className="pka:flex pka:flex-col pka:gap-4 pka:p-4 pka:text-xs pka:text-body">
                             <PasswordCriteria
@@ -187,13 +203,28 @@ const SignUpForm = ({
                     >
                         Confirm Password
                     </label>
-                    <input
-                        id="confirmPassword"
-                        {...form.register("confirmPassword")}
-                        className="input_style"
-                        placeholder="Confirm Password"
-                        type="password"
-                    />
+                    <div className="pka:relative">
+                        <input
+                            id="confirmPassword"
+                            {...form.register("confirmPassword")}
+                            className="input_style pka:pr-10"
+                            placeholder="Confirm Password"
+                            type={showConfirmPassword ? "text" : "password"}
+                        />
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setShowConfirmPassword(!showConfirmPassword)
+                            }
+                            className="pka:absolute pka:inset-y-0 pka:right-0 pka:flex pka:items-center pka:pr-3 pka:text-gray-400 hover:pka:text-gray-600"
+                        >
+                            {showConfirmPassword ? (
+                                <EyeOff className="pka:h-4 pka:w-4" />
+                            ) : (
+                                <Eye className="pka:h-4 pka:w-4" />
+                            )}
+                        </button>
+                    </div>
                     {form.formState.errors.confirmPassword?.message && (
                         <div className="pka:text-sm pka:text-danger">
                             {form.formState.errors.confirmPassword.message}

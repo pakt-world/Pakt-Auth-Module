@@ -2,11 +2,12 @@
 /*                             External Dependency                            */
 /* -------------------------------------------------------------------------- */
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import type * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMediaQuery } from "usehooks-ts";
+import { Eye, EyeOff } from "lucide-react";
 
 /* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
@@ -47,6 +48,9 @@ function ResetPasswordForm({
             token,
         },
     });
+
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const handleSubmit: SubmitHandler<ResetFormValues> = (values) => {
         onSubmit(values);
@@ -107,13 +111,30 @@ function ResetPasswordForm({
                                 >
                                     Create Password
                                 </label>
-                                <input
-                                    id="password"
-                                    {...resetForm.register("password")}
-                                    className="input_style"
-                                    placeholder="create password"
-                                    type="password"
-                                />
+                                <div className="pka:relative">
+                                    <input
+                                        id="password"
+                                        {...resetForm.register("password")}
+                                        className="input_style pka:pr-10"
+                                        placeholder="create password"
+                                        type={
+                                            showPassword ? "text" : "password"
+                                        }
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            setShowPassword(!showPassword)
+                                        }
+                                        className="pka:absolute pka:inset-y-0 pka:right-0 pka:flex pka:items-center pka:pr-3 pka:text-gray-400 hover:pka:text-gray-600"
+                                    >
+                                        {showPassword ? (
+                                            <EyeOff className="pka:h-4 pka:w-4" />
+                                        ) : (
+                                            <Eye className="pka:h-4 pka:w-4" />
+                                        )}
+                                    </button>
+                                </div>
                                 {isPasswordTyping && (
                                     <div className="pka:flex pka:flex-col pka:gap-4 pka:p-4 pka:text-xs pka:text-body">
                                         <PasswordCriteria
@@ -162,13 +183,36 @@ function ResetPasswordForm({
                                 >
                                     Confirm Password
                                 </label>
-                                <input
-                                    id="confirmPassword"
-                                    {...resetForm.register("confirmPassword")}
-                                    className="input_style"
-                                    placeholder="re-type password"
-                                    type="password"
-                                />
+                                <div className="pka:relative">
+                                    <input
+                                        id="confirmPassword"
+                                        {...resetForm.register(
+                                            "confirmPassword"
+                                        )}
+                                        className="input_style pka:pr-10"
+                                        placeholder="re-type password"
+                                        type={
+                                            showConfirmPassword
+                                                ? "text"
+                                                : "password"
+                                        }
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            setShowConfirmPassword(
+                                                !showConfirmPassword
+                                            )
+                                        }
+                                        className="pka:absolute pka:inset-y-0 pka:right-0 pka:flex pka:items-center pka:pr-3 pka:text-gray-400 hover:pka:text-gray-600"
+                                    >
+                                        {showConfirmPassword ? (
+                                            <EyeOff className="pka:h-4 pka:w-4" />
+                                        ) : (
+                                            <Eye className="pka:h-4 pka:w-4" />
+                                        )}
+                                    </button>
+                                </div>
                                 {resetForm.formState.errors.confirmPassword
                                     ?.message && (
                                     <div className="pka:text-sm pka:text-danger">
