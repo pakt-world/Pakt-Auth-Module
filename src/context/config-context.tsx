@@ -9,7 +9,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 /* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
-import { setGlobalErrorHandler } from "../lib/error-handler";
+import Logger from "../lib/logger";
 import { paktSDKService } from "../lib/pakt-sdk";
 import { applyTheme } from "../utils";
 import defaultTheme from "../styles/default-theme";
@@ -35,17 +35,13 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
     children,
 }) => {
     useEffect(() => {
-        if (config?.errorHandler) {
-            setGlobalErrorHandler(config.errorHandler);
-        }
-
         applyTheme({ ...defaultTheme, ...(config?.theme || {}) });
     }, [config]);
 
     useEffect(() => {
         if (config?.paktSDK) {
             paktSDKService.initialize(config.paktSDK).catch((error) => {
-                console.error("Failed to initialize PAKT SDK:", error);
+                Logger.error("Failed to initialize PAKT SDK:", error);
             });
         }
     }, [config?.paktSDK]);

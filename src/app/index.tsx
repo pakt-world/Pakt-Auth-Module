@@ -8,13 +8,12 @@ import { useRef, useState } from "react";
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
 
+import Logger from "lib/logger";
 import { AuthRef, UserData } from "../components/pakt-auth/types";
 import PaktAuth from "../components/pakt-auth";
 
 const App = () => {
     const paktAuthRef = useRef<AuthRef>(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | undefined>(undefined);
 
     const customConfig = {
         googleOAuth: {
@@ -32,11 +31,11 @@ const App = () => {
     const handleSignup = () => paktAuthRef.current?.onSignup?.();
 
     const handleSignupSuccess = (userData: UserData) => {
-        console.log("Signup success:", userData);
+        Logger.info("Signup success:", userData);
     };
 
     const handleLoginSuccess = (userData: UserData) => {
-        console.log("Login success:", userData);
+        Logger.info("Login success:", userData);
     };
 
     return (

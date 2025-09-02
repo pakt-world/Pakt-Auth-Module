@@ -95,7 +95,7 @@ export const useGoogleAuth = ({ onSuccess, onError }: GoogleAuthOptions) => {
 
     const signIn = useCallback(() => {
         if (!isGoogleOAuthEnabled) {
-            console.warn(
+            Logger.warn(
                 "Google OAuth is not configured. Please provide a client ID."
             );
             const msg = "Google OAuth is not configured";

@@ -142,35 +142,30 @@ function ResetPasswordForm({
                                                 validatingErr.isMinLength
                                             }
                                             criteria="At least 8 characters"
-                                            isSignUp
                                         />
                                         <PasswordCriteria
                                             isValidated={
                                                 validatingErr.checkLowerUpper
                                             }
                                             criteria="Upper and lower case characters"
-                                            isSignUp
                                         />
                                         <PasswordCriteria
                                             isValidated={
                                                 validatingErr.checkNumber
                                             }
                                             criteria="1 or more numbers"
-                                            isSignUp
                                         />
                                         <PasswordCriteria
                                             isValidated={
                                                 validatingErr.specialCharacter
                                             }
                                             criteria="1 or more special characters"
-                                            isSignUp
                                         />
                                         <PasswordCriteria
                                             isValidated={
                                                 validatingErr.confirmedPassword
                                             }
                                             criteria="passwords must match"
-                                            isSignUp
                                         />
                                     </div>
                                 )}
