@@ -76,6 +76,7 @@ function VerifyLoginForm({
     };
 
     return (
+        // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
             {!isSuccess ? (
                 <form

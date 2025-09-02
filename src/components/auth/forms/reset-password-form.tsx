@@ -44,7 +44,7 @@ function ResetPasswordForm({
         defaultValues: {
             password: "",
             confirmPassword: "",
-            token: token,
+            token,
         },
     });
 
@@ -83,6 +83,7 @@ function ResetPasswordForm({
         passwordWatch !== null;
 
     return (
+        // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
             {!isSuccess ? (
                 <div className="pka:flex pka:h-full pka:w-full pka:flex-col pka:items-center pka:justify-center pka:gap-6 pka:sm:max-w-2xl pka:max-sm:p-0">

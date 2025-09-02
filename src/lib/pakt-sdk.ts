@@ -18,7 +18,7 @@ import {
     GoogleOAuthGenerateDto,
     GoogleOAuthValdatePayload,
     GoogleOAuthValidateDto,
-    ResponseDto
+    ResponseDto,
 } from "pakt-sdk";
 
 // Define LoginTwoFAPayload interface since it might not be exported from pakt-sdk
@@ -53,23 +53,30 @@ class PaktSDKService {
             this.isInitialized = true;
         } catch (error) {
             this.isInitialized = false;
-            throw new Error(`Failed to initialize PAKT SDK: ${error instanceof Error ? error.message : 'Unknown error'}`);
+            throw new Error(
+                `Failed to initialize PAKT SDK: ${error instanceof Error ? error.message : "Unknown error"}`
+            );
         }
     }
 
     private ensureInitialized(): any {
         if (!this.isInitialized || !this.sdk) {
-            throw new Error("PAKT SDK not initialized. Call initialize() first.");
+            throw new Error(
+                "PAKT SDK not initialized. Call initialize() first."
+            );
         }
         return this.sdk;
     }
 
-    private createErrorResponse<T>(error: unknown, defaultMessage: string): AuthResponse<T> {
+    private static createErrorResponse<T>(
+        error: unknown,
+        defaultMessage: string
+    ): AuthResponse<T> {
         return {
             status: "error",
             message: error instanceof Error ? error.message : defaultMessage,
             data: null as T,
-            statusCode: 500
+            statusCode: 500,
         };
     }
 
@@ -90,107 +97,161 @@ class PaktSDKService {
             const response = await sdk.auth.login(payload);
             return response as AuthResponse<LoginDto>;
         } catch (error) {
-            return this.createErrorResponse<LoginDto>(error, "Login failed");
+            return PaktSDKService.createErrorResponse<LoginDto>(
+                error,
+                "Login failed"
+            );
         }
     }
 
-    async loginTwoFa(payload: LoginTwoFAPayload): Promise<AuthResponse<LoginDto>> {
+    async loginTwoFa(
+        payload: LoginTwoFAPayload
+    ): Promise<AuthResponse<LoginDto>> {
         const sdk = this.ensureInitialized();
         try {
             const response = await sdk.auth.loginTwoFa(payload);
             return response as AuthResponse<LoginDto>;
         } catch (error) {
-            return this.createErrorResponse<LoginDto>(error, "Two-factor authentication failed");
+            return PaktSDKService.createErrorResponse<LoginDto>(
+                error,
+                "Two-factor authentication failed"
+            );
         }
     }
 
-    async register(payload: RegisterPayload): Promise<AuthResponse<RegisterDto>> {
+    async register(
+        payload: RegisterPayload
+    ): Promise<AuthResponse<RegisterDto>> {
         const sdk = this.ensureInitialized();
         try {
             const response = await sdk.auth.register(payload);
             return response as AuthResponse<RegisterDto>;
         } catch (error) {
-            return this.createErrorResponse<RegisterDto>(error, "Registration failed");
+            return PaktSDKService.createErrorResponse<RegisterDto>(
+                error,
+                "Registration failed"
+            );
         }
     }
 
-    async verifyAccount(payload: VerifyAccountPayload): Promise<AuthResponse<AccountVerifyDto>> {
+    async verifyAccount(
+        payload: VerifyAccountPayload
+    ): Promise<AuthResponse<AccountVerifyDto>> {
         const sdk = this.ensureInitialized();
         try {
             const response = await sdk.auth.verifyAccount(payload);
             return response as AuthResponse<AccountVerifyDto>;
         } catch (error) {
-            return this.createErrorResponse<AccountVerifyDto>(error, "Account verification failed");
+            return PaktSDKService.createErrorResponse<AccountVerifyDto>(
+                error,
+                "Account verification failed"
+            );
         }
     }
 
-    async resendVerifyLink(payload: ResendVerifyPayload): Promise<AuthResponse<IResendVerifyLink>> {
+    async resendVerifyLink(
+        payload: ResendVerifyPayload
+    ): Promise<AuthResponse<IResendVerifyLink>> {
         const sdk = this.ensureInitialized();
         try {
             const response = await sdk.auth.resendVerifyLink(payload);
             return response as AuthResponse<IResendVerifyLink>;
         } catch (error) {
-            return this.createErrorResponse<IResendVerifyLink>(error, "Resend verification failed");
+            return PaktSDKService.createErrorResponse<IResendVerifyLink>(
+                error,
+                "Resend verification failed"
+            );
         }
     }
 
-    async resetPassword(payload: ResetPasswordPayload): Promise<AuthResponse<ResetDto>> {
+    async resetPassword(
+        payload: ResetPasswordPayload
+    ): Promise<AuthResponse<ResetDto>> {
         const sdk = this.ensureInitialized();
         try {
             const response = await sdk.auth.resetPassword(payload);
             return response as AuthResponse<ResetDto>;
         } catch (error) {
-            return this.createErrorResponse<ResetDto>(error, "Password reset failed");
+            return PaktSDKService.createErrorResponse<ResetDto>(
+                error,
+                "Password reset failed"
+            );
         }
     }
 
-    async changePassword(payload: ChangeAuthenticationPasswordPayload): Promise<AuthResponse<ChangePasswordDto>> {
+    async changePassword(
+        payload: ChangeAuthenticationPasswordPayload
+    ): Promise<AuthResponse<ChangePasswordDto>> {
         const sdk = this.ensureInitialized();
         try {
             const response = await sdk.auth.changePassword(payload);
             return response as AuthResponse<ChangePasswordDto>;
         } catch (error) {
-            return this.createErrorResponse<ChangePasswordDto>(error, "Password change failed");
+            return PaktSDKService.createErrorResponse<ChangePasswordDto>(
+                error,
+                "Password change failed"
+            );
         }
     }
 
-    async validatePasswordToken(props: { token: string; tempToken: string }): Promise<AuthResponse<ValidatePasswordToken>> {
+    async validatePasswordToken(props: {
+        token: string;
+        tempToken: string;
+    }): Promise<AuthResponse<ValidatePasswordToken>> {
         const sdk = this.ensureInitialized();
         try {
             const response = await sdk.auth.validatePasswordToken(props);
             return response as AuthResponse<ValidatePasswordToken>;
         } catch (error) {
-            return this.createErrorResponse<ValidatePasswordToken>(error, "Password token validation failed");
+            return PaktSDKService.createErrorResponse<ValidatePasswordToken>(
+                error,
+                "Password token validation failed"
+            );
         }
     }
 
-    async validateReferral(token: string): Promise<AuthResponse<ValidateReferralDto>> {
+    async validateReferral(
+        token: string
+    ): Promise<AuthResponse<ValidateReferralDto>> {
         const sdk = this.ensureInitialized();
         try {
             const response = await sdk.auth.validateReferral(token);
             return response as AuthResponse<ValidateReferralDto>;
         } catch (error) {
-            return this.createErrorResponse<ValidateReferralDto>(error, "Referral validation failed");
+            return PaktSDKService.createErrorResponse<ValidateReferralDto>(
+                error,
+                "Referral validation failed"
+            );
         }
     }
 
-    async googleOAuthGenerateState(): Promise<AuthResponse<GoogleOAuthGenerateDto>> {
+    async googleOAuthGenerateState(): Promise<
+        AuthResponse<GoogleOAuthGenerateDto>
+    > {
         const sdk = this.ensureInitialized();
         try {
             const response = await sdk.auth.googleOAuthGenerateState();
             return response as AuthResponse<GoogleOAuthGenerateDto>;
         } catch (error) {
-            return this.createErrorResponse<GoogleOAuthGenerateDto>(error, "Google OAuth state generation failed");
+            return PaktSDKService.createErrorResponse<GoogleOAuthGenerateDto>(
+                error,
+                "Google OAuth state generation failed"
+            );
         }
     }
 
-    async googleOAuthValidateState(props: GoogleOAuthValdatePayload): Promise<AuthResponse<GoogleOAuthValidateDto>> {
+    async googleOAuthValidateState(
+        props: GoogleOAuthValdatePayload
+    ): Promise<AuthResponse<GoogleOAuthValidateDto>> {
         const sdk = this.ensureInitialized();
         try {
             const response = await sdk.auth.googleOAuthValidateState(props);
             return response as AuthResponse<GoogleOAuthValidateDto>;
         } catch (error) {
-            return this.createErrorResponse<GoogleOAuthValidateDto>(error, "Google OAuth validation failed");
+            return PaktSDKService.createErrorResponse<GoogleOAuthValidateDto>(
+                error,
+                "Google OAuth validation failed"
+            );
         }
     }
 
@@ -201,7 +262,10 @@ class PaktSDKService {
             const response = await sdk.account.getUser(authToken);
             return response as AuthResponse<any>;
         } catch (error) {
-            return this.createErrorResponse<any>(error, "Failed to get user");
+            return PaktSDKService.createErrorResponse<any>(
+                error,
+                "Failed to get user"
+            );
         }
     }
 
@@ -211,18 +275,24 @@ class PaktSDKService {
             const response = await sdk.account.logout(authToken);
             return response as AuthResponse<void>;
         } catch (error) {
-            return this.createErrorResponse<void>(error, "Logout failed");
+            return PaktSDKService.createErrorResponse<void>(
+                error,
+                "Logout failed"
+            );
         }
     }
 
     // Two-Factor Authentication
-    async resendTwoFAEmailCode(email: string): Promise<AuthResponse<{}>> {
+    async resendTwoFAEmailCode(email: string): Promise<AuthResponse<object>> {
         const sdk = this.ensureInitialized();
         try {
             const response = await sdk.auth.resendTwoFAEmailCode(email);
-            return response as AuthResponse<{}>;
+            return response as AuthResponse<object>;
         } catch (error) {
-            return this.createErrorResponse<{}>(error, "Failed to resend 2FA email code");
+            return PaktSDKService.createErrorResponse<object>(
+                error,
+                "Failed to resend 2FA email code"
+            );
         }
     }
 
@@ -255,5 +325,5 @@ export type {
     ValidateReferralDto,
     GoogleOAuthGenerateDto,
     GoogleOAuthValdatePayload,
-    GoogleOAuthValidateDto
-}; 
+    GoogleOAuthValidateDto,
+};

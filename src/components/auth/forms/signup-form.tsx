@@ -13,12 +13,12 @@ import { ChevronLeft } from "lucide-react";
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
 
-import { spChars } from "../../../utils/auth-utils";
+import { spChars, AuthEnums } from "../../../utils/auth-utils";
 import { signupSchema, type SignupFormValues } from "../../../utils/validation";
 import { Button } from "../../common/button";
-import { AuthEnums } from "../../../utils/auth-utils";
-import { Spinner } from "../../../components/common/loader";
-import { PasswordCriteria } from "../../../components/common/password-criteria";
+
+import { Spinner } from "../../common/loader";
+import { PasswordCriteria } from "../../common/password-criteria";
 
 interface SignUpFormProps {
     onSubmit: (data: SignupFormValues) => void;
@@ -216,12 +216,19 @@ const SignUpForm = ({
                     <span className="pka:text-title">
                         Already have an account?{" "}
                     </span>
-                    <span
+                    <button
+                        type="button"
                         onClick={goToLoginMethod}
-                        className="pka:hover:underline pka:cursor-pointer pka:font-bold pka:text-primary"
+                        className="pka:hover:underline pka:cursor-pointer pka:font-bold pka:text-primary pka:bg-transparent pka:border-none"
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                                e.preventDefault();
+                                goToLoginMethod();
+                            }
+                        }}
                     >
                         Login
-                    </span>
+                    </button>
                 </div>
             )}
         </form>

@@ -79,7 +79,12 @@ export interface ExtendedGoogleOAuthValidateDto {
     type: string;
 }
 
-export type UserData = ExtendedLoginDto | ExtendedGoogleOAuthValidateDto | AccountVerifyDto | LoginDto | GoogleOAuthValidateDto;
+export type UserData =
+    | ExtendedLoginDto
+    | ExtendedGoogleOAuthValidateDto
+    | AccountVerifyDto
+    | LoginDto
+    | GoogleOAuthValidateDto;
 
 type AuthRef = {
     onLogin: () => void;

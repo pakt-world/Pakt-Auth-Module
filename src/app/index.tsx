@@ -52,12 +52,14 @@ const App = () => {
                     </p>
                     <div className="pka:space-y-4">
                         <button
+                            type="button"
                             onClick={handleLogin}
                             className="pka:w-full pka:rounded-lg pka:bg-white pka:px-6 pka:py-3 pka:font-semibold pka:text-blue-900 pka:transition-colors pka:hover:bg-gray-100"
                         >
                             Login
                         </button>
                         <button
+                            type="button"
                             onClick={handleSignup}
                             className="pka:w-full pka:rounded-lg pka:border-2 pka:border-white pka:bg-transparent pka:px-6 pka:py-3 pka:font-semibold pka:text-white pka:transition-colors pka:hover:bg-white pka:hover:text-blue-900"
                         >

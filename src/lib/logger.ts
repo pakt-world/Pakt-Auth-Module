@@ -36,10 +36,10 @@ class Logger {
         meta?: Record<string, any>
     ) {
         const logMethod = {
-            info: console.info, // @ts-ignore
-            warn: console.warn, // @ts-ignore
-            error: console.error, // @ts-ignore
-            debug: console.debug, // @ts-ignore
+            info: console.info,
+            warn: console.warn,
+            error: console.error,
+            debug: console.debug,
         }[level];
 
         logMethod(`[${level.toUpperCase()}]: ${message}`, meta || "");

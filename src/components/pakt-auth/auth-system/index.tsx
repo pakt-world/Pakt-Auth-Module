@@ -134,7 +134,7 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
         const handleVerifyLogin = async (verificationData: { otp: string }) => {
             const loginTwoFaPayload: LoginTwoFAPayload = {
                 code: verificationData.otp,
-                tempToken: tempToken,
+                tempToken,
             };
 
             const { data, status } = await loginTwoFa(loginTwoFaPayload);
@@ -173,7 +173,7 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
             otp: string;
         }) => {
             const verifyPayload: VerifyAccountPayload = {
-                tempToken: tempToken,
+                tempToken,
                 token: verificationData.otp,
             };
 
@@ -231,7 +231,7 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
         ) => {
             const changePasswordPayload: ChangeAuthenticationPasswordPayload = {
                 token: resetPasswordPayload.token,
-                tempToken: tempToken,
+                tempToken,
                 password: resetPasswordPayload.password,
             };
 
