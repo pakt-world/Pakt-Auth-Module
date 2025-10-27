@@ -120,14 +120,21 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
             const { data, status } = await login(loginPayload);
 
             if (status === "success" && data) {
-                if (data?.twoFa?.status) {
-                    setTwoFaType(data?.twoFa?.type);
-                    setTempToken(data?.tempToken?.token);
-                    setLogin2faEmail(data?.email);
-                    setCurrentView("verify-login");
-                } else {
-                    handleLoginSuccess(data);
+                setTempToken(data?.tempToken?.token);
+                if (!data?.isVerified) {
+                    setSignupEmail(data?.email);
+                    setCurrentView("verify-signup");
+                    return;
                 }
+
+                if (data?.twoFa?.status) {
+                    setLogin2faEmail(data?.email);
+                    setTwoFaType(data?.twoFa?.type);
+                    setCurrentView("verify-login");
+                    return;
+                }
+
+                handleLoginSuccess(data);
             }
         };
 
