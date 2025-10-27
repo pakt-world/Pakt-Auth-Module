@@ -17,15 +17,15 @@ export const toast = {
             (t: { visible: boolean }) => {
                 return (
                     <div
-                        className={`${t.visible ? "animate-enter" : "animate-leave"} pointer-events-auto flex w-full max-w-md rounded-lg bg-red-100 ring-1 ring-red-800 ring-opacity-50`}
+                        className={`${t.visible ? "animate-enter" : "animate-leave"} pka:pointer-events-auto pka:flex pka:w-full pka:max-w-md pka:rounded-lg pka:bg-red-100 pka:ring-1 pka:ring-red-800 pka:ring-opacity-50`}
                     >
-                        <div className="w-0 flex-1 p-4">
-                            <div className="flex items-center">
-                                <div className="flex-shrink-0">
-                                    <CircleAlert className="h-6 w-6 text-red-600" />
+                        <div className="pka:w-0 pka:flex-1 pka:p-4">
+                            <div className="pka:flex pka:items-center">
+                                <div className="pka:flex-shrink-0">
+                                    <CircleAlert className="pka:h-6 pka:w-6 pka:text-red-600" />
                                 </div>
-                                <div className="ml-3 flex-1 md:flex md:justify-between">
-                                    <p className="text-sm leading-5 text-red-700">
+                                <div className="pka:ml-3 pka:flex-1 pka:md:flex pka:md:justify-between">
+                                    <p className="pka:text-sm pka:leading-5 pka:text-red-700">
                                         {message}
                                     </p>
                                 </div>
@@ -42,15 +42,15 @@ export const toast = {
         toastPrimitive.custom(
             (t: { visible: boolean }) => (
                 <div
-                    className={`${t.visible ? "animate-enter" : "animate-leave"} pointer-events-auto flex w-full max-w-md rounded-lg bg-green-100 ring-1 ring-green-800 ring-opacity-50`}
+                    className={`${t.visible ? "animate-enter" : "animate-leave"} pka:pointer-events-auto pka:flex pka:w-full pka:max-w-md pka:rounded-lg pka:bg-green-100 pka:ring-1 pka:ring-green-800 pka:ring-opacity-50`}
                 >
-                    <div className="w-0 flex-1 p-4">
-                        <div className="flex items-center">
-                            <div className="flex-shrink-0">
-                                <CheckCircle className="h-6 w-6 text-green-600" />
+                    <div className="pka:w-0 pka:flex-1 pka:p-4">
+                        <div className="pka:flex pka:items-center">
+                            <div className="pka:flex-shrink-0">
+                                <CheckCircle className="pka:h-6 pka:w-6 pka:text-green-600" />
                             </div>
-                            <div className="ml-3 flex-1 md:flex md:justify-between">
-                                <p className="text-sm leading-5 text-green-700">
+                            <div className="pka:ml-3 pka:flex-1 pka:md:flex pka:md:justify-between">
+                                <p className="pka:text-sm pka:leading-5 pka:text-green-700">
                                     {message}
                                 </p>
                             </div>
@@ -110,15 +110,15 @@ export const toast = {
         toastPrimitive.custom(
             (t: { visible: boolean }) => (
                 <div
-                    className={`${t.visible ? "animate-enter" : "animate-leave"} pointer-events-auto flex w-full max-w-md rounded-lg bg-blue-100 ring-1 ring-blue-800 ring-opacity-50`}
+                    className={`${t.visible ? "animate-enter" : "animate-leave"} pka:pointer-events-auto pka:flex pka:w-full pka:max-w-md pka:rounded-lg pka:bg-blue-100 pka:ring-1 pka:ring-blue-800 pka:ring-opacity-50`}
                 >
-                    <div className="w-0 flex-1 p-4">
-                        <div className="flex items-center">
-                            <div className="flex-shrink-0">
-                                <CircleAlert className="h-6 w-6 text-blue-600" />
+                    <div className="pka:w-0 pka:flex-1 pka:p-4">
+                        <div className="pka:flex pka:items-center">
+                            <div className="pka:flex-shrink-0">
+                                <CircleAlert className="pka:h-6 pka:w-6 pka:text-blue-600" />
                             </div>
-                            <div className="ml-3 flex md:flex md:justify-between">
-                                <p className="text-sm leading-5 text-blue-700">
+                            <div className="pka:ml-3 pka:flex pka:md:flex pka:md:justify-between">
+                                <p className="pka:text-sm pka:leading-5 pka:text-blue-700">
                                     {message}
                                 </p>
                             </div>

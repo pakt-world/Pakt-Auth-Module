@@ -9,10 +9,11 @@ import { useCallback, useState, useEffect } from "react";
 /* -------------------------------------------------------------------------- */
 
 import { paktSDKService } from "../lib/pakt-sdk";
-import type { 
+import { triggerGlobalError } from "../lib/error-handler";
+import type {
     AuthResponse,
-    LoginPayload, 
-    RegisterPayload, 
+    LoginPayload,
+    RegisterPayload,
     VerifyAccountPayload,
     ResetPasswordPayload,
     ChangeAuthenticationPasswordPayload,
@@ -28,7 +29,7 @@ import type {
     GoogleOAuthGenerateDto,
     GoogleOAuthValdatePayload,
     GoogleOAuthValidateDto,
-    LoginTwoFAPayload
+    LoginTwoFAPayload,
 } from "../lib/pakt-sdk";
 
 interface User {
@@ -45,23 +46,40 @@ interface UsePaktAuthReturn {
     user: User | null;
     loading: boolean;
     error: string | null;
-    
+
     // Authentication Methods
     login: (payload: LoginPayload) => Promise<AuthResponse<LoginDto>>;
     loginTwoFa: (payload: LoginTwoFAPayload) => Promise<AuthResponse<LoginDto>>;
     register: (payload: RegisterPayload) => Promise<AuthResponse<RegisterDto>>;
-    verifyAccount: (payload: VerifyAccountPayload) => Promise<AuthResponse<AccountVerifyDto>>;
-    resendVerifyLink: (payload: ResendVerifyPayload) => Promise<AuthResponse<IResendVerifyLink>>;
-    resetPassword: (payload: ResetPasswordPayload) => Promise<AuthResponse<ResetDto>>;
-    changePassword: (payload: ChangeAuthenticationPasswordPayload) => Promise<AuthResponse<ChangePasswordDto>>;
-    validatePasswordToken: (props: { token: string; tempToken: string }) => Promise<AuthResponse<ValidatePasswordToken>>;
-    validateReferral: (token: string) => Promise<AuthResponse<ValidateReferralDto>>;
-    googleOAuthGenerateState: () => Promise<AuthResponse<GoogleOAuthGenerateDto>>;
-    googleOAuthValidateState: (props: GoogleOAuthValdatePayload) => Promise<AuthResponse<GoogleOAuthValidateDto>>;
+    verifyAccount: (
+        payload: VerifyAccountPayload
+    ) => Promise<AuthResponse<AccountVerifyDto>>;
+    resendVerifyLink: (
+        payload: ResendVerifyPayload
+    ) => Promise<AuthResponse<IResendVerifyLink>>;
+    resetPassword: (
+        payload: ResetPasswordPayload
+    ) => Promise<AuthResponse<ResetDto>>;
+    changePassword: (
+        payload: ChangeAuthenticationPasswordPayload
+    ) => Promise<AuthResponse<ChangePasswordDto>>;
+    validatePasswordToken: (props: {
+        token: string;
+        tempToken: string;
+    }) => Promise<AuthResponse<ValidatePasswordToken>>;
+    validateReferral: (
+        token: string
+    ) => Promise<AuthResponse<ValidateReferralDto>>;
+    googleOAuthGenerateState: () => Promise<
+        AuthResponse<GoogleOAuthGenerateDto>
+    >;
+    googleOAuthValidateState: (
+        props: GoogleOAuthValdatePayload
+    ) => Promise<AuthResponse<GoogleOAuthValidateDto>>;
     getUser: (authToken: string) => Promise<AuthResponse<any>>;
     logout: (authToken: string) => Promise<AuthResponse<void>>;
-    sendEmailTwoFA: (authToken: string) => Promise<AuthResponse<{}>>;
-    
+    resendTwoFAEmailCode: (email: string) => Promise<AuthResponse<object>>;
+
     // Utility Methods
     clearError: () => void;
     clearUser: () => void;
@@ -73,16 +91,24 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
     const [error, setError] = useState<string | null>(null);
 
     // Helper function to create error response
-    const createErrorResponse = useCallback(<T>(errorMessage: string, defaultMessage: string): AuthResponse<T> => {
-        const message = errorMessage || defaultMessage;
+    const setAndTriggerError = useCallback((message: string) => {
         setError(message);
-        return {
-            status: 'error',
-            message,
-            data: null as unknown as T,
-            statusCode: 500
-        };
+        triggerGlobalError(message);
     }, []);
+
+    const createErrorResponse = useCallback(
+        <T>(errorMessage: string, defaultMessage: string): AuthResponse<T> => {
+            const message = errorMessage || defaultMessage;
+            setAndTriggerError(message);
+            return {
+                status: "error",
+                message,
+                data: null as unknown as T,
+                statusCode: 500,
+            };
+        },
+        [setAndTriggerError]
+    );
 
     // Clear error
     const clearError = useCallback(() => {
@@ -95,317 +121,473 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
     }, []);
 
     // Login
-    const login = useCallback(async (payload: LoginPayload): Promise<AuthResponse<LoginDto>> => {
-        setLoading(true);
-        setError(null);
-        
-        try {
-            const response = await paktSDKService.login(payload);
-            
-            if (response.status === 'success' && response.data) {
-                setUser(response.data);
-            } else {
-                setError(response.message || 'Login failed');
+    const login = useCallback(
+        async (payload: LoginPayload): Promise<AuthResponse<LoginDto>> => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const response = await paktSDKService.login(payload);
+
+                if (response.status === "success" && response.data) {
+                    setUser(response.data);
+                } else {
+                    setAndTriggerError(response.message || "Login failed");
+                }
+
+                return response;
+            } catch (err) {
+                const errorMessage =
+                    err instanceof Error ? err.message : "Login failed";
+                return createErrorResponse<LoginDto>(
+                    errorMessage,
+                    "Login failed"
+                );
+            } finally {
+                setLoading(false);
             }
-            
-            return response;
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Login failed';
-            return createErrorResponse<LoginDto>(errorMessage, 'Login failed');
-        } finally {
-            setLoading(false);
-        }
-    }, [createErrorResponse]);
+        },
+        [createErrorResponse, setAndTriggerError]
+    );
 
     // Register
-    const register = useCallback(async (payload: RegisterPayload): Promise<AuthResponse<RegisterDto>> => {
-        setLoading(true);
-        setError(null);
-        
-        try {
-            const response = await paktSDKService.register(payload);
-            
-            if (response.status === 'error') {
-                setError(response.message || 'Registration failed');
+    const register = useCallback(
+        async (
+            payload: RegisterPayload
+        ): Promise<AuthResponse<RegisterDto>> => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const response = await paktSDKService.register(payload);
+
+                if (response.status === "error") {
+                    setAndTriggerError(
+                        response.message || "Registration failed"
+                    );
+                }
+
+                return response;
+            } catch (err) {
+                const errorMessage =
+                    err instanceof Error ? err.message : "Registration failed";
+                return createErrorResponse<RegisterDto>(
+                    errorMessage,
+                    "Registration failed"
+                );
+            } finally {
+                setLoading(false);
             }
-            
-            return response;
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Registration failed';
-            return createErrorResponse<RegisterDto>(errorMessage, 'Registration failed');
-        } finally {
-            setLoading(false);
-        }
-    }, [createErrorResponse]);
+        },
+        [createErrorResponse, setAndTriggerError]
+    );
 
     // Verify Account
-    const verifyAccount = useCallback(async (payload: VerifyAccountPayload): Promise<AuthResponse<AccountVerifyDto>> => {
-        setLoading(true);
-        setError(null);
-        
-        try {
-            const response = await paktSDKService.verifyAccount(payload);
-            
-            if (response.status === 'success' && response.data) {
-                setUser(response.data);
-            } else {
-                setError(response.message || 'Account verification failed');
+    const verifyAccount = useCallback(
+        async (
+            payload: VerifyAccountPayload
+        ): Promise<AuthResponse<AccountVerifyDto>> => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const response = await paktSDKService.verifyAccount(payload);
+
+                if (response.status === "success" && response.data) {
+                    setUser(response.data);
+                } else {
+                    setAndTriggerError(
+                        response.message || "Account verification failed"
+                    );
+                }
+
+                return response;
+            } catch (err) {
+                const errorMessage =
+                    err instanceof Error
+                        ? err.message
+                        : "Account verification failed";
+                return createErrorResponse<AccountVerifyDto>(
+                    errorMessage,
+                    "Account verification failed"
+                );
+            } finally {
+                setLoading(false);
             }
-            
-            return response;
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Account verification failed';
-            return createErrorResponse<AccountVerifyDto>(errorMessage, 'Account verification failed');
-        } finally {
-            setLoading(false);
-        }
-    }, [createErrorResponse]);
+        },
+        [createErrorResponse, setAndTriggerError]
+    );
 
     // Resend Verify Link
-    const resendVerifyLink = useCallback(async (payload: ResendVerifyPayload): Promise<AuthResponse<IResendVerifyLink>> => {
-        setLoading(true);
-        setError(null);
-        
-        try {
-            const response = await paktSDKService.resendVerifyLink(payload);
-            
-            if (response.status === 'error') {
-                setError(response.message || 'Failed to resend verification link');
+    const resendVerifyLink = useCallback(
+        async (
+            payload: ResendVerifyPayload
+        ): Promise<AuthResponse<IResendVerifyLink>> => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const response = await paktSDKService.resendVerifyLink(payload);
+
+                if (response.status === "error") {
+                    setAndTriggerError(
+                        response.message || "Failed to resend verification link"
+                    );
+                }
+
+                return response;
+            } catch (err) {
+                const errorMessage =
+                    err instanceof Error
+                        ? err.message
+                        : "Failed to resend verification link";
+                return createErrorResponse<IResendVerifyLink>(
+                    errorMessage,
+                    "Failed to resend verification link"
+                );
+            } finally {
+                setLoading(false);
             }
-            
-            return response;
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Failed to resend verification link';
-            return createErrorResponse<IResendVerifyLink>(errorMessage, 'Failed to resend verification link');
-        } finally {
-            setLoading(false);
-        }
-    }, [createErrorResponse]);
+        },
+        [createErrorResponse, setAndTriggerError]
+    );
 
     // Reset Password
-    const resetPassword = useCallback(async (payload: ResetPasswordPayload): Promise<AuthResponse<ResetDto>> => {
-        setLoading(true);
-        setError(null);
-        
-        try {
-            const response = await paktSDKService.resetPassword(payload);
-            
-            if (response.status === 'error') {
-                setError(response.message || 'Password reset failed');
+    const resetPassword = useCallback(
+        async (
+            payload: ResetPasswordPayload
+        ): Promise<AuthResponse<ResetDto>> => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const response = await paktSDKService.resetPassword(payload);
+
+                if (response.status === "error") {
+                    setAndTriggerError(
+                        response.message || "Password reset failed"
+                    );
+                }
+
+                return response;
+            } catch (err) {
+                const errorMessage =
+                    err instanceof Error
+                        ? err.message
+                        : "Password reset failed";
+                return createErrorResponse<ResetDto>(
+                    errorMessage,
+                    "Password reset failed"
+                );
+            } finally {
+                setLoading(false);
             }
-            
-            return response;
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Password reset failed';
-            return createErrorResponse<ResetDto>(errorMessage, 'Password reset failed');
-        } finally {
-            setLoading(false);
-        }
-    }, [createErrorResponse]);
+        },
+        [createErrorResponse, setAndTriggerError]
+    );
 
     // Change Password
-    const changePassword = useCallback(async (payload: ChangeAuthenticationPasswordPayload): Promise<AuthResponse<ChangePasswordDto>> => {
-        setLoading(true);
-        setError(null);
-        
-        try {
-            const response = await paktSDKService.changePassword(payload);
-            
-            if (response.status === 'error') {
-                setError(response.message || 'Password change failed');
+    const changePassword = useCallback(
+        async (
+            payload: ChangeAuthenticationPasswordPayload
+        ): Promise<AuthResponse<ChangePasswordDto>> => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const response = await paktSDKService.changePassword(payload);
+
+                if (response.status === "error") {
+                    setAndTriggerError(
+                        response.message || "Password change failed"
+                    );
+                }
+
+                return response;
+            } catch (err) {
+                const errorMessage =
+                    err instanceof Error
+                        ? err.message
+                        : "Password change failed";
+                return createErrorResponse<ChangePasswordDto>(
+                    errorMessage,
+                    "Password change failed"
+                );
+            } finally {
+                setLoading(false);
             }
-            
-            return response;
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Password change failed';
-            return createErrorResponse<ChangePasswordDto>(errorMessage, 'Password change failed');
-        } finally {
-            setLoading(false);
-        }
-    }, [createErrorResponse]);
+        },
+        [createErrorResponse, setAndTriggerError]
+    );
 
     // Validate Password Token
-    const validatePasswordToken = useCallback(async (props: { token: string; tempToken: string }): Promise<AuthResponse<ValidatePasswordToken>> => {
-        setLoading(true);
-        setError(null);
-        
-        try {
-            const response = await paktSDKService.validatePasswordToken(props);
-            
-            if (response.status === 'error') {
-                setError(response.message || 'Password token validation failed');
+    const validatePasswordToken = useCallback(
+        async (props: {
+            token: string;
+            tempToken: string;
+        }): Promise<AuthResponse<ValidatePasswordToken>> => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const response =
+                    await paktSDKService.validatePasswordToken(props);
+
+                if (response.status === "error") {
+                    setAndTriggerError(
+                        response.message || "Password token validation failed"
+                    );
+                }
+
+                return response;
+            } catch (err) {
+                const errorMessage =
+                    err instanceof Error
+                        ? err.message
+                        : "Password token validation failed";
+                return createErrorResponse<ValidatePasswordToken>(
+                    errorMessage,
+                    "Password token validation failed"
+                );
+            } finally {
+                setLoading(false);
             }
-            
-            return response;
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Password token validation failed';
-            return createErrorResponse<ValidatePasswordToken>(errorMessage, 'Password token validation failed');
-        } finally {
-            setLoading(false);
-        }
-    }, [createErrorResponse]);
+        },
+        [createErrorResponse, setAndTriggerError]
+    );
 
     // Google OAuth Generate State
-    const googleOAuthGenerateState = useCallback(async (): Promise<AuthResponse<GoogleOAuthGenerateDto>> => {
+    const googleOAuthGenerateState = useCallback(async (): Promise<
+        AuthResponse<GoogleOAuthGenerateDto>
+    > => {
         setLoading(true);
         setError(null);
-        
+
         try {
             const response = await paktSDKService.googleOAuthGenerateState();
-            
-            if (response.status === 'error') {
-                setError(response.message || 'Google OAuth state generation failed');
+
+            if (response.status === "error") {
+                setAndTriggerError(
+                    response.message || "Google OAuth state generation failed"
+                );
             }
-            
+
             return response;
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Google OAuth state generation failed';
-            return createErrorResponse<GoogleOAuthGenerateDto>(errorMessage, 'Google OAuth state generation failed');
+        } catch (err) {
+            const errorMessage =
+                err instanceof Error
+                    ? err.message
+                    : "Google OAuth state generation failed";
+            return createErrorResponse<GoogleOAuthGenerateDto>(
+                errorMessage,
+                "Google OAuth state generation failed"
+            );
         } finally {
             setLoading(false);
         }
-    }, [createErrorResponse]);
+    }, [createErrorResponse, setAndTriggerError]);
 
     // Google OAuth Validate State
-    const googleOAuthValidateState = useCallback(async (props: GoogleOAuthValdatePayload): Promise<AuthResponse<GoogleOAuthValidateDto>> => {
-        setLoading(true);
-        setError(null);
-        
-        try {
-            const response = await paktSDKService.googleOAuthValidateState(props);
-            
-            if (response.status === 'success' && response.data) {
-                setUser(response.data as unknown as User);
-            } else {
-                setError(response.message || 'Google OAuth validation failed');
+    const googleOAuthValidateState = useCallback(
+        async (
+            props: GoogleOAuthValdatePayload
+        ): Promise<AuthResponse<GoogleOAuthValidateDto>> => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const response =
+                    await paktSDKService.googleOAuthValidateState(props);
+
+                if (response.status === "success" && response.data) {
+                    setUser(response.data as unknown as User);
+                } else {
+                    setAndTriggerError(
+                        response.message || "Google OAuth validation failed"
+                    );
+                }
+
+                return response;
+            } catch (err) {
+                const errorMessage =
+                    err instanceof Error
+                        ? err.message
+                        : "Google OAuth validation failed";
+                return createErrorResponse<GoogleOAuthValidateDto>(
+                    errorMessage,
+                    "Google OAuth validation failed"
+                );
+            } finally {
+                setLoading(false);
             }
-            
-            return response;
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Google OAuth validation failed';
-            return createErrorResponse<GoogleOAuthValidateDto>(errorMessage, 'Google OAuth validation failed');
-        } finally {
-            setLoading(false);
-        }
-    }, [createErrorResponse]);
+        },
+        [createErrorResponse, setAndTriggerError]
+    );
 
     // Get User
-    const getUser = useCallback(async (authToken: string): Promise<AuthResponse<any>> => {
-        setLoading(true);
-        setError(null);
-        
-        try {
-            const response = await paktSDKService.getUser(authToken);
-            
-            if (response.status === 'success' && response.data) {
-                setUser(response.data);
-            } else {
-                setError(response.message || 'Failed to get user');
+    const getUser = useCallback(
+        async (authToken: string): Promise<AuthResponse<any>> => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const response = await paktSDKService.getUser(authToken);
+
+                if (response.status === "success" && response.data) {
+                    setUser(response.data);
+                } else {
+                    setAndTriggerError(
+                        response.message || "Failed to get user"
+                    );
+                }
+
+                return response;
+            } catch (err) {
+                const errorMessage =
+                    err instanceof Error ? err.message : "Failed to get user";
+                return createErrorResponse<any>(
+                    errorMessage,
+                    "Failed to get user"
+                );
+            } finally {
+                setLoading(false);
             }
-            
-            return response;
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Failed to get user';
-            return createErrorResponse<any>(errorMessage, 'Failed to get user');
-        } finally {
-            setLoading(false);
-        }
-    }, [createErrorResponse]);
+        },
+        [createErrorResponse, setAndTriggerError]
+    );
 
     // Logout
-    const logout = useCallback(async (authToken: string): Promise<AuthResponse<void>> => {
-        setLoading(true);
-        setError(null);
-        
-        try {
-            const response = await paktSDKService.logout(authToken);
-            
-            if (response.status === 'success') {
-                clearUser();
-            } else {
-                setError(response.message || 'Logout failed');
+    const logout = useCallback(
+        async (authToken: string): Promise<AuthResponse<void>> => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const response = await paktSDKService.logout(authToken);
+
+                if (response.status === "success") {
+                    clearUser();
+                } else {
+                    setAndTriggerError(response.message || "Logout failed");
+                }
+
+                return response;
+            } catch (err) {
+                const errorMessage =
+                    err instanceof Error ? err.message : "Logout failed";
+                return createErrorResponse<void>(errorMessage, "Logout failed");
+            } finally {
+                setLoading(false);
             }
-            
-            return response;
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Logout failed';
-            return createErrorResponse<void>(errorMessage, 'Logout failed');
-        } finally {
-            setLoading(false);
-        }
-    }, [clearUser, createErrorResponse]);
+        },
+        [clearUser, createErrorResponse, setAndTriggerError]
+    );
 
     // Send Email 2FA
-    const sendEmailTwoFA = useCallback(async (authToken: string): Promise<AuthResponse<{}>> => {
-        setLoading(true);
-        setError(null);
-        
-        try {
-            const response = await paktSDKService.sendEmailTwoFA(authToken);
-            
-            if (response.status === 'error') {
-                setError(response.message || 'Failed to send 2FA email');
+    const resendTwoFAEmailCode = useCallback(
+        async (email: string): Promise<AuthResponse<object>> => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const response =
+                    await paktSDKService.resendTwoFAEmailCode(email);
+
+                if (response.status === "error") {
+                    setAndTriggerError(
+                        response.message || "Failed to resend 2FA email"
+                    );
+                }
+
+                return response;
+            } catch (err) {
+                const errorMessage =
+                    err instanceof Error
+                        ? err.message
+                        : "Failed to resend 2FA email";
+                return createErrorResponse<object>(
+                    errorMessage,
+                    "Failed to resend 2FA email"
+                );
+            } finally {
+                setLoading(false);
             }
-            
-            return response;
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Failed to send 2FA email';
-            return createErrorResponse<{}>(errorMessage, 'Failed to send 2FA email');
-        } finally {
-            setLoading(false);
-        }
-    }, [createErrorResponse]);
+        },
+        [createErrorResponse, setAndTriggerError]
+    );
 
     // Validate Referral
-    const validateReferral = useCallback(async (token: string): Promise<AuthResponse<ValidateReferralDto>> => {
-        setLoading(true);
-        setError(null);
-        
-        try {
-            const response = await paktSDKService.validateReferral(token);
-            
-            if (response.status === 'error') {
-                setError(response.message || 'Referral validation failed');
+    const validateReferral = useCallback(
+        async (token: string): Promise<AuthResponse<ValidateReferralDto>> => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const response = await paktSDKService.validateReferral(token);
+
+                if (response.status === "error") {
+                    setAndTriggerError(
+                        response.message || "Referral validation failed"
+                    );
+                }
+
+                return response;
+            } catch (err) {
+                const errorMessage =
+                    err instanceof Error
+                        ? err.message
+                        : "Referral validation failed";
+                return createErrorResponse<ValidateReferralDto>(
+                    errorMessage,
+                    "Referral validation failed"
+                );
+            } finally {
+                setLoading(false);
             }
-            
-            return response;
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Referral validation failed';
-            return createErrorResponse<ValidateReferralDto>(errorMessage, 'Referral validation failed');
-        } finally {
-            setLoading(false);
-        }
-    }, [createErrorResponse]);
+        },
+        [createErrorResponse, setAndTriggerError]
+    );
 
     // Login Two-Factor Authentication
-    const loginTwoFa = useCallback(async (payload: LoginTwoFAPayload): Promise<AuthResponse<LoginDto>> => {
-        setLoading(true);
-        setError(null);
-        
-        try {
-            const response = await paktSDKService.loginTwoFa(payload);
-            
-            if (response.status === 'success' && response.data) {
-                setUser(response.data);
-            } else {
-                setError(response.message || 'Two-factor authentication failed');
+    const loginTwoFa = useCallback(
+        async (payload: LoginTwoFAPayload): Promise<AuthResponse<LoginDto>> => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const response = await paktSDKService.loginTwoFa(payload);
+
+                if (response.status === "success" && response.data) {
+                    setUser(response.data);
+                } else {
+                    setAndTriggerError(
+                        response.message || "Two-factor authentication failed"
+                    );
+                }
+
+                return response;
+            } catch (err) {
+                const errorMessage =
+                    err instanceof Error
+                        ? err.message
+                        : "Two-factor authentication failed";
+                return createErrorResponse<LoginDto>(
+                    errorMessage,
+                    "Two-factor authentication failed"
+                );
+            } finally {
+                setLoading(false);
             }
-            
-            return response;
-        } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Two-factor authentication failed';
-            return createErrorResponse<LoginDto>(errorMessage, 'Two-factor authentication failed');
-        } finally {
-            setLoading(false);
-        }
-    }, [createErrorResponse]);
+        },
+        [createErrorResponse, setAndTriggerError]
+    );
 
     return {
         // State
         user,
         loading,
         error,
-        
+
         // Authentication Methods
         login,
         loginTwoFa,
@@ -420,8 +602,8 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
         googleOAuthValidateState,
         getUser,
         logout,
-        sendEmailTwoFA,
-        
+        resendTwoFAEmailCode,
+
         // Utility Methods
         clearError,
         clearUser,

@@ -10,7 +10,7 @@
 export { default as LoginDialog } from "./dialogs/login-dialog";
 export { default as SignupDialog } from "./dialogs/signup-dialog";
 export { default as ForgotPasswordDialog } from "./dialogs/forgot-password-dialog";
-export { default as VerifyEmailDialog } from "./dialogs/verify-email-dialog";
+export { default as VerifyResetDialog } from "./dialogs/verify-reset-dialog";
 export { default as VerifyLoginDialog } from "./dialogs/verify-login-dialog";
 export { default as VerifySignupDialog } from "./dialogs/verify-signup-dialog";
 export { default as ResetPasswordDialog } from "./dialogs/reset-password-dialog";
@@ -23,7 +23,7 @@ export { default as SignupForm } from "./forms/signup-form";
 export { default as LoginFormWrapper } from "./forms/login-form-wrapper";
 export { default as SignupFormWrapper } from "./forms/signup-form-wrapper";
 export { default as ForgotPasswordForm } from "./forms/forgot-password-form";
-export { default as VerifyEmailForm } from "./forms/verify-email-form";
+export { default as VerifyResetForm } from "./forms/verify-reset-form";
 export { default as ResetPasswordForm } from "./forms/reset-password-form";
 export { default as VerifySignupForm } from "./forms/verify-signup-form";
 export { default as VerifyLoginForm } from "./forms/verify-login-form";

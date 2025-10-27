@@ -11,7 +11,6 @@ import { Check } from "lucide-react";
 interface PasswordCriteriaProps {
     isValidated: boolean;
     criteria: string;
-    isSignUp?: boolean;
 }
 
 export const PasswordCriteria = ({

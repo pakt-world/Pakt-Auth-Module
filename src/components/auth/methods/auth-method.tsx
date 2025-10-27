@@ -105,6 +105,7 @@ export const AuthOptions = ({
                         : "Already have an account?"}
                 </div>
                 <button
+                    type="button"
                     onClick={isLogin ? goToSignupMethod : goToLoginMethod}
                     className="pka:text-sm pka:font-bold pka:leading-tight pka:text-primary"
                 >

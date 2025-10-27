@@ -17,7 +17,6 @@ interface ForgotPasswordDialogProps {
     onClose: () => void;
     onSubmit: (data: { email: string }) => void;
     isLoading?: boolean;
-    error?: string;
     onBackToLogin?: () => void;
 }
 
@@ -26,7 +25,6 @@ const ForgotPasswordDialog = ({
     onClose,
     onSubmit,
     isLoading,
-    error,
     onBackToLogin,
 }: ForgotPasswordDialogProps): JSX.Element => {
     return (
@@ -44,11 +42,10 @@ const ForgotPasswordDialog = ({
                 <ForgotPasswordForm
                     onSubmit={onSubmit}
                     isLoading={isLoading}
-                    error={error}
                     onBackToLogin={onBackToLogin}
                 />
                 <div className="pka:flex pka:w-full pka:items-center pka:justify-end">
-                    <PoweredByPakt className="!pka:text-white" />
+                    <PoweredByPakt className="pka:!text-white" />
                 </div>
             </div>
         </HeadlessModal>

@@ -302,7 +302,7 @@ function MyApp() {
 
 ```typescript
 import React, { useRef } from 'react';
-import PaktAuth, { AuthRef, ConfigContextType } from '@pakt/auth-module';
+import { PaktAuth, AuthRef, ConfigContextType } from '@pakt/auth-module';
 
 function MyApp() {
   const authRef = useRef<AuthRef>(null);
@@ -318,10 +318,6 @@ function MyApp() {
     paktSDK: {
       baseUrl: "https://api-devpaktbuild.chain.site",
       verbose: true,
-    },
-    errorHandler: (errorMessage) => {
-      // Handle errors (e.g., show toast notification)
-      console.error("Authentication error:", errorMessage);
     },
   };
 

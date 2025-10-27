@@ -2,28 +2,27 @@
 /*                             External Dependency                            */
 /* -------------------------------------------------------------------------- */
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import type * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMediaQuery } from "usehooks-ts";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Eye, EyeOff } from "lucide-react";
 
 /* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
 
-import { spChars } from "../../../utils/auth-utils";
+import { spChars, AuthEnums } from "../../../utils/auth-utils";
 import { signupSchema, type SignupFormValues } from "../../../utils/validation";
 import { Button } from "../../common/button";
-import { AuthEnums } from "../../../utils/auth-utils";
-import { Spinner } from "../../../components/common/loader";
-import { PasswordCriteria } from "../../../components/common/password-criteria";
+
+import { Spinner } from "../../common/loader";
+import { PasswordCriteria } from "../../common/password-criteria";
 
 interface SignUpFormProps {
     onSubmit: (data: SignupFormValues) => void;
     isLoading?: boolean;
-    error?: string;
     backToSignupMethod?: () => void;
     goToLoginMethod?: () => void;
 }
@@ -31,7 +30,6 @@ interface SignUpFormProps {
 const SignUpForm = ({
     onSubmit,
     isLoading,
-    error,
     backToSignupMethod,
     goToLoginMethod,
 }: SignUpFormProps): React.JSX.Element => {
@@ -40,6 +38,9 @@ const SignUpForm = ({
     const form = useForm<SignupFormValues>({
         resolver: zodResolver(signupSchema),
     });
+
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const handleSubmit: SubmitHandler<SignupFormValues> = (values) => {
         onSubmit(values);
@@ -144,39 +145,47 @@ const SignUpForm = ({
                     >
                         Create Password
                     </label>
-                    <input
-                        id="password"
-                        {...form.register("password")}
-                        className="input_style"
-                        placeholder="Password"
-                        type="password"
-                    />
+                    <div className="pka:relative">
+                        <input
+                            id="password"
+                            {...form.register("password")}
+                            className="input_style pka:pr-10"
+                            placeholder="Password"
+                            type={showPassword ? "text" : "password"}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="pka:absolute pka:inset-y-0 pka:right-0 pka:flex pka:items-center pka:pr-3 pka:text-gray-400 hover:pka:text-gray-600"
+                        >
+                            {showPassword ? (
+                                <EyeOff className="pka:h-4 pka:w-4" />
+                            ) : (
+                                <Eye className="pka:h-4 pka:w-4" />
+                            )}
+                        </button>
+                    </div>
                     {isPasswordTyping && (
                         <div className="pka:flex pka:flex-col pka:gap-4 pka:p-4 pka:text-xs pka:text-body">
                             <PasswordCriteria
                                 isValidated={validatingErr.isMinLength}
                                 criteria="At least 8 characters"
-                                isSignUp
                             />
                             <PasswordCriteria
                                 isValidated={validatingErr.checkLowerUpper}
                                 criteria="Upper and lower case characters"
-                                isSignUp
                             />
                             <PasswordCriteria
                                 isValidated={validatingErr.checkNumber}
                                 criteria="1 or more numbers"
-                                isSignUp
                             />
                             <PasswordCriteria
                                 isValidated={validatingErr.specialCharacter}
                                 criteria="1 or more special characters"
-                                isSignUp
                             />
                             <PasswordCriteria
                                 isValidated={validatingErr.confirmedPassword}
                                 criteria="passwords must match"
-                                isSignUp
                             />
                         </div>
                     )}
@@ -189,13 +198,28 @@ const SignUpForm = ({
                     >
                         Confirm Password
                     </label>
-                    <input
-                        id="confirmPassword"
-                        {...form.register("confirmPassword")}
-                        className="input_style"
-                        placeholder="Confirm Password"
-                        type="password"
-                    />
+                    <div className="pka:relative">
+                        <input
+                            id="confirmPassword"
+                            {...form.register("confirmPassword")}
+                            className="input_style pka:pr-10"
+                            placeholder="Confirm Password"
+                            type={showConfirmPassword ? "text" : "password"}
+                        />
+                        <button
+                            type="button"
+                            onClick={() =>
+                                setShowConfirmPassword(!showConfirmPassword)
+                            }
+                            className="pka:absolute pka:inset-y-0 pka:right-0 pka:flex pka:items-center pka:pr-3 pka:text-gray-400 hover:pka:text-gray-600"
+                        >
+                            {showConfirmPassword ? (
+                                <EyeOff className="pka:h-4 pka:w-4" />
+                            ) : (
+                                <Eye className="pka:h-4 pka:w-4" />
+                            )}
+                        </button>
+                    </div>
                     {form.formState.errors.confirmPassword?.message && (
                         <div className="pka:text-sm pka:text-danger">
                             {form.formState.errors.confirmPassword.message}
@@ -203,12 +227,6 @@ const SignUpForm = ({
                     )}
                 </div>
             </div>
-
-            {error && (
-                <div className="pka:text-center pka:text-sm pka:text-danger">
-                    {error}
-                </div>
-            )}
 
             <Button
                 className=""
@@ -224,12 +242,19 @@ const SignUpForm = ({
                     <span className="pka:text-title">
                         Already have an account?{" "}
                     </span>
-                    <span
+                    <button
+                        type="button"
                         onClick={goToLoginMethod}
-                        className="pka:hover:underline pka:cursor-pointer pka:font-bold pka:text-primary"
+                        className="pka:hover:underline pka:cursor-pointer pka:font-bold pka:text-primary pka:bg-transparent pka:border-none"
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                                e.preventDefault();
+                                goToLoginMethod?.();
+                            }
+                        }}
                     >
                         Login
-                    </span>
+                    </button>
                 </div>
             )}
         </form>

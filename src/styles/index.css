@@ -103,6 +103,16 @@
     border-color: var(--pkas-input-border);
     color: var(--pkas-input-text);
   }
+
+  @media (max-width: 424px) {
+    .otp_style {
+      width: 2.25rem !important;
+      height: 2.25rem !important;
+      font-size: 0.95rem;
+      padding: 0 !important;
+      box-sizing: border-box;
+    }
+  }
   
   .otp_style:focus {
     outline: none;

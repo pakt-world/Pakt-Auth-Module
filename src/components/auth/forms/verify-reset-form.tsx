@@ -9,6 +9,7 @@ import ReactOTPInput from "react-otp-input";
 import type * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMediaQuery } from "usehooks-ts";
+import { useResendCountdown } from "../../../hooks/use-resend-countdown";
 
 /* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
@@ -40,29 +41,13 @@ function VerifyEmailForm({
     resendLoading = false,
     email,
 }: VerifyEmailFormProps): React.JSX.Element {
-    const [countdown, setCountdown] = useState(0);
-    const [isResendDisabled, setIsResendDisabled] = useState(true);
+    const {
+        countdown,
+        isDisabled: isResendDisabled,
+        start: startCountdown,
+    } = useResendCountdown();
 
     const isMobile = useMediaQuery("(max-width: 640px)");
-
-    useEffect(() => {
-        if (isResendDisabled) {
-            setCountdown(COUNTDOWN_START);
-            const timer = setInterval(() => {
-                setCountdown((prev) => (prev > 1 ? prev - 1 : 0));
-            }, ONE_SECOND);
-            const timeout = setTimeout(() => {
-                setIsResendDisabled(false);
-            }, RESEND_INTERVAL);
-
-            return () => {
-                clearInterval(timer);
-                clearTimeout(timeout);
-            };
-        }
-
-        return () => {};
-    }, [isResendDisabled]);
 
     const form = useForm<FormValues>({
         resolver: zodResolver(otpSchema),
@@ -75,7 +60,7 @@ function VerifyEmailForm({
     const handleResendOTP = (): void => {
         if (isResendDisabled || resendLoading) return;
         onResend();
-        setIsResendDisabled(true);
+        startCountdown();
     };
 
     const formatCountdown = (counter: number): string => {
@@ -114,7 +99,7 @@ function VerifyEmailForm({
                                     renderInput={(props) => (
                                         <input
                                             {...props}
-                                            className="otp_style !pka:select-none pka:px-3 pka:py-2 pka:focus:outline-none pka:focus:ring-1 pka:focus:ring-primary"
+                                            className="otp_style pka:!select-none pka:px-3 pka:py-2 max-[424px]:pka:px-0 max-[424px]:pka:py-0 pka:focus:outline-none pka:focus:ring-1 pka:focus:ring-primary"
                                         />
                                     )}
                                 />
@@ -142,7 +127,7 @@ function VerifyEmailForm({
                             variant="outline"
                             onClick={handleResendOTP}
                             disabled={resendLoading || isResendDisabled}
-                            className="!pka:h-7 pka:max-w-[150px] pka:items-center pka:justify-center !pka:py-2"
+                            className="pka:!h-7 pka:max-w-[150px] pka:items-center pka:justify-center pka:justify-items-center pka:!p-0"
                             style={{
                                 opacity:
                                     resendLoading || isResendDisabled ? 0.2 : 1,

@@ -10,3 +10,7 @@ tailwind.config.ts
 postcss.config.js
 rename-types.js
 global.d.ts
+/*.md
+src/styles/
+src/assets/
+src/**/*.md

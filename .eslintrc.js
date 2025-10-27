@@ -1,10 +1,10 @@
-const { resolve } = require('node:path');
+const { resolve } = require("node:path");
 
-const dir =  __dirname
-const cwd = process.cwd()
+const dir = __dirname;
+const cwd = process.cwd();
 
-const project_dir = cwd.endsWith(dir) ? process.cwd() : `${dir}`
-const project = resolve(project_dir, 'tsconfig.json')
+const project_dir = cwd.endsWith(dir) ? process.cwd() : `${dir}`;
+const project = resolve(project_dir, "tsconfig.json");
 
 module.exports = {
     root: true,
@@ -40,7 +40,7 @@ module.exports = {
         ecmaVersion: "latest",
         sourceType: "module",
         // project: "./tsconfig.json",
-        project
+        project,
     },
     plugins: ["react", "@typescript-eslint", "prettier"],
     rules: {
@@ -70,6 +70,7 @@ module.exports = {
         "react/require-default-props": "off",
         "import/no-extraneous-dependencies": "off",
         // Bad rules to disable
+        "no-unused-vars": "off",
         "@typescript-eslint/no-unsafe-assignment": "off",
         "@typescript-eslint/no-unsafe-call": "off",
         "@typescript-eslint/no-unsafe-argument": "off",

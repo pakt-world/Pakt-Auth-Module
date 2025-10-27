@@ -42,16 +42,12 @@ export const SigninMethod = ({
                 instruction="Choose Log in method"
                 currentAuth="signin_method"
                 google={isGoogleOAuthEnabled ? () => signIn() : undefined}
-                github={() => {
-                    console.log(
-                        "Github authentication is not implemented yet."
-                    );
-                }}
+                github={() => {}}
                 email={onEmailLogin}
                 goToSignupMethod={goToSignupMethod}
             />
             <div className="pka:flex pka:w-full pka:items-center pka:justify-end">
-                <PoweredByPakt className="sm:!pka:text-white" />
+                <PoweredByPakt className="sm:pka:!text-white" />
             </div>
         </div>
     );

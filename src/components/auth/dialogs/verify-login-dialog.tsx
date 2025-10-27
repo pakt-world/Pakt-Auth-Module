@@ -66,7 +66,7 @@ const VerifyLoginDialog = ({
                     onSuccess={onSuccess}
                 />
                 <div className="pka:flex pka:w-full pka:items-center pka:justify-end">
-                    <PoweredByPakt className="!pka:text-white" />
+                    <PoweredByPakt className="pka:!text-white" />
                 </div>
             </div>
         </HeadlessModal>

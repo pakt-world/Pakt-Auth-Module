@@ -19,7 +19,6 @@ interface SignupDialogProps {
     textConfig?: AuthTextConfig;
     onSubmit: (data: any) => void;
     isLoading?: boolean;
-    error?: string;
     backToSignupMethod?: () => void;
     goToLoginMethod?: () => void;
 }
@@ -30,7 +29,6 @@ const SignupDialog = ({
     textConfig,
     onSubmit,
     isLoading,
-    error,
     backToSignupMethod,
     goToLoginMethod,
 }: SignupDialogProps): JSX.Element => {
@@ -49,12 +47,11 @@ const SignupDialog = ({
                 <SignUpForm
                     onSubmit={onSubmit}
                     isLoading={isLoading}
-                    error={error}
                     backToSignupMethod={backToSignupMethod}
                     goToLoginMethod={goToLoginMethod}
                 />
                 <div className="pka:flex pka:w-full pka:items-center pka:justify-end">
-                    <PoweredByPakt className="!pka:text-white" />
+                    <PoweredByPakt className="pka:!text-white" />
                 </div>
             </div>
         </HeadlessModal>

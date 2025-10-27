@@ -10,9 +10,9 @@ import { memo } from "react";
 
 import { HeadlessModal } from "../../common/headless-modal";
 import PoweredByPakt from "../../common/powered-by-pakt";
-import VerifyEmailForm from "../forms/verify-email-form";
+import VerifyEmailForm from "../forms/verify-reset-form";
 
-interface VerifyEmailDialogProps {
+interface VerifyResetDialogProps {
     isOpen: boolean;
     onClose: () => void;
     onVerify: (data: { otp: string }) => void;
@@ -22,7 +22,7 @@ interface VerifyEmailDialogProps {
     email?: string;
 }
 
-const VerifyEmailDialog = ({
+const VerifyResetDialog = ({
     isOpen,
     onClose,
     onVerify,
@@ -30,7 +30,7 @@ const VerifyEmailDialog = ({
     isLoading = false,
     resendLoading = false,
     email,
-}: VerifyEmailDialogProps): JSX.Element => {
+}: VerifyResetDialogProps): JSX.Element => {
     return (
         <HeadlessModal isOpen={isOpen} closeModal={onClose} disableClickOutside>
             <div className="pka:z-[2] pka:flex pka:size-full pka:flex-col pka:items-center pka:justify-center pka:gap-6">
@@ -42,11 +42,11 @@ const VerifyEmailDialog = ({
                     email={email}
                 />
                 <div className="pka:flex pka:w-full pka:items-center pka:justify-end">
-                    <PoweredByPakt className="!pka:text-white" />
+                    <PoweredByPakt className="pka:!text-white" />
                 </div>
             </div>
         </HeadlessModal>
     );
 };
 
-export default memo(VerifyEmailDialog);
+export default memo(VerifyResetDialog);

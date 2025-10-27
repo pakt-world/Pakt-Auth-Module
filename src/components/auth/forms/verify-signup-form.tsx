@@ -9,6 +9,7 @@ import ReactOTPInput from "react-otp-input";
 import type * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMediaQuery } from "usehooks-ts";
+import { useResendCountdown } from "../../../hooks/use-resend-countdown";
 
 /* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
@@ -46,29 +47,13 @@ function VerifySignupForm({
     isSuccess = false,
     onSuccess,
 }: VerifySignupFormProps): React.JSX.Element {
-    const [countdown, setCountdown] = useState(0);
-    const [isResendDisabled, setIsResendDisabled] = useState(true);
+    const {
+        countdown,
+        isDisabled: isResendDisabled,
+        start: startCountdown,
+    } = useResendCountdown();
 
     const isMobile = useMediaQuery("(max-width: 640px)");
-
-    useEffect(() => {
-        if (isResendDisabled) {
-            setCountdown(COUNTDOWN_START);
-            const timer = setInterval(() => {
-                setCountdown((prev) => (prev > 1 ? prev - 1 : 0));
-            }, ONE_SECOND);
-            const timeout = setTimeout(() => {
-                setIsResendDisabled(false);
-            }, RESEND_INTERVAL);
-
-            return () => {
-                clearInterval(timer);
-                clearTimeout(timeout);
-            };
-        }
-
-        return () => {};
-    }, [isResendDisabled]);
 
     const form = useForm<FormValues>({
         resolver: zodResolver(otpSchema),
@@ -81,7 +66,7 @@ function VerifySignupForm({
     const handleResendOTP = (): void => {
         if (isResendDisabled || resendLoading) return;
         onResend();
-        setIsResendDisabled(true);
+        startCountdown();
     };
 
     const formatCountdown = (counter: number): string => {
@@ -91,6 +76,7 @@ function VerifySignupForm({
     };
 
     return (
+        // eslint-disable-next-line react/jsx-no-useless-fragment
         <>
             {!isSuccess ? (
                 <form
@@ -112,7 +98,7 @@ function VerifySignupForm({
                                         renderInput={(props) => (
                                             <input
                                                 {...props}
-                                                className="otp_style !pka:select-none pka:px-3 pka:py-2 pka:focus:outline-none pka:focus:ring-1 pka:focus:ring-input-focus-border"
+                                                className="otp_style pka:!select-none pka:px-3 pka:py-2 max-[424px]:pka:px-0 max-[424px]:pka:py-0 pka:focus:outline-none pka:focus:ring-1 pka:focus:ring-input-focus-border"
                                             />
                                         )}
                                     />
@@ -136,17 +122,19 @@ function VerifySignupForm({
                             <Button
                                 size="xs"
                                 fullWidth
-                                className="!pka:h-7 pka:max-w-[150px] pka:items-center pka:justify-center !pka:py-2"
+                                className="pka:!h-7 pka:max-w-[150px] pka:items-center pka:justify-center pka:justify-items-center pka:!p-0"
                                 variant="outline"
                                 onClick={handleResendOTP}
                                 disabled={resendLoading || isResendDisabled}
                             >
-                                <span className="pka:flex pka:flex-row pka:gap-2">
+                                <span className="pka:flex pka:flex-row pka:items-center pka:justify-center pka:gap-2">
                                     <Timer size={16} className="" />
                                     {resendLoading ? (
                                         <Spinner size={16} />
                                     ) : (
-                                        "Resend Code"
+                                        <span className="pka:self-center">
+                                            Resend Code
+                                        </span>
                                     )}
                                 </span>
                             </Button>

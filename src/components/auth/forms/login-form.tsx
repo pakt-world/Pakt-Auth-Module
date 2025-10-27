@@ -5,7 +5,8 @@
 import type * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import { ChevronLeft } from "lucide-react";
+import { useState } from "react";
+import { ChevronLeft, Eye, EyeOff } from "lucide-react";
 
 /* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
@@ -28,6 +29,8 @@ const LoginForm = ({
     const form = useForm<LoginFormValues>({
         resolver: zodResolver(loginSchema),
     });
+
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit: SubmitHandler<LoginFormValues> = (values) => {
         onSubmit(values);
@@ -86,12 +89,25 @@ const LoginForm = ({
                     >
                         Password
                     </label>
-                    <input
-                        {...form.register("password")}
-                        className="input_style"
-                        placeholder="Password"
-                        type="password"
-                    />
+                    <div className="pka:relative">
+                        <input
+                            {...form.register("password")}
+                            className="input_style pka:pr-10"
+                            placeholder="Password"
+                            type={showPassword ? "text" : "password"}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="pka:absolute pka:inset-y-0 pka:right-0 pka:flex pka:items-center pka:pr-3 pka:text-gray-400 hover:pka:text-gray-600"
+                        >
+                            {showPassword ? (
+                                <EyeOff className="pka:h-4 pka:w-4" />
+                            ) : (
+                                <Eye className="pka:h-4 pka:w-4" />
+                            )}
+                        </button>
+                    </div>
                     {form.formState.errors.password && (
                         <span className="pka:text-sm pka:text-danger">
                             {form.formState.errors.password.message}
