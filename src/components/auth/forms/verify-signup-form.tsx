@@ -18,11 +18,7 @@ import { useResendCountdown } from "../../../hooks/use-resend-countdown";
 import { Spinner } from "../../common/loader";
 import { otpSchema } from "../../../utils/validation";
 import { Button } from "../../common/button";
-import {
-    RESEND_INTERVAL,
-    COUNTDOWN_START,
-    ONE_SECOND,
-} from "../../../lib/constants";
+
 import Lottie from "../../common/lottie";
 import success from "../../../assets/success.json";
 

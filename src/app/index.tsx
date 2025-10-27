@@ -8,7 +8,7 @@ import { useRef, useState } from "react";
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
 
-import Logger from "lib/logger";
+import Logger from "../lib/logger";
 import { AuthRef, UserData } from "../components/pakt-auth/types";
 import PaktAuth from "../components/pakt-auth";
 
