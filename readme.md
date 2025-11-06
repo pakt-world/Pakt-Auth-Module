@@ -4,15 +4,14 @@ A comprehensive React authentication module for Pakt applications. This package 
 
 ## Features
 
+- **Persistent Auth State**: Authentication state persists across page reloads
+- **Plug-and-Play Hook**: Single `usePaktAuth` hook for all auth functionality
 - **Email/Password Authentication**: Complete signup, login, and password reset flows
 - **Google OAuth Integration**: Seamless Google authentication
 - **Two-Factor Authentication**: Email-based 2FA support
-- **Password Reset**: Forgot password and reset functionality
-- **Email Verification**: Account verification with resend capability
+- **Automatic Account Fetching**: Full user profile fetched automatically after login
 - **Customizable UI**: Theme customization support
-- **Customizable Text**: Configurable titles and descriptions for all auth dialogs
 - **TypeScript Support**: Full type definitions included
-- **Responsive Design**: Works on desktop and mobile devices
 
 ## Installation
 
@@ -27,66 +26,47 @@ bun add @pakt/auth-module
 ## Quick Start
 
 ```typescript
-// In your component
 import React, { useRef } from 'react';
-import PaktAuth, { AuthRef, ConfigContextType } from '@pakt/auth-module';
-
-// Import the stylesheet in your main entry file
+import PaktAuth, { usePaktAuth, AuthRef, ConfigContextType } from '@pakt/auth-module';
 import '@pakt/auth-module/dist/styles.css';
 
 function App() {
   const authRef = useRef<AuthRef>(null);
+  const { user, isAuthenticated, token, logout, fetchAccount } = usePaktAuth();
 
   const config: ConfigContextType = {
-    theme: {
-      primary: "#007C5B",
-      secondary: "#19A966",
-      title: "#1F2937",
-      body: "#6B7280",
-    },
-    googleOAuth: {
-      clientId: "your-google-client-id.apps.googleusercontent.com",
-    },
     paktSDK: {
       baseUrl: "https://api-devpaktbuild.chain.site",
       verbose: true,
     },
-    errorHandler: (errorMessage: string) => {
-      console.error("Auth Error:", errorMessage);
+    googleOAuth: {
+      clientId: "your-google-client-id.apps.googleusercontent.com",
     },
   };
 
-  const handleLoginSuccess = (userData: any) => {
-    console.log("Login successful:", userData);
-    // Handle successful login
-  };
+  // Check authentication status
+  if (isAuthenticated && user) {
+    return (
+      <div>
+        <h1>Welcome, {user.firstName || user.email}!</h1>
+        <p>Email: {user.email}</p>
+        <button onClick={logout}>Logout</button>
+      </div>
+    );
+  }
 
-  const handleSignupSuccess = (userData: any) => {
-    console.log("Signup successful:", userData);
-    // Handle successful signup
-  };
-
-  const openLogin = () => authRef.current?.onLogin();
-  const openSignup = () => authRef.current?.onSignup();
-
-  const textConfig = {
-    loginTitle: "Welcome Back",
-    loginDescription: "Sign in to continue your journey",
-    signupTitle: "Join Our Community",
-    signupDescription: "Start building amazing things together"
-  };
-
+  // Show login/signup
   return (
     <div>
-      <button onClick={openLogin}>Login</button>
-      <button onClick={openSignup}>Sign Up</button>
+      <button onClick={() => authRef.current?.onLogin()}>Login</button>
+      <button onClick={() => authRef.current?.onSignup()}>Sign Up</button>
       
       <PaktAuth
         config={config}
-        textConfig={textConfig}
         ref={authRef}
-        onLoginSuccess={handleLoginSuccess}
-        onSignupSuccess={handleSignupSuccess}
+        onLoginSuccess={() => {
+          fetchAccount(); // Fetch full account details after login
+        }}
       />
     </div>
   );
@@ -246,6 +226,80 @@ Access authentication methods through the ref:
 interface AuthRef {
   onLogin: () => void;    // Opens the login dialog
   onSignup: () => void;   // Opens the signup dialog
+}
+```
+
+## Using the Hook
+
+The `usePaktAuth` hook provides everything you need for authentication:
+
+```typescript
+import { usePaktAuth } from '@pakt/auth-module';
+
+function MyComponent() {
+  const { 
+    user,              // User data (null if not authenticated)
+    isAuthenticated,   // Boolean: true if user is logged in
+    token,             // Auth token (from cookie)
+    logout,            // Logout function
+    fetchAccount,      // Fetch full account details
+    loading,           // Loading state
+    error              // Error message
+  } = usePaktAuth();
+
+  // Check if user is authenticated
+  if (isAuthenticated) {
+    return <div>Welcome, {user?.email}</div>;
+  }
+
+  return <div>Please log in</div>;
+}
+```
+
+### Common Use Cases
+
+**Check if user is authenticated:**
+```typescript
+const { isAuthenticated } = usePaktAuth();
+
+if (isAuthenticated) {
+  // User is logged in
+}
+```
+
+**Access user data:**
+```typescript
+const { user } = usePaktAuth();
+
+// User data includes: email, firstName, lastName, _id, etc.
+console.log(user?.email);
+console.log(user?.firstName);
+```
+
+**Logout:**
+```typescript
+const { logout } = usePaktAuth();
+
+const handleLogout = async () => {
+  await logout(); // Clears auth state and cookies
+};
+```
+
+**Fetch account details:**
+```typescript
+const { fetchAccount } = usePaktAuth();
+
+// Fetch full user profile from /account endpoint
+await fetchAccount();
+```
+
+**Get auth token:**
+```typescript
+const { token } = usePaktAuth();
+
+// Token is automatically read from cookie
+if (token) {
+  // Use token for API calls
 }
 ```
 
