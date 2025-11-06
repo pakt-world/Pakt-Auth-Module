@@ -2,7 +2,7 @@
 /*                             External Dependency                            */
 /* -------------------------------------------------------------------------- */
 
-import { useCallback, useState, useEffect } from "react";
+import { useCallback, useState } from "react";
 
 /* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
@@ -10,6 +10,15 @@ import { useCallback, useState, useEffect } from "react";
 
 import { paktSDKService } from "../lib/pakt-sdk";
 import { triggerGlobalError } from "../lib/error-handler";
+import { useAuthStore } from "../store/auth-store";
+import {
+    AUTH_TOKEN_KEY,
+    setCookie,
+    removeCookie,
+    getCookie,
+} from "../utils/auth-utils";
+import { UserData } from "../components/pakt-auth/types";
+import Logger from "../lib/logger";
 import type {
     AuthResponse,
     LoginPayload,
@@ -32,20 +41,13 @@ import type {
     LoginTwoFAPayload,
 } from "../lib/pakt-sdk";
 
-interface User {
-    id?: string;
-    email: string;
-    firstName?: string;
-    lastName?: string;
-    isVerified?: boolean;
-    [key: string]: any;
-}
-
 interface UsePaktAuthReturn {
     // State
-    user: User | null;
+    user: UserData | null;
     loading: boolean;
     error: string | null;
+    isAuthenticated: boolean;
+    token: string | null;
 
     // Authentication Methods
     login: (payload: LoginPayload) => Promise<AuthResponse<LoginDto>>;
@@ -68,7 +70,7 @@ interface UsePaktAuthReturn {
         tempToken: string;
     }) => Promise<AuthResponse<ValidatePasswordToken>>;
     validateReferral: (
-        token: string
+        referralToken: string
     ) => Promise<AuthResponse<ValidateReferralDto>>;
     googleOAuthGenerateState: () => Promise<
         AuthResponse<GoogleOAuthGenerateDto>
@@ -77,7 +79,9 @@ interface UsePaktAuthReturn {
         props: GoogleOAuthValdatePayload
     ) => Promise<AuthResponse<GoogleOAuthValidateDto>>;
     getUser: (authToken: string) => Promise<AuthResponse<any>>;
-    logout: (authToken: string) => Promise<AuthResponse<void>>;
+    getAccount: (authToken: string) => Promise<AuthResponse<any>>;
+    fetchAccount: () => Promise<void>;
+    logout: () => Promise<void>;
     resendTwoFAEmailCode: (email: string) => Promise<AuthResponse<object>>;
 
     // Utility Methods
@@ -86,9 +90,15 @@ interface UsePaktAuthReturn {
 }
 
 export const usePaktAuth = (): UsePaktAuthReturn => {
-    const [user, setUser] = useState<User | null>(null);
+    const { user, setUser, clearStore } = useAuthStore();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+    // Get token from cookie
+    const token = getCookie(AUTH_TOKEN_KEY);
+
+    // Check if user is authenticated
+    const isAuthenticated = Boolean(user && token);
 
     // Helper function to create error response
     const setAndTriggerError = useCallback((message: string) => {
@@ -118,7 +128,8 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
     // Clear user
     const clearUser = useCallback(() => {
         setUser(null);
-    }, []);
+        clearStore();
+    }, [setUser, clearStore]);
 
     // Login
     const login = useCallback(
@@ -130,7 +141,12 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
                 const response = await paktSDKService.login(payload);
 
                 if (response.status === "success" && response.data) {
-                    setUser(response.data);
+                    const userData = response.data as UserData;
+                    setUser(userData);
+                    // Store token in cookie if available
+                    if ("token" in userData && userData.token) {
+                        setCookie(AUTH_TOKEN_KEY, userData.token);
+                    }
                 } else {
                     setAndTriggerError(response.message || "Login failed");
                 }
@@ -147,7 +163,7 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
                 setLoading(false);
             }
         },
-        [createErrorResponse, setAndTriggerError]
+        [createErrorResponse, setAndTriggerError, setUser]
     );
 
     // Register
@@ -194,7 +210,12 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
                 const response = await paktSDKService.verifyAccount(payload);
 
                 if (response.status === "success" && response.data) {
-                    setUser(response.data);
+                    const userData = response.data as UserData;
+                    setUser(userData);
+                    // Store token in cookie if available
+                    if ("token" in userData && userData.token) {
+                        setCookie(AUTH_TOKEN_KEY, userData.token);
+                    }
                 } else {
                     setAndTriggerError(
                         response.message || "Account verification failed"
@@ -215,7 +236,7 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
                 setLoading(false);
             }
         },
-        [createErrorResponse, setAndTriggerError]
+        [createErrorResponse, setAndTriggerError, setUser]
     );
 
     // Resend Verify Link
@@ -400,7 +421,12 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
                     await paktSDKService.googleOAuthValidateState(props);
 
                 if (response.status === "success" && response.data) {
-                    setUser(response.data as unknown as User);
+                    const userData = response.data as UserData;
+                    setUser(userData);
+                    // Store token in cookie if available
+                    if ("token" in userData && userData.token) {
+                        setCookie(AUTH_TOKEN_KEY, userData.token);
+                    }
                 } else {
                     setAndTriggerError(
                         response.message || "Google OAuth validation failed"
@@ -421,7 +447,7 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
                 setLoading(false);
             }
         },
-        [createErrorResponse, setAndTriggerError]
+        [createErrorResponse, setUser, setAndTriggerError]
     );
 
     // Get User
@@ -434,7 +460,8 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
                 const response = await paktSDKService.getUser(authToken);
 
                 if (response.status === "success" && response.data) {
-                    setUser(response.data);
+                    const userData = response.data as UserData;
+                    setUser(userData);
                 } else {
                     setAndTriggerError(
                         response.message || "Failed to get user"
@@ -453,35 +480,116 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
                 setLoading(false);
             }
         },
-        [createErrorResponse, setAndTriggerError]
+        [createErrorResponse, setAndTriggerError, setUser]
     );
 
-    // Logout
-    const logout = useCallback(
-        async (authToken: string): Promise<AuthResponse<void>> => {
+    // Get Account (full profile from /account endpoint)
+    const getAccount = useCallback(
+        async (authToken: string): Promise<AuthResponse<any>> => {
             setLoading(true);
             setError(null);
 
             try {
-                const response = await paktSDKService.logout(authToken);
+                const response = await paktSDKService.getAccount(authToken);
 
-                if (response.status === "success") {
-                    clearUser();
+                if (response.status === "success" && response.data) {
+                    const userData = response.data as UserData;
+                    setUser(userData);
                 } else {
-                    setAndTriggerError(response.message || "Logout failed");
+                    setAndTriggerError(
+                        response.message || "Failed to get account"
+                    );
                 }
 
                 return response;
             } catch (err) {
                 const errorMessage =
-                    err instanceof Error ? err.message : "Logout failed";
-                return createErrorResponse<void>(errorMessage, "Logout failed");
+                    err instanceof Error
+                        ? err.message
+                        : "Failed to get account";
+                return createErrorResponse<any>(
+                    errorMessage,
+                    "Failed to get account"
+                );
             } finally {
                 setLoading(false);
             }
         },
-        [clearUser, createErrorResponse, setAndTriggerError]
+        [createErrorResponse, setAndTriggerError, setUser]
     );
+
+    // Fetch Account
+    const fetchAccount = useCallback(async (): Promise<void> => {
+        const authToken = getCookie(AUTH_TOKEN_KEY);
+        if (!authToken) {
+            Logger.error("No auth token found. Cannot fetch account.");
+            return;
+        }
+
+        // Wait for SDK initialization with retry mechanism
+        const maxRetries = 10;
+        const retryDelay = 200; // 200ms between retries
+
+        for (let retries = 0; retries < maxRetries; retries++) {
+            if (paktSDKService.getInitialized()) {
+                break;
+            }
+            // eslint-disable-next-line no-await-in-loop
+            await new Promise<void>((resolve) => {
+                setTimeout(() => {
+                    resolve();
+                }, retryDelay);
+            });
+        }
+
+        if (!paktSDKService.getInitialized()) {
+            Logger.error(
+                "PAKT SDK not initialized after retries. Cannot fetch account."
+            );
+            return;
+        }
+
+        setLoading(true);
+        try {
+            const response = await paktSDKService.getAccount(authToken);
+            if (response.status === "success" && response.data) {
+                const userData = response.data as UserData;
+                setUser(userData);
+            } else {
+                setAndTriggerError(
+                    response.message || "Failed to fetch account"
+                );
+            }
+        } catch (err) {
+            Logger.error("Failed to fetch account:", {
+                error: err instanceof Error ? err.message : String(err),
+            });
+        } finally {
+            setLoading(false);
+        }
+    }, [setUser, setAndTriggerError]);
+
+    // Logout
+    const logout = useCallback(async (): Promise<void> => {
+        const currentToken = getCookie(AUTH_TOKEN_KEY);
+        setLoading(true);
+        setError(null);
+
+        try {
+            if (currentToken) {
+                await paktSDKService.logout(currentToken);
+            }
+        } catch (err) {
+            Logger.error("Logout error:", {
+                error: err instanceof Error ? err.message : String(err),
+            });
+        } finally {
+            // Always clear local state and cookies, even if API call fails
+            clearUser();
+            removeCookie(AUTH_TOKEN_KEY);
+            setLoading(false);
+        }
+    }, [clearUser]);
 
     // Send Email 2FA
     const resendTwoFAEmailCode = useCallback(
@@ -518,12 +626,15 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
 
     // Validate Referral
     const validateReferral = useCallback(
-        async (token: string): Promise<AuthResponse<ValidateReferralDto>> => {
+        async (
+            referralToken: string
+        ): Promise<AuthResponse<ValidateReferralDto>> => {
             setLoading(true);
             setError(null);
 
             try {
-                const response = await paktSDKService.validateReferral(token);
+                const response =
+                    await paktSDKService.validateReferral(referralToken);
 
                 if (response.status === "error") {
                     setAndTriggerError(
@@ -558,7 +669,12 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
                 const response = await paktSDKService.loginTwoFa(payload);
 
                 if (response.status === "success" && response.data) {
-                    setUser(response.data);
+                    const userData = response.data as UserData;
+                    setUser(userData);
+                    // Store token in cookie if available
+                    if ("token" in userData && userData.token) {
+                        setCookie(AUTH_TOKEN_KEY, userData.token);
+                    }
                 } else {
                     setAndTriggerError(
                         response.message || "Two-factor authentication failed"
@@ -579,7 +695,7 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
                 setLoading(false);
             }
         },
-        [createErrorResponse, setAndTriggerError]
+        [createErrorResponse, setAndTriggerError, setUser]
     );
 
     return {
@@ -587,6 +703,8 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
         user,
         loading,
         error,
+        isAuthenticated,
+        token,
 
         // Authentication Methods
         login,
@@ -601,6 +719,8 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
         googleOAuthGenerateState,
         googleOAuthValidateState,
         getUser,
+        getAccount,
+        fetchAccount,
         logout,
         resendTwoFAEmailCode,
 

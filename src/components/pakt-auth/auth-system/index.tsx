@@ -17,6 +17,8 @@ import {
 /* -------------------------------------------------------------------------- */
 import { usePaktAuth } from "../../../hooks/use-pakt-auth";
 import { useConfig } from "../../../context/config-context";
+import { useAuthStore } from "../../../store/auth-store";
+import { AUTH_TOKEN_KEY, setCookie } from "../../../utils/auth-utils";
 import {
     SignupFormValues,
     ForgotPasswordFormValues,
@@ -96,6 +98,8 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
             loading,
         } = usePaktAuth();
 
+        const { setUser } = useAuthStore();
+
         const resetCurrentView = () => {
             setCurrentView("");
             setVerifySignupSuccess(initialAuthSuccess);
@@ -112,6 +116,11 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
         const backToLoginMethod = () => setCurrentView("login-method");
 
         const handleLoginSuccess = (userData: UserData) => {
+            // Persist user data to store (already done by usePaktAuth, but ensure token is in cookie)
+            setUser(userData);
+            if ("token" in userData && userData.token) {
+                setCookie(AUTH_TOKEN_KEY, userData.token);
+            }
             onLoginSuccess?.(userData);
             resetCurrentView();
         };
@@ -155,7 +164,15 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
         };
 
         const handleVerifyLoginSuccess = () => {
-            onLoginSuccess?.(verifyLoginSuccess.userData || ({} as UserData));
+            const userData = verifyLoginSuccess.userData;
+            if (userData) {
+                // Persist user data to store (already done by usePaktAuth, but ensure token is in cookie)
+                setUser(userData);
+                if ("token" in userData && userData.token) {
+                    setCookie(AUTH_TOKEN_KEY, userData.token);
+                }
+            }
+            onLoginSuccess?.(userData || ({} as UserData));
             resetCurrentView();
         };
 
@@ -195,7 +212,15 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
         };
 
         const handleVerifySignupSuccess = () => {
-            onSignupSuccess?.(verifySignupSuccess.userData as AccountVerifyDto);
+            const userData = verifySignupSuccess.userData;
+            if (userData) {
+                // Persist user data to store (already done by usePaktAuth, but ensure token is in cookie)
+                setUser(userData);
+                if ("token" in userData && userData.token) {
+                    setCookie(AUTH_TOKEN_KEY, userData.token);
+                }
+            }
+            onSignupSuccess?.(userData as AccountVerifyDto);
             resetCurrentView();
         };
 
@@ -254,11 +279,21 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
         };
 
         const handleGoogleSignupSuccess = (userData: UserData) => {
+            // Persist user data to store (already done by usePaktAuth, but ensure token is in cookie)
+            setUser(userData);
+            if ("token" in userData && userData.token) {
+                setCookie(AUTH_TOKEN_KEY, userData.token);
+            }
             onSignupSuccess?.(userData);
             resetCurrentView();
         };
 
         const handleGoogleLoginSuccess = (userData: UserData) => {
+            // Persist user data to store (already done by usePaktAuth, but ensure token is in cookie)
+            setUser(userData);
+            if ("token" in userData && userData.token) {
+                setCookie(AUTH_TOKEN_KEY, userData.token);
+            }
             onLoginSuccess?.(userData);
             resetCurrentView();
         };

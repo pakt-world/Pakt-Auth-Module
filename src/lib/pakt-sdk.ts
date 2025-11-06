@@ -269,6 +269,20 @@ class PaktSDKService {
         }
     }
 
+    async getAccount(authToken: string): Promise<AuthResponse<any>> {
+        const sdk = this.ensureInitialized();
+        try {
+            // The account endpoint returns full user profile
+            const response = await sdk.account.getUser(authToken);
+            return response as AuthResponse<any>;
+        } catch (error) {
+            return PaktSDKService.createErrorResponse<any>(
+                error,
+                "Failed to get account"
+            );
+        }
+    }
+
     async logout(authToken: string): Promise<AuthResponse<void>> {
         const sdk = this.ensureInitialized();
         try {
