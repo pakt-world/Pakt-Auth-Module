@@ -26,3 +26,6 @@ export type {
     ForgotPasswordFormValues,
     ResetPasswordFormValues,
 } from "./utils/validation";
+
+// Auth hook - Provides both simple and advanced auth functionality
+export { usePaktAuth } from "./hooks/use-pakt-auth";

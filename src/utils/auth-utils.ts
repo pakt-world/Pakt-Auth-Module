@@ -9,6 +9,7 @@
 // Constants for storage keys
 export const REDIRECT_STORAGE_KEY = "pakt_redirect_path";
 export const AUTH_TOKEN_KEY = "pakt_auth_token";
+export const USER_STORAGE_KEY = "pakt_auth_user";
 export const TIMEZONE_KEY = "pakt_timezone";
 export const VERIFY_LOGIN_KEY = "pakt_verify_login";
 export const VERIFY_SIGNUP_KEY = "pakt_verify_signup";
