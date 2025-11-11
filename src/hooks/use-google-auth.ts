@@ -10,7 +10,7 @@ import { useCallback } from "react";
 /* -------------------------------------------------------------------------- */
 
 import Logger from "../lib/logger";
-import { usePaktAuth } from "./use-pakt-auth";
+import { usePaktAuthInternal } from "./use-pakt-auth";
 import type { GoogleOAuthValdatePayload } from "../lib/pakt-sdk";
 import { useConfig } from "../context/config-context";
 import { UserData } from "../components/pakt-auth/types";
@@ -24,7 +24,7 @@ interface GoogleAuthOptions {
 export const useGoogleAuth = ({ onSuccess, onError }: GoogleAuthOptions) => {
     const { googleOAuth } = useConfig();
     const { googleOAuthGenerateState, googleOAuthValidateState, loading } =
-        usePaktAuth();
+        usePaktAuthInternal();
 
     // Check if Google OAuth is configured
     const isGoogleOAuthEnabled = !!googleOAuth?.clientId;
