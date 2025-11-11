@@ -89,7 +89,12 @@ interface UsePaktAuthReturn {
     clearUser: () => void;
 }
 
-export const usePaktAuth = (): UsePaktAuthReturn => {
+/**
+ * Internal hook for direct auth functionality.
+ * For context-based usage, use the usePaktAuth hook from auth-context.
+ * @internal
+ */
+export const usePaktAuthInternal = (): UsePaktAuthReturn => {
     const { user, setUser, clearStore } = useAuthStore();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -518,6 +523,28 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
         [createErrorResponse, setAndTriggerError, setUser]
     );
 
+    // Logout
+    const logout = useCallback(async (): Promise<void> => {
+        const currentToken = getCookie(AUTH_TOKEN_KEY);
+        setLoading(true);
+        setError(null);
+
+        try {
+            if (currentToken) {
+                await paktSDKService.logout(currentToken);
+            }
+        } catch (err) {
+            Logger.error("Logout error:", {
+                error: err instanceof Error ? err.message : String(err),
+            });
+        } finally {
+            // Always clear local state and cookies, even if API call fails
+            clearUser();
+            removeCookie(AUTH_TOKEN_KEY);
+            setLoading(false);
+        }
+    }, [clearUser]);
+
     // Fetch Account
     const fetchAccount = useCallback(async (): Promise<void> => {
         const authToken = getCookie(AUTH_TOKEN_KEY);
@@ -556,40 +583,40 @@ export const usePaktAuth = (): UsePaktAuthReturn => {
                 const userData = response.data as UserData;
                 setUser(userData);
             } else {
-                setAndTriggerError(
-                    response.message || "Failed to fetch account"
-                );
+                // Check for 401 Unauthorized
+                const statusCode = response.statusCode || response.code;
+                if (statusCode === 401) {
+                    Logger.warn(
+                        "Account endpoint returned 401 Unauthorized. Logging out user."
+                    );
+                    // Automatically logout on 401
+                    await logout();
+                } else {
+                    setAndTriggerError(
+                        response.message || "Failed to fetch account"
+                    );
+                }
             }
         } catch (err) {
             Logger.error("Failed to fetch account:", {
                 error: err instanceof Error ? err.message : String(err),
             });
-        } finally {
-            setLoading(false);
-        }
-    }, [setUser, setAndTriggerError]);
-
-    // Logout
-    const logout = useCallback(async (): Promise<void> => {
-        const currentToken = getCookie(AUTH_TOKEN_KEY);
-        setLoading(true);
-        setError(null);
-
-        try {
-            if (currentToken) {
-                await paktSDKService.logout(currentToken);
+            // Check if error has 401 status code
+            const errorStatus =
+                (err as any)?.response?.status ||
+                (err as any)?.status ||
+                (err as any)?.statusCode ||
+                (err as any)?.code;
+            if (errorStatus === 401) {
+                Logger.warn(
+                    "Account endpoint returned 401 Unauthorized. Logging out user."
+                );
+                await logout();
             }
-        } catch (err) {
-            Logger.error("Logout error:", {
-                error: err instanceof Error ? err.message : String(err),
-            });
         } finally {
-            // Always clear local state and cookies, even if API call fails
-            clearUser();
-            removeCookie(AUTH_TOKEN_KEY);
             setLoading(false);
         }
-    }, [clearUser]);
+    }, [setUser, setAndTriggerError, logout]);
 
     // Send Email 2FA
     const resendTwoFAEmailCode = useCallback(

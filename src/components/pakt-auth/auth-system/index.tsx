@@ -15,7 +15,7 @@ import {
 /* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
-import { usePaktAuth } from "../../../hooks/use-pakt-auth";
+import { usePaktAuthInternal } from "../../../hooks/use-pakt-auth";
 import { useConfig } from "../../../context/config-context";
 import { useAuthStore } from "../../../store/auth-store";
 import { AUTH_TOKEN_KEY, setCookie } from "../../../utils/auth-utils";
@@ -54,6 +54,8 @@ interface AuthSystemProps {
     textConfig?: AuthTextConfig;
     onLoginSuccess?: (userData: UserData) => void;
     onSignupSuccess?: (userData: UserData) => void;
+    initialView?: "login" | "signup";
+    onClose?: () => void;
 }
 
 type AuthSystemRef = {
@@ -72,8 +74,34 @@ const initialAuthSuccess: AuthSuccess = {
 };
 
 const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
-    ({ textConfig, onLoginSuccess, onSignupSuccess }: AuthSystemProps, ref) => {
-        const [currentView, setCurrentView] = useState<AuthView>("");
+    (
+        {
+            textConfig,
+            onLoginSuccess,
+            onSignupSuccess,
+            initialView,
+            onClose,
+        }: AuthSystemProps,
+        ref
+    ) => {
+        // Check if Google OAuth is enabled
+        const { googleOAuth } = useConfig();
+        const isGoogleOAuthEnabled = !!googleOAuth?.clientId;
+
+        const getInitialView = (): AuthView => {
+            if (!initialView) return "";
+            if (initialView === "login") {
+                return isGoogleOAuthEnabled ? "login-method" : "login";
+            }
+            if (initialView === "signup") {
+                return isGoogleOAuthEnabled ? "signup-method" : "signup";
+            }
+            return "";
+        };
+
+        const [currentView, setCurrentView] =
+            useState<AuthView>(getInitialView());
+
         const [verifySignupSuccess, setVerifySignupSuccess] =
             useState<AuthSuccess>(initialAuthSuccess);
         const [verifyLoginSuccess, setVerifyLoginSuccess] =
@@ -96,7 +124,7 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
             changePassword,
             resendTwoFAEmailCode,
             loading,
-        } = usePaktAuth();
+        } = usePaktAuthInternal();
 
         const { setUser } = useAuthStore();
 
@@ -111,6 +139,7 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
             setLogin2faEmail("");
             setVerificationToken("");
             setForgotPasswordEmail("");
+            onClose?.();
         };
         const backToSignupMethod = () => setCurrentView("signup-method");
         const backToLoginMethod = () => setCurrentView("login-method");
@@ -164,7 +193,8 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
         };
 
         const handleVerifyLoginSuccess = () => {
-            const userData = verifyLoginSuccess.userData;
+            const { userData } = verifyLoginSuccess;
+
             if (userData) {
                 // Persist user data to store (already done by usePaktAuth, but ensure token is in cookie)
                 setUser(userData);
@@ -212,7 +242,8 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
         };
 
         const handleVerifySignupSuccess = () => {
-            const userData = verifySignupSuccess.userData;
+            const { userData } = verifySignupSuccess;
+
             if (userData) {
                 // Persist user data to store (already done by usePaktAuth, but ensure token is in cookie)
                 setUser(userData);
@@ -297,10 +328,6 @@ const AuthSystem = forwardRef<AuthSystemRef, AuthSystemProps>(
             onLoginSuccess?.(userData);
             resetCurrentView();
         };
-
-        // Check if Google OAuth is enabled
-        const { googleOAuth } = useConfig();
-        const isGoogleOAuthEnabled = !!googleOAuth?.clientId;
 
         useImperativeHandle(ref, () => ({
             onSignup: () => {

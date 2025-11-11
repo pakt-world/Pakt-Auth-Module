@@ -72,11 +72,55 @@ class PaktSDKService {
         error: unknown,
         defaultMessage: string
     ): AuthResponse<T> {
+        let statusCode = 500;
+        let message = defaultMessage;
+
+        if (error instanceof Error) {
+            message = error.message;
+
+            // Extract status code from Axios errors
+            if (
+                typeof (error as any).response !== "undefined" &&
+                (error as any).response?.status
+            ) {
+                statusCode = (error as any).response.status;
+            }
+            // Extract status code from fetch errors or other error formats
+            else if (typeof (error as any).status === "number") {
+                statusCode = (error as any).status;
+            } else if (typeof (error as any).statusCode === "number") {
+                statusCode = (error as any).statusCode;
+            } else if (typeof (error as any).code === "number") {
+                // Some errors use 'code' for status code
+                const { code } = error as any;
+                if (code >= 100 && code < 600) {
+                    statusCode = code;
+                }
+            }
+        } else if (typeof error === "object" && error !== null) {
+            // Handle error objects that might have status information
+            const err = error as any;
+            if (typeof err.status === "number") {
+                statusCode = err.status;
+            } else if (typeof err.statusCode === "number") {
+                statusCode = err.statusCode;
+            } else if (
+                typeof err.code === "number" &&
+                err.code >= 100 &&
+                err.code < 600
+            ) {
+                statusCode = err.code;
+            }
+            if (err.message) {
+                message = err.message;
+            }
+        }
+
         return {
             status: "error",
-            message: error instanceof Error ? error.message : defaultMessage,
+            message,
             data: null as T,
-            statusCode: 500,
+            statusCode,
         };
     }
 
