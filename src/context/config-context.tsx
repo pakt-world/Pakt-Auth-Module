@@ -39,12 +39,18 @@ const ConfigProvider: React.FC<ConfigProviderProps> = ({
     }, [config]);
 
     useEffect(() => {
-        if (config?.paktSDK) {
-            paktSDKService.initialize(config.paktSDK).catch((error) => {
-                Logger.error("Failed to initialize PAKT SDK:", error);
-            });
+        if (config?.baseUrl) {
+            paktSDKService
+                .initialize({
+                    baseUrl: config.baseUrl,
+                    testnet: config.testnet,
+                    verbose: config.verbose,
+                })
+                .catch((error) => {
+                    Logger.error("Failed to initialize PAKT SDK:", error);
+                });
         }
-    }, [config?.paktSDK]);
+    }, [config?.baseUrl, config?.testnet, config?.verbose]);
 
     useEffect(() => {
         document.body.classList.add("pakt-auth-module");

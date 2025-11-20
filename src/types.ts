@@ -2,8 +2,6 @@
 /*                             Internal Dependency                            */
 /* -------------------------------------------------------------------------- */
 
-import { PaktSDKConfig } from "./lib/pakt-sdk";
-
 interface GoogleOAuthConfig {
     clientId: string;
     clientSecret?: string;
@@ -13,9 +11,11 @@ interface GoogleOAuthConfig {
 }
 
 interface ConfigContextType {
+    baseUrl: string; // PAKT SDK base URL
+    testnet?: boolean; // Use testnet environment
+    verbose?: boolean; // Enable verbose logging
     theme?: ITheme; // colors to theme the package
     googleOAuth?: GoogleOAuthConfig; // Google OAuth configuration
-    paktSDK: PaktSDKConfig; // PAKT SDK configuration
 }
 
 export type { ConfigContextType, GoogleOAuthConfig };

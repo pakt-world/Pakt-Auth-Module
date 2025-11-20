@@ -35,10 +35,8 @@ function App() {
   const { user, isAuthenticated, token, logout, fetchAccount } = usePaktAuth();
 
   const config: ConfigContextType = {
-    paktSDK: {
-      baseUrl: "https://api-devpaktbuild.chain.site",
-      verbose: true,
-    },
+    baseUrl: "https://api-devpaktbuild.chain.site",
+    verbose: true,
     googleOAuth: {
       clientId: "your-google-client-id.apps.googleusercontent.com",
     },
@@ -81,6 +79,10 @@ The main configuration object for the PaktAuth component:
 
 ```typescript
 interface ConfigContextType {
+  baseUrl: string;        // Required: API base URL
+  testnet?: boolean;      // Optional: Use testnet environment
+  verbose?: boolean;      // Optional: Enable verbose logging
+  
   // Theme customization
   theme?: ITheme;
   
@@ -89,9 +91,6 @@ interface ConfigContextType {
   
   // Google OAuth configuration
   googleOAuth?: GoogleOAuthConfig;
-  
-  // PAKT SDK configuration (required)
-  paktSDK: PaktSDKConfig;
 }
 ```
 
@@ -315,9 +314,7 @@ function MyApp() {
   const authRef = useRef<AuthRef>(null);
 
   const config: ConfigContextType = {
-    paktSDK: {
-      baseUrl: "https://api-devpaktbuild.chain.site",
-    },
+    baseUrl: "https://api-devpaktbuild.chain.site",
   };
 
   const textConfig = {
@@ -362,16 +359,14 @@ function MyApp() {
   const authRef = useRef<AuthRef>(null);
 
   const config: ConfigContextType = {
+    baseUrl: "https://api-devpaktbuild.chain.site",
+    verbose: true,
     theme: {
       primary: "#007C5B",
       secondary: "#19A966",
     },
     googleOAuth: {
       clientId: "your-google-client-id.apps.googleusercontent.com",
-    },
-    paktSDK: {
-      baseUrl: "https://api-devpaktbuild.chain.site",
-      verbose: true,
     },
   };
 
@@ -405,9 +400,7 @@ function MyApp() {
   const authRef = useRef<AuthRef>(null);
 
   const config: ConfigContextType = {
-    paktSDK: {
-      baseUrl: "https://api-devpaktbuild.chain.site",
-    },
+    baseUrl: "https://api-devpaktbuild.chain.site",
     errorHandler: (errorMessage: string) => {
       // Custom error handling
       toast.error(errorMessage);

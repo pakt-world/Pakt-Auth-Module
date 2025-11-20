@@ -199,14 +199,12 @@ const AppContent = () => {
 
 const App = () => {
     const customConfig = {
+        baseUrl: "https://api-devpaktbuild.chain.site",
+        verbose: true,
         googleOAuth: {
             clientId:
                 "583287786734-s8rrgm4ll9ltjm430a25vi6107dbiiib.apps.googleusercontent.com",
             redirectUri: "http://localhost:4234",
-        },
-        paktSDK: {
-            baseUrl: "https://api-devpaktbuild.chain.site",
-            verbose: true,
         },
     };
 
