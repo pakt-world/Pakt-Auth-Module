@@ -77,6 +77,9 @@ export interface ExtendedGoogleOAuthValidateDto {
     expiresIn: number;
     isVerified: boolean;
     type: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
 }
 
 export type UserData =
