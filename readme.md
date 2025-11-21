@@ -32,7 +32,7 @@ import '@pakt/auth-module/dist/styles.css';
 
 function App() {
   const authRef = useRef<AuthRef>(null);
-  const { user, isAuthenticated, token, logout, fetchAccount } = usePaktAuth();
+  const { user, isAuthenticated, token, logout, getAccount } = usePaktAuth();
 
   const config: ConfigContextType = {
     baseUrl: "https://api-devpaktbuild.chain.site",
@@ -63,7 +63,7 @@ function App() {
         config={config}
         ref={authRef}
         onLoginSuccess={() => {
-          fetchAccount(); // Fetch full account details after login
+          getAccount(); // Fetch full account details after login (optional - automatically called)
         }}
       />
     </div>
@@ -241,7 +241,7 @@ function MyComponent() {
     isAuthenticated,   // Boolean: true if user is logged in
     token,             // Auth token (from cookie)
     logout,            // Logout function
-    fetchAccount,      // Fetch full account details
+    getAccount,        // Fetch full account details (optional token parameter)
     loading,           // Loading state
     error              // Error message
   } = usePaktAuth();
@@ -286,10 +286,14 @@ const handleLogout = async () => {
 
 **Fetch account details:**
 ```typescript
-const { fetchAccount } = usePaktAuth();
+const { getAccount } = usePaktAuth();
 
 // Fetch full user profile from /account endpoint
-await fetchAccount();
+// Token is automatically retrieved from cookie if not provided
+await getAccount();
+
+// Or provide token explicitly
+await getAccount(authToken);
 ```
 
 **Get auth token:**
