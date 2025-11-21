@@ -2,7 +2,7 @@
 /*                             External Dependency                            */
 /* -------------------------------------------------------------------------- */
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 
 /* -------------------------------------------------------------------------- */
 /*                             Internal Dependency                            */
@@ -27,7 +27,6 @@ const AppContent = () => {
     } = usePaktAuth();
 
     const [isLoggingOut, setIsLoggingOut] = useState(false);
-    const hasFetchedAccount = useRef(false);
 
     const handleLogout = async () => {
         setIsLoggingOut(true);
@@ -42,26 +41,6 @@ const AppContent = () => {
             setIsLoggingOut(false);
         }
     };
-
-    // useEffect(() => {
-    //     if (
-    //         isAuthenticated &&
-    //         token &&
-    //         !loading &&
-    //         !hasFetchedAccount.current
-    //     ) {
-    //         hasFetchedAccount.current = true;
-    //         fetchAccount().catch((err) => {
-    //             Logger.error("Failed to fetch account:", {
-    //                 error: err instanceof Error ? err.message : String(err),
-    //             });
-    //             hasFetchedAccount.current = false;
-    //         });
-    //     }
-    //     if (!isAuthenticated) {
-    //         hasFetchedAccount.current = false;
-    //     }
-    // }, [isAuthenticated, token, loading, fetchAccount]);
 
     return (
         <div className="pka:flex pka:min-h-screen pka:items-center pka:justify-center pka:bg-gradient-to-br pka:from-blue-900 pka:via-purple-900 pka:to-indigo-900 pka:p-4">
