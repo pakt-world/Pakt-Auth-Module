@@ -73,9 +73,7 @@ export interface AuthContextType {
     googleOAuthValidateState: (
         props: GoogleOAuthValdatePayload
     ) => Promise<AuthResponse<GoogleOAuthValidateDto>>;
-    getUser: (authToken: string) => Promise<AuthResponse<any>>;
-    getAccount: (authToken: string) => Promise<AuthResponse<any>>;
-    fetchAccount: () => Promise<void>;
+    getAccount: (authToken?: string) => Promise<AuthResponse<any>>;
     logout: () => Promise<void>;
     resendTwoFAEmailCode: (email: string) => Promise<AuthResponse<object>>;
 

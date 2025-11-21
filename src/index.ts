@@ -14,6 +14,7 @@ export { usePaktAuthInternal } from "./hooks/use-pakt-auth";
 
 // PaktAuth types
 export type {
+    UserData,
     AuthRef,
     PaktAuthProps,
     DesktopAuthProps,

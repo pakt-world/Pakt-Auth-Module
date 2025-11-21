@@ -300,19 +300,6 @@ class PaktSDKService {
     }
 
     // Account Methods
-    async getUser(authToken: string): Promise<AuthResponse<any>> {
-        const sdk = this.ensureInitialized();
-        try {
-            const response = await sdk.account.getUser(authToken);
-            return response as AuthResponse<any>;
-        } catch (error) {
-            return PaktSDKService.createErrorResponse<any>(
-                error,
-                "Failed to get user"
-            );
-        }
-    }
-
     async getAccount(authToken: string): Promise<AuthResponse<any>> {
         const sdk = this.ensureInitialized();
         try {

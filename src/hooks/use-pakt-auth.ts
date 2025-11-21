@@ -78,9 +78,7 @@ interface UsePaktAuthReturn {
     googleOAuthValidateState: (
         props: GoogleOAuthValdatePayload
     ) => Promise<AuthResponse<GoogleOAuthValidateDto>>;
-    getUser: (authToken: string) => Promise<AuthResponse<any>>;
-    getAccount: (authToken: string) => Promise<AuthResponse<any>>;
-    fetchAccount: () => Promise<void>;
+    getAccount: (authToken?: string) => Promise<AuthResponse<any>>;
     logout: () => Promise<void>;
     resendTwoFAEmailCode: (email: string) => Promise<AuthResponse<object>>;
 
@@ -136,6 +134,128 @@ export const usePaktAuthInternal = (): UsePaktAuthReturn => {
         clearStore();
     }, [setUser, clearStore]);
 
+    // Logout
+    const logout = useCallback(async (): Promise<void> => {
+        const currentToken = getCookie(AUTH_TOKEN_KEY);
+        setLoading(true);
+        setError(null);
+
+        try {
+            if (currentToken) {
+                await paktSDKService.logout(currentToken);
+            }
+        } catch (err) {
+            Logger.error("Logout error:", {
+                error: err instanceof Error ? err.message : String(err),
+            });
+        } finally {
+            // Always clear local state and cookies, even if API call fails
+            clearUser();
+            removeCookie(AUTH_TOKEN_KEY);
+            setLoading(false);
+        }
+    }, [clearUser]);
+
+    // Get Account (full profile from /account endpoint)
+    const getAccount = useCallback(
+        async (authToken?: string): Promise<AuthResponse<any>> => {
+            // Get token from cookie if not provided
+            const authTokenValue = authToken || getCookie(AUTH_TOKEN_KEY);
+            if (!authTokenValue) {
+                Logger.error("No auth token found. Cannot fetch account.");
+                return createErrorResponse<any>(
+                    "No auth token found",
+                    "Failed to get account"
+                );
+            }
+
+            // Wait for SDK initialization with retry mechanism
+            const maxRetries = 10;
+            const retryDelay = 200; // 200ms between retries
+
+            for (let retries = 0; retries < maxRetries; retries++) {
+                if (paktSDKService.getInitialized()) {
+                    break;
+                }
+                // eslint-disable-next-line no-await-in-loop
+                await new Promise<void>((resolve) => {
+                    setTimeout(() => {
+                        resolve();
+                    }, retryDelay);
+                });
+            }
+
+            if (!paktSDKService.getInitialized()) {
+                Logger.error(
+                    "PAKT SDK not initialized after retries. Cannot fetch account."
+                );
+                return createErrorResponse<any>(
+                    "SDK not initialized",
+                    "Failed to get account"
+                );
+            }
+
+            setLoading(true);
+            setError(null);
+
+            try {
+                const response =
+                    await paktSDKService.getAccount(authTokenValue);
+
+                if (response.status === "success" && response.data) {
+                    const userData = response.data as UserData;
+                    setUser(userData);
+                } else {
+                    // Check for 401 Unauthorized
+                    const statusCode = response.statusCode || response.code;
+                    if (statusCode === 401) {
+                        Logger.warn(
+                            "Account endpoint returned 401 Unauthorized. Logging out user."
+                        );
+                        // Automatically logout on 401
+                        await logout();
+                        return createErrorResponse<any>(
+                            "Unauthorized",
+                            "Failed to get account"
+                        );
+                    }
+                    setAndTriggerError(
+                        response.message || "Failed to get account"
+                    );
+                }
+
+                return response;
+            } catch (err) {
+                Logger.error("Failed to get account:", {
+                    error: err instanceof Error ? err.message : String(err),
+                });
+                // Check if error has 401 status code
+                const errorStatus =
+                    (err as any)?.response?.status ||
+                    (err as any)?.status ||
+                    (err as any)?.statusCode ||
+                    (err as any)?.code;
+                if (errorStatus === 401) {
+                    Logger.warn(
+                        "Account endpoint returned 401 Unauthorized. Logging out user."
+                    );
+                    await logout();
+                }
+                const errorMessage =
+                    err instanceof Error
+                        ? err.message
+                        : "Failed to get account";
+                return createErrorResponse<any>(
+                    errorMessage,
+                    "Failed to get account"
+                );
+            } finally {
+                setLoading(false);
+            }
+        },
+        [createErrorResponse, setAndTriggerError, setUser, logout]
+    );
+
     // Login
     const login = useCallback(
         async (payload: LoginPayload): Promise<AuthResponse<LoginDto>> => {
@@ -151,6 +271,18 @@ export const usePaktAuthInternal = (): UsePaktAuthReturn => {
                     // Store token in cookie if available
                     if ("token" in userData && userData.token) {
                         setCookie(AUTH_TOKEN_KEY, userData.token);
+                        // Automatically fetch full account details
+                        getAccount().catch((err) => {
+                            Logger.error(
+                                "Failed to auto-fetch account after login:",
+                                {
+                                    error:
+                                        err instanceof Error
+                                            ? err.message
+                                            : String(err),
+                                }
+                            );
+                        });
                     }
                 } else {
                     setAndTriggerError(response.message || "Login failed");
@@ -168,7 +300,7 @@ export const usePaktAuthInternal = (): UsePaktAuthReturn => {
                 setLoading(false);
             }
         },
-        [createErrorResponse, setAndTriggerError, setUser]
+        [createErrorResponse, setAndTriggerError, setUser, getAccount]
     );
 
     // Register
@@ -220,6 +352,18 @@ export const usePaktAuthInternal = (): UsePaktAuthReturn => {
                     // Store token in cookie if available
                     if ("token" in userData && userData.token) {
                         setCookie(AUTH_TOKEN_KEY, userData.token);
+                        // Automatically fetch full account details
+                        getAccount().catch((err) => {
+                            Logger.error(
+                                "Failed to auto-fetch account after verification:",
+                                {
+                                    error:
+                                        err instanceof Error
+                                            ? err.message
+                                            : String(err),
+                                }
+                            );
+                        });
                     }
                 } else {
                     setAndTriggerError(
@@ -241,7 +385,7 @@ export const usePaktAuthInternal = (): UsePaktAuthReturn => {
                 setLoading(false);
             }
         },
-        [createErrorResponse, setAndTriggerError, setUser]
+        [createErrorResponse, setAndTriggerError, setUser, getAccount]
     );
 
     // Resend Verify Link
@@ -431,6 +575,18 @@ export const usePaktAuthInternal = (): UsePaktAuthReturn => {
                     // Store token in cookie if available
                     if ("token" in userData && userData.token) {
                         setCookie(AUTH_TOKEN_KEY, userData.token);
+                        // Automatically fetch full account details
+                        getAccount().catch((err) => {
+                            Logger.error(
+                                "Failed to auto-fetch account after Google OAuth:",
+                                {
+                                    error:
+                                        err instanceof Error
+                                            ? err.message
+                                            : String(err),
+                                }
+                            );
+                        });
                     }
                 } else {
                     setAndTriggerError(
@@ -452,171 +608,8 @@ export const usePaktAuthInternal = (): UsePaktAuthReturn => {
                 setLoading(false);
             }
         },
-        [createErrorResponse, setUser, setAndTriggerError]
+        [createErrorResponse, setUser, setAndTriggerError, getAccount]
     );
-
-    // Get User
-    const getUser = useCallback(
-        async (authToken: string): Promise<AuthResponse<any>> => {
-            setLoading(true);
-            setError(null);
-
-            try {
-                const response = await paktSDKService.getUser(authToken);
-
-                if (response.status === "success" && response.data) {
-                    const userData = response.data as UserData;
-                    setUser(userData);
-                } else {
-                    setAndTriggerError(
-                        response.message || "Failed to get user"
-                    );
-                }
-
-                return response;
-            } catch (err) {
-                const errorMessage =
-                    err instanceof Error ? err.message : "Failed to get user";
-                return createErrorResponse<any>(
-                    errorMessage,
-                    "Failed to get user"
-                );
-            } finally {
-                setLoading(false);
-            }
-        },
-        [createErrorResponse, setAndTriggerError, setUser]
-    );
-
-    // Get Account (full profile from /account endpoint)
-    const getAccount = useCallback(
-        async (authToken: string): Promise<AuthResponse<any>> => {
-            setLoading(true);
-            setError(null);
-
-            try {
-                const response = await paktSDKService.getAccount(authToken);
-
-                if (response.status === "success" && response.data) {
-                    const userData = response.data as UserData;
-                    setUser(userData);
-                } else {
-                    setAndTriggerError(
-                        response.message || "Failed to get account"
-                    );
-                }
-
-                return response;
-            } catch (err) {
-                const errorMessage =
-                    err instanceof Error
-                        ? err.message
-                        : "Failed to get account";
-                return createErrorResponse<any>(
-                    errorMessage,
-                    "Failed to get account"
-                );
-            } finally {
-                setLoading(false);
-            }
-        },
-        [createErrorResponse, setAndTriggerError, setUser]
-    );
-
-    // Logout
-    const logout = useCallback(async (): Promise<void> => {
-        const currentToken = getCookie(AUTH_TOKEN_KEY);
-        setLoading(true);
-        setError(null);
-
-        try {
-            if (currentToken) {
-                await paktSDKService.logout(currentToken);
-            }
-        } catch (err) {
-            Logger.error("Logout error:", {
-                error: err instanceof Error ? err.message : String(err),
-            });
-        } finally {
-            // Always clear local state and cookies, even if API call fails
-            clearUser();
-            removeCookie(AUTH_TOKEN_KEY);
-            setLoading(false);
-        }
-    }, [clearUser]);
-
-    // Fetch Account
-    const fetchAccount = useCallback(async (): Promise<void> => {
-        const authToken = getCookie(AUTH_TOKEN_KEY);
-        if (!authToken) {
-            Logger.error("No auth token found. Cannot fetch account.");
-            return;
-        }
-
-        // Wait for SDK initialization with retry mechanism
-        const maxRetries = 10;
-        const retryDelay = 200; // 200ms between retries
-
-        for (let retries = 0; retries < maxRetries; retries++) {
-            if (paktSDKService.getInitialized()) {
-                break;
-            }
-            // eslint-disable-next-line no-await-in-loop
-            await new Promise<void>((resolve) => {
-                setTimeout(() => {
-                    resolve();
-                }, retryDelay);
-            });
-        }
-
-        if (!paktSDKService.getInitialized()) {
-            Logger.error(
-                "PAKT SDK not initialized after retries. Cannot fetch account."
-            );
-            return;
-        }
-
-        setLoading(true);
-        try {
-            const response = await paktSDKService.getAccount(authToken);
-            if (response.status === "success" && response.data) {
-                const userData = response.data as UserData;
-                setUser(userData);
-            } else {
-                // Check for 401 Unauthorized
-                const statusCode = response.statusCode || response.code;
-                if (statusCode === 401) {
-                    Logger.warn(
-                        "Account endpoint returned 401 Unauthorized. Logging out user."
-                    );
-                    // Automatically logout on 401
-                    await logout();
-                } else {
-                    setAndTriggerError(
-                        response.message || "Failed to fetch account"
-                    );
-                }
-            }
-        } catch (err) {
-            Logger.error("Failed to fetch account:", {
-                error: err instanceof Error ? err.message : String(err),
-            });
-            // Check if error has 401 status code
-            const errorStatus =
-                (err as any)?.response?.status ||
-                (err as any)?.status ||
-                (err as any)?.statusCode ||
-                (err as any)?.code;
-            if (errorStatus === 401) {
-                Logger.warn(
-                    "Account endpoint returned 401 Unauthorized. Logging out user."
-                );
-                await logout();
-            }
-        } finally {
-            setLoading(false);
-        }
-    }, [setUser, setAndTriggerError, logout]);
 
     // Send Email 2FA
     const resendTwoFAEmailCode = useCallback(
@@ -701,6 +694,18 @@ export const usePaktAuthInternal = (): UsePaktAuthReturn => {
                     // Store token in cookie if available
                     if ("token" in userData && userData.token) {
                         setCookie(AUTH_TOKEN_KEY, userData.token);
+                        // Automatically fetch full account details
+                        getAccount().catch((err) => {
+                            Logger.error(
+                                "Failed to auto-fetch account after 2FA login:",
+                                {
+                                    error:
+                                        err instanceof Error
+                                            ? err.message
+                                            : String(err),
+                                }
+                            );
+                        });
                     }
                 } else {
                     setAndTriggerError(
@@ -722,7 +727,7 @@ export const usePaktAuthInternal = (): UsePaktAuthReturn => {
                 setLoading(false);
             }
         },
-        [createErrorResponse, setAndTriggerError, setUser]
+        [createErrorResponse, setAndTriggerError, setUser, getAccount]
     );
 
     return {
@@ -745,9 +750,7 @@ export const usePaktAuthInternal = (): UsePaktAuthReturn => {
         validateReferral,
         googleOAuthGenerateState,
         googleOAuthValidateState,
-        getUser,
         getAccount,
-        fetchAccount,
         logout,
         resendTwoFAEmailCode,
 
