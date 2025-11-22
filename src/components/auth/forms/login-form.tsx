@@ -6,6 +6,7 @@ import type * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
+import { useMediaQuery } from "usehooks-ts";
 import { ChevronLeft, Eye, EyeOff } from "lucide-react";
 
 /* -------------------------------------------------------------------------- */
@@ -31,6 +32,7 @@ const LoginForm = ({
     });
 
     const [showPassword, setShowPassword] = useState(false);
+    const isMobile = useMediaQuery("(max-width: 640px)");
 
     const handleSubmit: SubmitHandler<LoginFormValues> = (values) => {
         onSubmit(values);
@@ -148,6 +150,27 @@ const LoginForm = ({
                 >
                     Continue with Google
                 </Button>
+            )}
+
+            {!isMobile && onSignup && (
+                <div className="pka:relative pka:flex pka:w-full pka:items-center pka:justify-center pka:gap-2">
+                    <span className="pka:text-heading-text">
+                        Don&apos;t have an account?{" "}
+                    </span>
+                    <button
+                        type="button"
+                        onClick={onSignup}
+                        className="pka:hover:underline pka:cursor-pointer pka:font-bold pka:text-brand-primary pka:bg-transparent pka:border-none"
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                                e.preventDefault();
+                                onSignup?.();
+                            }
+                        }}
+                    >
+                        Sign up
+                    </button>
+                </div>
             )}
         </form>
     );
