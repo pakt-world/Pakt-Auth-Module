@@ -29,23 +29,15 @@ module.exports = {
                 // Brand Colors
                 "brand-primary": RenderPrefixVariable("brand-primary"),
                 "brand-secondary": RenderPrefixVariable("brand-secondary"),
-                "brand-accent": RenderPrefixVariable("brand-accent"),
 
                 // Text Colors
                 "heading-text": RenderPrefixVariable("heading-text"),
                 "body-text": RenderPrefixVariable("body-text"),
-                "link-text": RenderPrefixVariable("link-text"),
                 "inverse-text": RenderPrefixVariable("inverse-text"),
 
                 // Background Colors
                 "form-background": RenderPrefixVariable("form-background"),
                 "modal-overlay": RenderPrefixVariable("modal-overlay"),
-                "page-background": RenderPrefixVariable("page-background"),
-                "card-background": RenderPrefixVariable("card-background"),
-
-                // Border Colors
-                "border-color": RenderPrefixVariable("border-color"),
-                "divider-color": RenderPrefixVariable("divider-color"),
 
                 // Interactive Elements
                 "button-primary-background": RenderPrefixVariable(
@@ -62,9 +54,6 @@ module.exports = {
                 ),
                 "button-outline-text": RenderPrefixVariable(
                     "button-outline-text"
-                ),
-                "button-outline-border": RenderPrefixVariable(
-                    "button-outline-border"
                 ),
                 "button-outline-hover-background": RenderPrefixVariable(
                     "button-outline-hover-background"
@@ -86,22 +75,9 @@ module.exports = {
                 "error-background": RenderPrefixVariable("error-background"),
                 "error-text": RenderPrefixVariable("error-text"),
                 "error-border": RenderPrefixVariable("error-border"),
-                "success-background":
-                    RenderPrefixVariable("success-background"),
                 "success-text": RenderPrefixVariable("success-text"),
-                "warning-background":
-                    RenderPrefixVariable("warning-background"),
-                "warning-text": RenderPrefixVariable("warning-text"),
             },
             backgroundImage: {
-                // Semantic gradients
-                "brand-primary-gradient": RenderPrefixVariable(
-                    "brand-primary-gradient"
-                ),
-                "brand-secondary-gradient": RenderPrefixVariable(
-                    "brand-secondary-gradient"
-                ),
-
                 none: "none",
             },
             fontFamily: {
@@ -109,12 +85,6 @@ module.exports = {
                     RenderPrefixVariable("circular-std-font"),
                     ...defaultTheme.fontFamily.sans,
                 ],
-            },
-            borderRadius: {
-                // Semantic border radius
-                "modal-border-radius": RenderPrefixVariable(
-                    "modal-border-radius"
-                ),
             },
             keyframes: {
                 "accordion-down": {
