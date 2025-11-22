@@ -14,10 +14,10 @@ const Login = (props: LoginFormProps): React.JSX.Element => {
         <div className="pka:z-[2] pka:flex pka:w-full pka:items-center pka:sm:mx-auto pka:sm:size-full">
             <div className="pka:flex pka:size-full pka:flex-col pka:items-center pka:justify-center pka:gap-6">
                 <div className="pka:flex pka:flex-col pka:items-center pka:gap-2 pka:text-center">
-                    <h3 className="pka:font-sans pka:text-2xl pka:font-bold pka:text-title pka:sm:text-3xl pka:sm:text-inverse-text">
+                    <h3 className="pka:font-sans pka:text-2xl pka:font-bold pka:text-heading-text pka:sm:text-3xl pka:sm:text-inverse-text">
                         Welcome Back
                     </h3>
-                    <p className="pka:w-[392px] pka:text-center pka:text-base pka:font-medium pka:leading-normal pka:tracking-tight pka:text-body pka:sm:text-inverse-text">
+                    <p className="pka:w-[392px] pka:text-center pka:text-base pka:font-medium pka:leading-normal pka:tracking-tight pka:text-body-text pka:sm:text-inverse-text">
                         Sign in to your account to continue
                     </p>
                 </div>

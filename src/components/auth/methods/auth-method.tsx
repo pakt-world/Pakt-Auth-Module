@@ -33,7 +33,7 @@ const MethodWrapper = ({
             <div data-svg-wrapper className="pka:relative">
                 {icon}
             </div>
-            <div className="pka:text-base pka:font-medium pka:leading-normal pka:text-text-primary">
+            <div className="pka:text-base pka:font-medium pka:leading-normal pka:text-heading-text">
                 {isLogin ? "Log in" : "Sign up"} with {method}
             </div>
         </button>
@@ -64,7 +64,7 @@ export const AuthOptions = ({
 
     return (
         <div className="pka:flex pka:w-full pka:flex-col pka:items-center pka:justify-center pka:gap-4 pka:rounded-3xl pka:bg-form-background pka:p-6">
-            <h3 className="pka:text-xl pka:leading-[30px] pka:tracking-tight pka:text-text-primary">
+            <h3 className="pka:text-xl pka:leading-[30px] pka:tracking-tight pka:text-heading-text">
                 {instruction}
             </h3>
             {AUTH_METHOD.map((method) => {
@@ -99,7 +99,7 @@ export const AuthOptions = ({
                 );
             })}
             <div className="pka:inline-flex pka:h-5 pka:items-start pka:justify-center pka:gap-1">
-                <div className="pka:text-sm pka:font-medium pka:leading-tight pka:text-text-primary">
+                <div className="pka:text-sm pka:font-medium pka:leading-tight pka:text-heading-text">
                     {isLogin
                         ? "Don't have an account?"
                         : "Already have an account?"}
@@ -107,7 +107,7 @@ export const AuthOptions = ({
                 <button
                     type="button"
                     onClick={isLogin ? goToSignupMethod : goToLoginMethod}
-                    className="pka:text-sm pka:font-bold pka:leading-tight pka:text-primary"
+                    className="pka:text-sm pka:font-bold pka:leading-tight pka:text-brand-primary"
                 >
                     {isLogin ? "Sign up" : "Login"}
                 </button>
@@ -143,10 +143,10 @@ export const AuthMethod = ({
         <div className="pka:z-[2] pka:flex pka:w-full pka:items-center pka:sm:mx-auto pka:sm:size-full">
             <div className="pka:flex pka:size-full pka:flex-col pka:items-center pka:justify-center pka:gap-6">
                 <div className="pka:flex pka:flex-col pka:items-center pka:gap-2 pka:text-center">
-                    <h3 className="pka:font-sans pka:text-2xl pka:font-bold pka:text-text-inverse pka:sm:text-3xl">
+                    <h3 className="pka:font-sans pka:text-2xl pka:font-bold pka:text-inverse-text pka:sm:text-3xl">
                         {title}
                     </h3>
-                    <p className="pka:w-[392px] pka:text-center pka:text-base pka:font-medium pka:leading-normal pka:tracking-tight pka:text-body pka:text-text-inverse">
+                    <p className="pka:w-[392px] pka:text-center pka:text-base pka:font-medium pka:leading-normal pka:tracking-tight pka:text-body-text pka:text-inverse-text">
                         {description}
                     </p>
                 </div>

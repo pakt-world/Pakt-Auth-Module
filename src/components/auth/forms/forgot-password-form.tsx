@@ -55,7 +55,7 @@ const ForgotPasswordForm = ({
                     id="email"
                 />
                 {form.formState.errors.email?.message && (
-                    <div className="pka:text-sm pka:text-danger">
+                    <div className="pka:text-sm pka:text-error-text">
                         {form.formState.errors.email.message}
                     </div>
                 )}
@@ -72,7 +72,7 @@ const ForgotPasswordForm = ({
             {onBackToLogin && (
                 <Button
                     variant="transparent"
-                    className="pka:text-primary"
+                    className="pka:text-brand-primary"
                     onClick={onBackToLogin}
                     type="button"
                 >

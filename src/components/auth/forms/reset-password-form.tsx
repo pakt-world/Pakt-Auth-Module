@@ -95,7 +95,7 @@ function ResetPasswordForm({
                         <h3 className="pka:font-sans pka:text-2xl pka:font-bold pka:text-inverse-text pka:2xl:text-3xl">
                             Reset Password
                         </h3>
-                        <p className="pka:font-sans pka:text-base pka:leading-normal pka:tracking-tight pka:text-body pka:text-inverse-text">
+                        <p className="pka:font-sans pka:text-base pka:leading-normal pka:tracking-tight pka:text-body-text pka:text-inverse-text">
                             Choose a new password for your account
                         </p>
                     </div>
@@ -136,7 +136,7 @@ function ResetPasswordForm({
                                     </button>
                                 </div>
                                 {isPasswordTyping && (
-                                    <div className="pka:flex pka:flex-col pka:gap-4 pka:p-4 pka:text-xs pka:text-body">
+                                    <div className="pka:flex pka:flex-col pka:gap-4 pka:p-4 pka:text-xs pka:text-body-text">
                                         <PasswordCriteria
                                             isValidated={
                                                 validatingErr.isMinLength
@@ -210,7 +210,7 @@ function ResetPasswordForm({
                                 </div>
                                 {resetForm.formState.errors.confirmPassword
                                     ?.message && (
-                                    <div className="pka:text-sm pka:text-danger">
+                                    <div className="pka:text-sm pka:text-error-text">
                                         {
                                             resetForm.formState.errors
                                                 .confirmPassword.message
@@ -232,7 +232,7 @@ function ResetPasswordForm({
                     </form>
                 </div>
             ) : (
-                <div className="pka:mx-auto pka:mt-8 pka:flex pka:w-full pka:max-w-xl pka:flex-col pka:items-center pka:justify-center pka:gap-2 pka:rounded-2xl pka:bg-form-background pka:p-8 pka:px-[40px] pka:py-10 pka:text-center pka:text-body pka:sm:mt-28">
+                <div className="pka:mx-auto pka:mt-8 pka:flex pka:w-full pka:max-w-xl pka:flex-col pka:items-center pka:justify-center pka:gap-2 pka:rounded-2xl pka:bg-form-background pka:p-8 pka:px-[40px] pka:py-10 pka:text-center pka:text-body-text pka:sm:mt-28">
                     <div className="pka:flex pka:w-full pka:max-w-[150px] pka:items-center pka:justify-center">
                         <Lottie animationData={success} />
                     </div>

@@ -93,7 +93,7 @@ function VerifyLoginForm({
                                         renderInput={(props) => (
                                             <input
                                                 {...props}
-                                                className="otp_style pka:!select-none pka:px-3 pka:py-2 max-[424px]:pka:px-0 max-[424px]:pka:py-0 pka:focus:outline-none pka:focus:ring-1 pka:focus:ring-primary"
+                                                className="otp_style pka:!select-none pka:px-3 pka:py-2 max-[424px]:pka:px-0 max-[424px]:pka:py-0 pka:focus:outline-none pka:focus:ring-1 pka:focus:ring-input-focus-border"
                                             />
                                         )}
                                     />
@@ -110,7 +110,7 @@ function VerifyLoginForm({
                         </Button>
 
                         <div className="pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-4">
-                            <span className="pka:text-body">
+                            <span className="pka:text-body-text">
                                 {formatCountdown(countdown)}
                             </span>
 
@@ -135,7 +135,7 @@ function VerifyLoginForm({
                     </div>
                 </form>
             ) : (
-                <div className="pka:mx-auto pka:mt-8 pka:flex pka:w-full pka:max-w-xl pka:flex-col pka:items-center pka:justify-center pka:gap-2 pka:rounded-2xl pka:bg-form-background pka:p-8 pka:px-[40px] pka:py-10 pka:text-center pka:text-body">
+                <div className="pka:mx-auto pka:mt-8 pka:flex pka:w-full pka:max-w-xl pka:flex-col pka:items-center pka:justify-center pka:gap-2 pka:rounded-2xl pka:bg-form-background pka:p-8 pka:px-[40px] pka:py-10 pka:text-center pka:text-body-text">
                     <div className="pka:flex pka:w-full pka:max-w-[150px] pka:items-center pka:justify-center">
                         <Lottie animationData={success} />
                     </div>

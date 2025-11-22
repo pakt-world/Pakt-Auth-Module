@@ -366,8 +366,8 @@ function MyApp() {
     baseUrl: "https://api-devpaktbuild.chain.site",
     verbose: true,
     theme: {
-      primary: "#007C5B",
-      secondary: "#19A966",
+      brandPrimary: "#007C5B",
+      brandSecondary: "#19A966",
     },
     googleOAuth: {
       clientId: "your-google-client-id.apps.googleusercontent.com",

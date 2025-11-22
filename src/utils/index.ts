@@ -48,7 +48,7 @@ const applyTheme = (theme: ITheme) => {
             .toLowerCase();
     };
 
-    // Apply flat tokens (including legacy tokens)
+    // Apply flat tokens
     Object.keys(theme).forEach((key) => {
         const value = theme[key as keyof typeof theme];
         if (typeof value === "string") {
@@ -57,22 +57,6 @@ const applyTheme = (theme: ITheme) => {
             root.style.setProperty(cssProperty, value);
         }
     });
-
-    // Apply nested structure tokens (only if they exist)
-    const nestedStructures = ["text", "input", "states", "button"];
-    const hasNestedStructures = nestedStructures.some(
-        (key) => theme[key as keyof typeof theme]
-    );
-
-    if (hasNestedStructures) {
-        const flattenedColors = flattenTheme(theme);
-
-        Object.keys(flattenedColors).forEach((key) => {
-            const value = flattenedColors[key];
-            const cssProperty = `--pkas-${key}`;
-            root.style.setProperty(cssProperty, value);
-        });
-    }
 };
 
 const sleep = (milliseconds: number) => {

@@ -5,7 +5,7 @@ const PoweredByPakt = ({ className }: { className?: string }) => {
         <a
             href="https://pakt.world"
             target="_blank"
-            className={`pka:flex pka:cursor-pointer pka:items-center pka:text-title ${className}`}
+            className={`pka:flex pka:cursor-pointer pka:items-center pka:text-heading-text ${className}`}
             rel="noreferrer"
         >
             <p className="pka:text-base pka:text-white">Powered by</p>{" "}

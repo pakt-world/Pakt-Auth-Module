@@ -45,7 +45,7 @@ const VerifyLoginDialog = ({
                     <h3 className="pka:font-sans pka:text-2xl pka:font-bold pka:text-white pka:sm:text-3xl">
                         2FA Security
                     </h3>
-                    <p className="pka:font-sans pka:text-base pka:leading-normal pka:tracking-tight pka:text-body pka:text-white">
+                    <p className="pka:font-sans pka:text-base pka:leading-normal pka:tracking-tight pka:text-body-text pka:text-white">
                         {type === "google_auth"
                             ? "Enter the OTP from your authenticator app"
                             : "Enter the code that was sent to"}

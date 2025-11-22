@@ -70,7 +70,7 @@ function VerifyEmailForm({
                 <h3 className="pka:font-sans pka:text-3xl pka:font-bold pka:text-white">
                     Reset Password Code
                 </h3>
-                <p className="pka:font-sans pka:text-base pka:text-body pka:text-white">
+                <p className="pka:font-sans pka:text-base pka:text-body-text pka:text-white">
                     A code has been sent to your email address. Enter it to
                     verify your reset password.
                 </p>
@@ -94,7 +94,7 @@ function VerifyEmailForm({
                                     renderInput={(props) => (
                                         <input
                                             {...props}
-                                            className="otp_style pka:!select-none pka:px-3 pka:py-2 max-[424px]:pka:px-0 max-[424px]:pka:py-0 pka:focus:outline-none pka:focus:ring-1 pka:focus:ring-primary"
+                                            className="otp_style pka:!select-none pka:px-3 pka:py-2 max-[424px]:pka:px-0 max-[424px]:pka:py-0 pka:focus:outline-none pka:focus:ring-1 pka:focus:ring-input-focus-border"
                                         />
                                     )}
                                 />
@@ -112,7 +112,7 @@ function VerifyEmailForm({
                     </Button>
 
                     <div className="pka:flex pka:w-full pka:flex-col pka:items-center pka:gap-4">
-                        <span className="pka:text-body">
+                        <span className="pka:text-body-text">
                             {formatCountdown(countdown)}
                         </span>
 

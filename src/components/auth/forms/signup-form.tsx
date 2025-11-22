@@ -88,8 +88,8 @@ const SignUpForm = ({
                     onClick={backToSignupMethod}
                     className="pka:inline-flex pka:items-center pka:justify-start pka:gap-2 pka:self-start"
                 >
-                    <ChevronLeft size={24} className="pka:text-primary" />
-                    <div className="pka:text-base pka:leading-normal pka:tracking-tight pka:text-primary">
+                    <ChevronLeft size={24} className="pka:text-brand-primary" />
+                    <div className="pka:text-base pka:leading-normal pka:tracking-tight pka:text-brand-primary">
                         Sign up another way
                     </div>
                 </button>
@@ -111,7 +111,7 @@ const SignUpForm = ({
                             className="input_style"
                         />
                         {form.formState.errors.firstName?.message && (
-                            <div className="pka:text-sm pka:text-danger">
+                            <div className="pka:text-sm pka:text-error-text">
                                 {form.formState.errors.firstName.message}
                             </div>
                         )}
@@ -132,7 +132,7 @@ const SignUpForm = ({
                         className="input_style"
                     />
                     {form.formState.errors.email?.message && (
-                        <div className="pka:text-sm pka:text-danger">
+                        <div className="pka:text-sm pka:text-error-text">
                             {form.formState.errors.email.message}
                         </div>
                     )}
@@ -166,7 +166,7 @@ const SignUpForm = ({
                         </button>
                     </div>
                     {isPasswordTyping && (
-                        <div className="pka:flex pka:flex-col pka:gap-4 pka:p-4 pka:text-xs pka:text-body">
+                        <div className="pka:flex pka:flex-col pka:gap-4 pka:p-4 pka:text-xs pka:text-body-text">
                             <PasswordCriteria
                                 isValidated={validatingErr.isMinLength}
                                 criteria="At least 8 characters"
@@ -221,7 +221,7 @@ const SignUpForm = ({
                         </button>
                     </div>
                     {form.formState.errors.confirmPassword?.message && (
-                        <div className="pka:text-sm pka:text-danger">
+                        <div className="pka:text-sm pka:text-error-text">
                             {form.formState.errors.confirmPassword.message}
                         </div>
                     )}
@@ -239,13 +239,13 @@ const SignUpForm = ({
 
             {!isMobile && (
                 <div className="pka:relative pka:flex pka:w-full pka:items-center pka:justify-center pka:gap-2">
-                    <span className="pka:text-title">
+                    <span className="pka:text-heading-text">
                         Already have an account?{" "}
                     </span>
                     <button
                         type="button"
                         onClick={goToLoginMethod}
-                        className="pka:hover:underline pka:cursor-pointer pka:font-bold pka:text-primary pka:bg-transparent pka:border-none"
+                        className="pka:hover:underline pka:cursor-pointer pka:font-bold pka:text-brand-primary pka:bg-transparent pka:border-none"
                         onKeyDown={(e) => {
                             if (e.key === "Enter" || e.key === " ") {
                                 e.preventDefault();

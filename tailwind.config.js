@@ -26,31 +26,6 @@ module.exports = {
         },
         extend: {
             colors: {
-                // Legacy colors (kept for backward compatibility)
-                primary: RenderPrefixVariable("primary"),
-                info: RenderPrefixVariable("info"),
-                secondary: RenderPrefixVariable("secondary"),
-                "blue-lightest": RenderPrefixVariable("blue-lightest"),
-                "blue-darkest": RenderPrefixVariable("blue-darkest"),
-                line: RenderPrefixVariable("line"),
-                title: RenderPrefixVariable("title"),
-                body: RenderPrefixVariable("body"),
-                warning: RenderPrefixVariable("warning"),
-                success: RenderPrefixVariable("success"),
-                danger: RenderPrefixVariable("danger"),
-                magnolia: RenderPrefixVariable("magnolia"),
-                "primary-brighter": RenderPrefixVariable("primary-brighter"),
-                "refer-border": RenderPrefixVariable("refer-border"),
-                "exhibit-tab-list": RenderPrefixVariable("exhibit-tab-list"),
-
-                // Legacy text colors (kept for backward compatibility)
-                "text-primary": RenderPrefixVariable("text-primary"),
-                "text-body": RenderPrefixVariable("text-body"),
-                "text-title": RenderPrefixVariable("text-title"),
-                "text-danger": RenderPrefixVariable("text-danger"),
-                "text-success": RenderPrefixVariable("text-success"),
-                "text-warning": RenderPrefixVariable("text-warning"),
-
                 // Brand Colors
                 "brand-primary": RenderPrefixVariable("brand-primary"),
                 "brand-secondary": RenderPrefixVariable("brand-secondary"),
@@ -117,35 +92,9 @@ module.exports = {
                 "warning-background":
                     RenderPrefixVariable("warning-background"),
                 "warning-text": RenderPrefixVariable("warning-text"),
-
-                // Nested structure colors (kept for backward compatibility)
-                "text-primary": RenderPrefixVariable("text-primary"),
-                "text-secondary": RenderPrefixVariable("text-secondary"),
-                "text-inverse": RenderPrefixVariable("text-inverse"),
-                "input-focus": RenderPrefixVariable("input-focus"),
-                "error-bg": RenderPrefixVariable("error-bg"),
-                "success-bg": RenderPrefixVariable("success-bg"),
-                "warning-bg": RenderPrefixVariable("warning-bg"),
-                "btn-primary-bg": RenderPrefixVariable("btn-primary-bg"),
-                "btn-primary-text": RenderPrefixVariable("btn-primary-text"),
-                "btn-primary-hover": RenderPrefixVariable("btn-primary-hover"),
-                "btn-outline-bg": RenderPrefixVariable("btn-outline-bg"),
-                "btn-outline-text": RenderPrefixVariable("btn-outline-text"),
-                "btn-outline-border":
-                    RenderPrefixVariable("btn-outline-border"),
-                "btn-outline-hover-bg": RenderPrefixVariable(
-                    "btn-outline-hover-bg"
-                ),
-                "btn-outline-hover-text": RenderPrefixVariable(
-                    "btn-outline-hover-text"
-                ),
             },
             backgroundImage: {
-                // Legacy gradients (kept for backward compatibility)
-                "btn-primary": RenderPrefixVariable("btn-primary"),
-                "primary-gradient": RenderPrefixVariable("primary-gradient"),
-
-                // New semantic gradients
+                // Semantic gradients
                 "brand-primary-gradient": RenderPrefixVariable(
                     "brand-primary-gradient"
                 ),
@@ -162,10 +111,7 @@ module.exports = {
                 ],
             },
             borderRadius: {
-                // Legacy border radius (kept for backward compatibility)
-                "modal": RenderPrefixVariable("modal-radius"),
-
-                // New semantic border radius
+                // Semantic border radius
                 "modal-border-radius": RenderPrefixVariable(
                     "modal-border-radius"
                 ),

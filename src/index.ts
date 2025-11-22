@@ -25,17 +25,3 @@ export type { AuthContextType } from "./context/auth-context";
 
 // Configuration types
 export type { ConfigContextType, GoogleOAuthConfig, ITheme } from "./types";
-
-// PAKT SDK types
-export type {
-    PaktSDKConfig,
-    AuthResponse,
-    LoginTwoFAPayload,
-} from "./lib/pakt-sdk";
-
-// Form validation types
-export type {
-    SignupFormValues,
-    ForgotPasswordFormValues,
-    ResetPasswordFormValues,
-} from "./utils/validation";

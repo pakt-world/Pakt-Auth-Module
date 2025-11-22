@@ -138,7 +138,7 @@ function VerifySignupForm({
                     </div>
                 </form>
             ) : (
-                <div className="pka:mx-auto pka:mt-8 pka:flex pka:w-full pka:max-w-xl pka:flex-col pka:items-center pka:justify-center pka:gap-2 pka:rounded-2xl pka:bg-form-background pka:p-8 pka:px-[40px] pka:py-10 pka:text-center pka:text-body">
+                <div className="pka:mx-auto pka:mt-8 pka:flex pka:w-full pka:max-w-xl pka:flex-col pka:items-center pka:justify-center pka:gap-2 pka:rounded-2xl pka:bg-form-background pka:p-8 pka:px-[40px] pka:py-10 pka:text-center pka:text-body-text">
                     <div className="pka:flex pka:w-full pka:max-w-[150px] pka:items-center pka:justify-center">
                         <Lottie animationData={success} />
                     </div>

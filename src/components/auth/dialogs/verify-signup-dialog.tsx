@@ -42,7 +42,7 @@ const VerifySignUpDialog = ({
                     <h3 className="pka:font-sans pka:text-2xl pka:font-bold pka:sm:text-3xl pka:text-white">
                         Verify Email
                     </h3>
-                    <p className="pka:font-sans pka:text-base pka:text-body pka:text-white">
+                    <p className="pka:font-sans pka:text-base pka:text-body-text pka:text-white">
                         A code has been sent to your email address.
                         <br /> Enter it to verify your email.
                     </p>

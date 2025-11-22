@@ -48,8 +48,8 @@ const LoginForm = ({
                     onClick={backToLoginMethod}
                     className="pka:inline-flex pka:items-center pka:justify-start pka:gap-2 pka:self-start"
                 >
-                    <ChevronLeft size={24} className="pka:text-primary" />
-                    <div className="pka:text-base pka:leading-normal pka:tracking-tight pka:text-primary">
+                    <ChevronLeft size={24} className="pka:text-brand-primary" />
+                    <div className="pka:text-base pka:leading-normal pka:tracking-tight pka:text-brand-primary">
                         Log in another way
                     </div>
                 </button>
@@ -76,7 +76,7 @@ const LoginForm = ({
                         type="email"
                     />
                     {form.formState.errors.email && (
-                        <span className="pka:text-sm pka:text-danger">
+                        <span className="pka:text-sm pka:text-error-text">
                             {form.formState.errors.email.message}
                         </span>
                     )}
@@ -109,7 +109,7 @@ const LoginForm = ({
                         </button>
                     </div>
                     {form.formState.errors.password && (
-                        <span className="pka:text-sm pka:text-danger">
+                        <span className="pka:text-sm pka:text-error-text">
                             {form.formState.errors.password.message}
                         </span>
                     )}
@@ -120,7 +120,7 @@ const LoginForm = ({
                         <button
                             type="button"
                             onClick={onForgotPassword}
-                            className="pka:cursor-pointer pka:font-bold pka:text-primary pka:hover:underline"
+                            className="pka:cursor-pointer pka:font-bold pka:text-brand-primary pka:hover:underline"
                         >
                             Forgot Password?
                         </button>
