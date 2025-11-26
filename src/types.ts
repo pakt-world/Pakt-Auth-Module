@@ -45,6 +45,8 @@ interface ITheme {
     buttonOutlineText?: string; // Outline button text color
     buttonOutlineHoverBackground?: string; // Outline button hover background
     buttonOutlineHoverText?: string; // Outline button hover text
+    buttonDisabledBackground?: string; // Disabled button background
+    buttonDisabledText?: string; // Disabled button text color
 
     // Form Input Colors
     inputBackground?: string; // Input field background

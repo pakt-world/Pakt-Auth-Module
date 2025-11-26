@@ -1,4 +1,3 @@
-
 @import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
 @import "./tailwind.css";
 
@@ -85,17 +84,17 @@
     border-color: var(--pkas-input-border);
     color: var(--pkas-input-text);
   }
-  
+
   .input_style::placeholder {
     color: var(--pkas-input-placeholder);
   }
-  
+
   .input_style:focus {
     outline: none;
     border-color: transparent;
     box-shadow: 0 0 0 2px var(--pkas-input-focus-border);
   }
-  
+
   .otp_style {
     @apply pka:w-12 pka:h-12 pka:text-center pka:border pka:rounded-lg pka:text-lg pka:font-semibold pka:transition-colors;
     width: 3rem !important;
@@ -113,31 +112,39 @@
       box-sizing: border-box;
     }
   }
-  
+
   .otp_style:focus {
     outline: none;
     border-color: transparent;
     box-shadow: 0 0 0 2px var(--pkas-input-focus-border);
   }
-  
+
   /* Button theme tokens using background property for gradient support */
   .pka\:bg-\[var\(--pkas-button-primary-background\)\] {
     background: var(--pkas-button-primary-background);
   }
-  
+
   .pka\:bg-\[var\(--pkas-button-outline-background\)\] {
     background: var(--pkas-button-outline-background);
   }
-  
+
   .pka\:bg-\[var\(--pkas-button-outline-hover-background\)\] {
     background: var(--pkas-button-outline-hover-background);
   }
-  
+
   .pka\:bg-\[var\(--pkas-button-primary-hover\)\] {
     background: var(--pkas-button-primary-hover);
   }
-  
+
   .pka\:bg-\[var\(--pkas-error-background\)\] {
     background: var(--pkas-error-background);
+  }
+
+  .pka\:bg-\[var\(--pkas-button-disabled-background\)\] {
+    background: var(--pkas-button-disabled-background);
+  }
+
+  .pka\:text-\[var\(--pkas-button-disabled-text\)\] {
+    color: var(--pkas-button-disabled-text);
   }
 }
