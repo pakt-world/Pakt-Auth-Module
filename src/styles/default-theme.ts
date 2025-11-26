@@ -23,6 +23,8 @@ const defaultTheme: ITheme = {
     buttonOutlineText: "#007C5B",
     buttonOutlineHoverBackground: "#007C5B",
     buttonOutlineHoverText: "#FFFFFF",
+    buttonDisabledBackground: "rgba(128, 128, 128, 0.2)",
+    buttonDisabledText: "rgba(128, 128, 128, 0.5)",
 
     // Form Input Colors
     inputBackground: "#FFFFFF",

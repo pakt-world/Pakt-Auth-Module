@@ -140,4 +140,12 @@
   .pka\:bg-\[var\(--pkas-error-background\)\] {
     background: var(--pkas-error-background);
   }
+  
+  .pka\:bg-\[var\(--pkas-button-disabled-background\)\] {
+    background: var(--pkas-button-disabled-background);
+  }
+  
+  .pka\:text-\[var\(--pkas-button-disabled-text\)\] {
+    color: var(--pkas-button-disabled-text);
+  }
 }

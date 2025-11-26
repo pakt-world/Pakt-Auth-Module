@@ -184,6 +184,35 @@ const App = () => {
                 "583287786734-s8rrgm4ll9ltjm430a25vi6107dbiiib.apps.googleusercontent.com",
             redirectUri: "http://localhost:4234",
         },
+        theme: {
+            // Glassmorphism theme - transparent and works with any background
+            brandPrimary: "rgba(255, 255, 255, 0.9)",
+            brandSecondary: "rgba(255, 255, 255, 0.7)",
+            inverseText: "rgba(255, 255, 255, 0.95)",
+            headingText: "rgba(255, 255, 255, 0.95)",
+            bodyText: "rgba(255, 255, 255, 0.85)",
+            formBackground: "rgba(255, 255, 255, 0.1)", // Transparent glass effect
+            modalOverlay: "rgba(0, 0, 0, 0.5)", // Semi-transparent dark overlay
+            buttonPrimaryBackground: "rgba(255, 255, 255, 0.2)",
+            buttonPrimaryText: "rgba(255, 255, 255, 0.95)",
+            buttonPrimaryHover: "rgba(255, 255, 255, 0.3)",
+            buttonOutlineBackground: "transparent",
+            buttonOutlineText: "rgba(255, 255, 255, 0.9)",
+            buttonOutlineHoverBackground: "rgba(255, 255, 255, 0.15)",
+            buttonOutlineHoverText: "rgba(255, 255, 255, 0.95)",
+            buttonDisabledBackground: "rgba(128, 128, 128, 0.2)", // Toned-down grey at 20% opacity
+            buttonDisabledText: "rgba(128, 128, 128, 0.5)",
+            inputBackground: "rgba(255, 255, 255, 0.1)",
+            inputBorder: "rgba(255, 255, 255, 0.2)",
+            inputFocusBorder: "rgba(255, 255, 255, 0.4)",
+            inputPlaceholder: "rgba(255, 255, 255, 0.5)",
+            inputText: "rgba(255, 255, 255, 0.9)",
+            inputLabel: "rgba(255, 255, 255, 0.85)",
+            errorBackground: "rgba(239, 68, 68, 0.15)",
+            errorText: "rgba(254, 202, 202, 1)",
+            errorBorder: "rgba(239, 68, 68, 0.5)",
+            successText: "rgba(134, 239, 172, 1)",
+        },
     };
 
     return (

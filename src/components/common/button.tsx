@@ -10,19 +10,19 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../../utils";
 
 const button = cva(
-    "pka:focus:outline-none pka:py-3 pka:whitespace-nowrap pka:duration-200 pka:capitalize pka:focus-visible:ring-1 pka:focus-visible:ring-[#19A966] pka:relative pka:z-0 pka:rounded-[10px] pka:text-center pka:w-fit pka:px-6 pka:font-semibold pka:focus-visible:border-transparent",
+    "pka:focus:outline-none pka:py-3 pka:whitespace-nowrap pka:duration-200 pka:capitalize pka:focus-visible:ring-1 pka:focus-visible:ring-[#19A966] pka:relative pka:z-0 pka:rounded-[10px] pka:text-center pka:w-fit pka:px-6 pka:font-semibold pka:focus-visible:border-transparent pka:cursor-pointer pka:transition-all pka:hover:scale-[1.02] pka:active:scale-[0.98]",
     {
         variants: {
             variant: {
                 primary:
-                    "pka:border-white pka:border-opacity-10 pka:bg-[var(--pkas-button-primary-background)] pka:text-button-primary-text",
+                    "pka:border-white pka:border-opacity-10 pka:bg-[var(--pkas-button-primary-background)] pka:text-button-primary-text pka:active:bg-white pka:active:text-gray-900",
                 secondary:
-                    "pka:border-brand-primary pka:border pka:text-brand-primary pka:bg-brand-secondary pka:hover:bg-button-primary-hover pka:duration-200 pka:font-normal",
+                    "pka:border-brand-primary pka:border pka:text-brand-primary pka:bg-brand-secondary pka:hover:bg-button-primary-hover pka:duration-200 pka:font-normal pka:active:bg-white",
                 outline:
-                    "pka:border-brand-primary pka:border pka:text-button-outline-text pka:border-opacity-100 pka:bg-[var(--pkas-button-outline-background)] pka:hover:border-opacity-50 pka:hover:bg-[var(--pkas-button-outline-hover-background)] pka:hover:text-button-outline-hover-text pka:font-normal pka:duration-200",
+                    "pka:border-brand-primary pka:border pka:text-button-outline-text pka:border-opacity-100 pka:bg-[var(--pkas-button-outline-background)] pka:hover:border-opacity-50 pka:hover:bg-[var(--pkas-button-outline-hover-background)] pka:hover:text-button-outline-hover-text pka:font-normal pka:duration-200 pka:active:bg-white pka:active:text-gray-900",
                 transparent:
-                    "pka:border-transparent pka:text-brand-primary pka:bg-transparent pka:hover:bg-[#008D6C1A] pka:duration-200",
-                danger: "pka:bg-[var(--pkas-error-background)] pka:text-error-text pka:hover:bg-[var(--pkas-error-background)] pka:border pka:border-transparent",
+                    "pka:border-transparent pka:text-brand-primary pka:bg-transparent pka:hover:bg-[#008D6C1A] pka:duration-200 pka:active:bg-white pka:active:text-gray-900",
+                danger: "pka:bg-[var(--pkas-error-background)] pka:text-error-text pka:hover:bg-[var(--pkas-error-background)] pka:border pka:border-transparent pka:active:bg-white pka:active:text-red-600",
             },
             size: {
                 xs: "pka:px-2 pka:py-[8px] pka:text-xs",
@@ -35,7 +35,7 @@ const button = cva(
                 true: "pka:w-full",
             },
             disabled: {
-                true: "pka:cursor-not-allowed pka:!bg-none pka:!bg-[#E3E5E5] pka:!text-[#979C9E]",
+                true: "pka:cursor-not-allowed pka:!bg-none pka:!bg-[var(--pkas-button-disabled-background)] pka:!text-[var(--pkas-button-disabled-text)] pka:hover:scale-100 pka:active:scale-100",
             },
         },
         defaultVariants: {
@@ -80,7 +80,7 @@ const gradientHover = cva(
 
 export interface ButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-        VariantProps<typeof button> {
+    VariantProps<typeof button> {
     disabled?: boolean;
 }
 
@@ -146,7 +146,7 @@ export const LinkButton = React.forwardRef<HTMLAnchorElement, LinkButtonProps>(
 
 export interface AnchorButtonProps
     extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
-        VariantProps<typeof button> {
+    VariantProps<typeof button> {
     disabled?: boolean;
 }
 
