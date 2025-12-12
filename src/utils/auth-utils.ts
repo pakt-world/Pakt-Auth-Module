@@ -184,26 +184,51 @@ export const handleAuthResponse = ({
     }
 };
 
-// Utility functions for cookie and storage management
+const isBrowser = typeof window !== "undefined";
+
+const setLocalToken = (key: string, value: string) => {
+    if (!isBrowser) return;
+
+    window.localStorage.setItem(key, value);
+};
+
+const getLocalToken = (key: string): string | null => {
+    if (!isBrowser) return null;
+    try {
+        return window.localStorage.getItem(key);
+    } catch {
+        return null;
+    }
+};
+
+const removeLocalToken = (key: string) => {
+    if (!isBrowser) return;
+
+    window.localStorage.removeItem(key);
+};
+
 export const setCookie = (key: string, value: string, options?: any) => {
-    // Framework-agnostic cookie setting
-    // This can be overridden by the consuming application
     if (typeof document !== "undefined") {
         document.cookie = `${key}=${value}; path=/`;
     }
+    setLocalToken(key, value);
 };
 
 export const getCookie = (key: string): string | null => {
     if (typeof document !== "undefined") {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${key}=`);
-        if (parts.length === 2) return parts.pop()?.split(";").shift() || null;
+        if (parts.length === 2) {
+            const cookieVal = parts.pop()?.split(";").shift() || null;
+            if (cookieVal) return cookieVal;
+        }
     }
-    return null;
+    return getLocalToken(key);
 };
 
 export const removeCookie = (key: string) => {
     if (typeof document !== "undefined") {
         document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     }
+    removeLocalToken(key);
 };
