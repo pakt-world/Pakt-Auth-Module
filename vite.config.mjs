@@ -20,6 +20,10 @@ const __dirname = path.dirname(__filename);
 // Consider using import assertions once stable, or stick to fs/readFileSync if needed.
 // import pkg from './package.json' assert { type: 'json' }; // Example with import assertion
 import { readFileSync } from "fs";
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
+
 const pkg = JSON.parse(
     readFileSync(path.resolve(__dirname, "package.json"), "utf-8")
 );
